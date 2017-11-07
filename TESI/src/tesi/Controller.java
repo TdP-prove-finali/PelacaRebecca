@@ -51,13 +51,15 @@ public class Controller {
     @FXML
     void doPrevisione(ActionEvent event) {
     	
+    	txtResult.clear();
+    	
     	if(boxMetodi.getValue()!=null && boxProdotti.getValue()!=null) {
     		
     		if(tau.getText()!="") {
     			
 	    		if(boxMetodi.getValue().toLowerCase().equals("moving average")) {
 	    			if(m.getText()!="")
-	    				model.getMovingAverage(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Integer.parseInt(m.getText()));
+	    				txtResult.appendText(model.getMovingAverage(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Integer.parseInt(m.getText())));
 	    			else
 	    				txtResult.appendText("Inserisci il parametro m");
 	    		}	
@@ -106,6 +108,7 @@ public class Controller {
 		
 		this.model = model;
 		
+		boxProdotti.getItems().addAll(model.getProdotti());
 		boxMetodi.getItems().addAll(model.getMetodi());
 	}
 }

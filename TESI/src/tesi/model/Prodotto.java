@@ -2,18 +2,21 @@ package tesi.model;
 
 public class Prodotto {
 	
-	private int codice;
+	private String codice;
 
-	public Prodotto(int codice) {
-		super();
+	public Prodotto(String codice) {
 		this.codice = codice;
 	}
 
-	public int getCodice() {
+	public String getCodice() {
 		return codice;
 	}
 
-	public void setCodice(int codice) {
+	public void setCodice(String codice) {
 		this.codice = codice;
 	}
+
+	public String toString() {
+		return codice;
+	}	
 }

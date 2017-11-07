@@ -16,11 +16,10 @@ public class DBConnect {
 	public static Connection getConnection() {
 		
 		if(ds==null) {
-			// initialize DataSource
 			try {
 				ds = DataSources.pooledDataSource(DataSources.unpooledDataSource(jdbcURL)) ;
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 				System.exit(1);
 			}
@@ -29,8 +28,9 @@ public class DBConnect {
 		try {
 			Connection c = ds.getConnection() ;
 			return c ;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (SQLException e) {
+
 			e.printStackTrace();
 			return null ;
 		}

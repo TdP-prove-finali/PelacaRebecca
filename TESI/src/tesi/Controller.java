@@ -55,36 +55,30 @@ public class Controller {
     	
     	if(boxMetodi.getValue()!=null && boxProdotti.getValue()!=null) {
     		
-    		if(tau.getText()!="") {
-    			
-	    		if(boxMetodi.getValue().toLowerCase().equals("moving average")) {
-	    			if(m.getText()!="")
-	    				txtResult.appendText(model.getMovingAverage(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Integer.parseInt(m.getText())));
-	    			else
-	    				txtResult.appendText("Inserisci il parametro m");
-	    		}	
-	    		else if (boxMetodi.getValue().toLowerCase().equals("exponential smoothing")) {
-	    			if(alfa.getText()!="")
-	    				model.getExponentialSmoothing(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Double.parseDouble(alfa.getText()));
-	    			else
-	    				txtResult.appendText("Inserisci il parametro alfa");
-	    		}	
-	    		else if(boxMetodi.getValue().toLowerCase().equals("exponential smoothing with trend")) {
-	    			if(alfa.getText()!="" && beta.getText()!="")
-	    				model.getExponentialSmoothingWithTrend(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Double.parseDouble(alfa.getText()), Double.parseDouble(beta.getText()));
-	    			else
-	    				txtResult.appendText("Inserisci parametri alfa e beta");
-	    		}	
-	    		else if(boxMetodi.getValue().toLowerCase().equals("winter")) {
-	    			if(alfa.getText()!="" && beta.getText()!="" && gamma.getText()!="")
-	    				model.getWinter(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Double.parseDouble(alfa.getText()), Double.parseDouble(beta.getText()), Double.parseDouble(gamma.getText()));
-	    			else 
-	    				txtResult.appendText("Inserisci i parametri alfa, beta e gamma");
-	    		}
-	    			
+    		if(boxMetodi.getValue().toLowerCase().equals("moving average")) {
+    			if(!tau.getText().equals("") && !m.getText().equals(""))
+    				txtResult.appendText(model.getMovingAverage(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Integer.parseInt(m.getText())));
+    			else
+    				txtResult.appendText("Inserisci i parametri m e tau");
+    		}	
+    		else if (boxMetodi.getValue().toLowerCase().equals("exponential smoothing")) {
+    			if(!tau.getText().equals("") && !alfa.getText().equals(""))
+    				txtResult.appendText(model.getExponentialSmoothing(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Double.parseDouble(alfa.getText())));
+    			else
+    				txtResult.appendText("Inserisci i parametr alfa e tau");
+    		}	
+    		else if(boxMetodi.getValue().toLowerCase().equals("exponential smoothing with trend")) {
+    			if(!tau.getText().equals("") && !alfa.getText().equals("") && !beta.getText().equals(""))
+    				txtResult.appendText(model.getExponentialSmoothingWithTrend(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Double.parseDouble(alfa.getText()), Double.parseDouble(beta.getText())));
+    			else
+    				txtResult.appendText("Inserisci parametri alfa, beta e tau");
+    		}	
+    		else if(boxMetodi.getValue().toLowerCase().equals("winter")) {
+    			if(!tau.getText().equals("") && !alfa.getText().equals("") && !beta.getText().equals("") && !gamma.getText().equals(""))
+    				txtResult.appendText(model.getWinter(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Double.parseDouble(alfa.getText()), Double.parseDouble(beta.getText()), Double.parseDouble(gamma.getText())));
+    			else 
+    				txtResult.appendText("Inserisci i parametri alfa, beta, gamma e tau");
     		}
-    		else
-    			txtResult.appendText("Inserisci il parametro tau");
     	}
     	else
     		txtResult.appendText("Selezionare un prodotto e un metodo");

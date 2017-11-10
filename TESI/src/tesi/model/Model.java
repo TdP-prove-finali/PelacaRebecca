@@ -142,6 +142,25 @@ public class Model {
 	}
 
 	public String getWinter(Prodotto prodotto, int tau, double alfa, double beta, double gamma) {
+		
+		StringBuilder result = new StringBuilder();
+		
+		List<Integer> demand = dao.getStoricoDB(prodotto);
+		List<Double> smoothed_estimate = new ArrayList<Double>();
+		List<Double> smoothed_trend = new ArrayList<Double>();
+		List<Double> smoothed_seasonality = new ArrayList<Double>();
+		List<Double> forecast = new ArrayList<Double>();
+		
+		int sum = 0;
+		double average;
+		
+		for(Integer d : demand) 
+			sum += d;
+			
+		average = (double)sum/demand.size();
+		smoothed_estimate.add(average);
+		smoothed_trend.add(0.0);
+		
 		return null;
 		
 		

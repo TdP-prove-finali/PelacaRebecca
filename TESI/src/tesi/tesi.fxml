@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -108,10 +109,136 @@
                   <Insets left="10.0" />
                </VBox.margin>
             </GridPane>
-            <TextArea fx:id="txtResult" VBox.vgrow="ALWAYS">
+            <Label text="Inserisci gli ordini acquisiti per i prossimi 10 giorni :">
                <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                  <Insets bottom="5.0" left="10.0" top="15.0" />
                </VBox.margin>
+            </Label>
+            <GridPane>
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="70.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="70.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="70.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="70.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="70.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="70.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="70.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="70.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="70.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="70.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="1" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                  <Label text="2" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                  <Label text="9" GridPane.columnIndex="9" GridPane.halignment="CENTER" />
+                  <Label text="10" GridPane.columnIndex="10" GridPane.halignment="CENTER" />
+                  <Label text="8" GridPane.columnIndex="8" GridPane.halignment="CENTER" />
+                  <TextField fx:id="txt1" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="2.5" right="2.5" />
+                     </GridPane.margin>
+                  </TextField>
+                  <TextField fx:id="txt2" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="2.5" right="2.5" />
+                     </GridPane.margin>
+                  </TextField>
+                  <TextField fx:id="txt9" GridPane.columnIndex="9" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="2.5" right="2.5" />
+                     </GridPane.margin>
+                  </TextField>
+                  <TextField fx:id="txt10" GridPane.columnIndex="10" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="2.5" right="2.5" />
+                     </GridPane.margin>
+                  </TextField>
+                  <TextField fx:id="txt8" GridPane.columnIndex="8" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="2.5" right="2.5" />
+                     </GridPane.margin>
+                  </TextField>
+                  <TextField fx:id="txt7" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="2.5" right="2.5" />
+                     </GridPane.margin>
+                  </TextField>
+                  <TextField fx:id="txt6" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="2.5" right="2.5" />
+                     </GridPane.margin>
+                  </TextField>
+                  <TextField fx:id="txt5" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="2.5" right="2.5" />
+                     </GridPane.margin>
+                  </TextField>
+                  <TextField fx:id="txt4" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="2.5" right="2.5" />
+                     </GridPane.margin>
+                  </TextField>
+                  <TextField fx:id="txt3" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="2.5" right="2.5" />
+                     </GridPane.margin>
+                  </TextField>
+                  <Label text="3" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
+                  <Label text="4" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
+                  <Label text="5" GridPane.columnIndex="5" GridPane.halignment="CENTER" />
+                  <Label text="6" GridPane.columnIndex="6" GridPane.halignment="CENTER" />
+                  <Label text="7" GridPane.columnIndex="7" GridPane.halignment="CENTER" />
+               </children>
+               <padding>
+                  <Insets left="2.5" right="2.5" />
+               </padding>
+            </GridPane>
+            <HBox>
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="Inserisci l'MPS Lot-size :" />
+                  <TextField fx:id="txtLotSize" maxWidth="70.0">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets left="2.5" right="2.5" top="10.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox>
+               <children>
+                  <Label text="Inserisci la quantità iniziale del magazzino :" />
+                  <TextField fx:id="txtMagIn" maxWidth="70.0">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="2.5" right="2.5" top="15.0" />
+               </VBox.margin>
+            </HBox>
+            <Button fx:id="buttonMPS" mnemonicParsing="false" onAction="#doMPS" text="Calcola MPS">
+               <VBox.margin>
+                  <Insets left="2.5" />
+               </VBox.margin>
+            </Button>
+            <TextArea fx:id="txtResult" editable="false" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="2.5" right="2.5" top="10.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
             </TextArea>
          </children>
          <BorderPane.margin>

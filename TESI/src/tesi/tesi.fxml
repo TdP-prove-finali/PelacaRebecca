@@ -109,6 +109,11 @@
                   <Insets left="10.0" />
                </VBox.margin>
             </GridPane>
+            <Label text="Per procedere con MPS e ATP, avvia una previsione con τ = 10">
+               <VBox.margin>
+                  <Insets left="10.0" top="5.0" />
+               </VBox.margin>
+            </Label>
             <Label text="Inserisci gli ordini acquisiti per i prossimi 10 giorni :">
                <VBox.margin>
                   <Insets bottom="5.0" left="10.0" top="15.0" />

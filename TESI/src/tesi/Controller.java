@@ -125,7 +125,37 @@ public class Controller {
     
     @FXML
     void doMPS(ActionEvent event) {
-
+    	
+    	txtResult.clear();
+    	
+    	if(txt1.getText()!="" && txt2.getText()!="" && txt3.getText()!="" && txt4.getText()!="" && txt5.getText()!="" &&
+		   txt6.getText()!="" && txt7.getText()!="" && txt8.getText()!="" && txt9.getText()!="" && txt10.getText()!="") {
+    		
+    		int tb1 = Integer.parseInt(txt1.getText());
+        	int tb2 = Integer.parseInt(txt2.getText());
+        	int tb3 = Integer.parseInt(txt3.getText());
+        	int tb4 = Integer.parseInt(txt4.getText());
+        	int tb5 = Integer.parseInt(txt5.getText());
+        	int tb6 = Integer.parseInt(txt6.getText());
+        	int tb7 = Integer.parseInt(txt7.getText());
+        	int tb8 = Integer.parseInt(txt8.getText());
+        	int tb9 = Integer.parseInt(txt9.getText());
+        	int tb10 = Integer.parseInt(txt10.getText());
+    		
+    		if(tb1>=0 && tb2>=0 && tb3>=0 && tb4>=0 && tb5>=0 && tb6>=0 && tb7>=0 && tb8>=0 && tb9>=0 && tb10>=0) {
+    			if(txtLotSize.getText()!="" && Integer.parseInt(txtLotSize.getText())>0) {
+    				if(txtMagIn.getText()!="" && Integer.parseInt(txtMagIn.getText())>=0) {
+    					txtResult.appendText(model.getMPS(Integer.parseInt(txtLotSize.getText()), Integer.parseInt(txtMagIn.getText()), tb1, tb2, tb3, tb4, tb5, tb6, tb7, tb8, tb9, tb10));
+    				}
+    				else
+    					txtResult.appendText("Inserisci un valore iniziale di disponibilità del magazzino maggiore o uguale a zero");
+    			}
+    			else
+    				txtResult.appendText("Inserisci un valore di MPS lot-size maggiore di zero");
+    		}
+    		else
+    			txtResult.appendText("Inserisci i valori degli ordini acquisiti per i 10 periodi");
+    	}
     }
 
     @FXML

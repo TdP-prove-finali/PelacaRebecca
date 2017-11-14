@@ -25,13 +25,13 @@ public class Controller {
     private ComboBox<Prodotto> boxProdotti;
 
     @FXML
-    private TextField alfa;
+    private TextField alfaES;
 
     @FXML
-    private TextField beta;
+    private TextField betaEST;
 
     @FXML
-    private TextField gamma;
+    private TextField gammaW;
 
     @FXML
     private ComboBox<String> boxMetodi;
@@ -41,10 +41,22 @@ public class Controller {
 
     @FXML
     private Button ButtonPrevisione;
-    
+
     @FXML
     private TextField m;
-    
+
+    @FXML
+    private TextField alfaEST;
+
+    @FXML
+    private TextField alfaW;
+
+    @FXML
+    private TextField betaW;
+
+    @FXML
+    private TextField Nperiod;
+
     @FXML
     private TextField txt1;
 
@@ -83,10 +95,13 @@ public class Controller {
 
     @FXML
     private Button buttonMPS;
+    
+    @FXML
+    private Button btnAggiornaStorico;
 
     @FXML
     private TextArea txtResult;
-
+    
     @FXML
     void doPrevisione(ActionEvent event) {
     	
@@ -95,79 +110,100 @@ public class Controller {
     	if(boxMetodi.getValue()!=null && boxProdotti.getValue()!=null) {
     		
     		if(boxMetodi.getValue().toLowerCase().equals("moving average")) {
-    			if(!tau.getText().equals("") && !m.getText().equals("") && Integer.parseInt(tau.getText())>0 && Integer.parseInt(m.getText())>0)
-    				txtResult.appendText(model.getMovingAverage(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Integer.parseInt(m.getText())));
+    			if(!tau.getText().equals("") && !m.getText().equals("")) 
+    				if(Integer.parseInt(tau.getText())>0 && Integer.parseInt(m.getText())>0)
+    					txtResult.appendText(model.getMovingAverage(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Integer.parseInt(m.getText())));
+    				else
+    					txtResult.appendText("Inserisci i parametri strettamente positivi m e tau");
     			else
     				txtResult.appendText("Inserisci i parametri strettamente positivi m e tau");
     		}	
     		else if (boxMetodi.getValue().toLowerCase().equals("exponential smoothing")) {
-    			if(!tau.getText().equals("") && !alfa.getText().equals("") && Integer.parseInt(tau.getText())>0 && Double.parseDouble(alfa.getText())>0.0)
-    				txtResult.appendText(model.getExponentialSmoothing(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Double.parseDouble(alfa.getText())));
+    			if(!tau.getText().equals("") && !alfaES.getText().equals(""))
+    				if(Integer.parseInt(tau.getText())>0 && Double.parseDouble(alfaES.getText())>0.0)
+    					txtResult.appendText(model.getExponentialSmoothing(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Double.parseDouble(alfaES.getText())));
+    				else
+    					txtResult.appendText("Inserisci i parametri strettamente positivi alfa e tau");
     			else
-    				txtResult.appendText("Inserisci i parametri strettamente positivi alfa e tau");
+    				txtResult.appendText("Inserisci i parametri strettamente positivi alfa e tau");				
     		}	
     		else if(boxMetodi.getValue().toLowerCase().equals("exponential smoothing with trend")) {
-    			if(!tau.getText().equals("") && !alfa.getText().equals("") && !beta.getText().equals("") && Integer.parseInt(tau.getText())>0 && Double.parseDouble(alfa.getText())>0.0 && Double.parseDouble(beta.getText())>0.0)
-    				txtResult.appendText(model.getExponentialSmoothingWithTrend(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Double.parseDouble(alfa.getText()), Double.parseDouble(beta.getText())));
+    			if(!tau.getText().equals("") && !alfaEST.getText().equals("") && !betaEST.getText().equals(""))
+    				if(Integer.parseInt(tau.getText())>0 && Double.parseDouble(alfaEST.getText())>0.0 && Double.parseDouble(betaEST.getText())>0.0)
+    					txtResult.appendText(model.getExponentialSmoothingWithTrend(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Double.parseDouble(alfaEST.getText()), Double.parseDouble(betaEST.getText())));
+    				else
+    					txtResult.appendText("Inserisci i parametri strettamente positivi alfa, beta e tau");
     			else
-    				txtResult.appendText("Inserisci i parametri strettamente positivi alfa, beta e tau");
+    				txtResult.appendText("Inserisci i parametri strettamente positivi alfa, beta e tau");	
     		}	
     		else if(boxMetodi.getValue().toLowerCase().equals("winter")) {
-    			if(!tau.getText().equals("") && !alfa.getText().equals("") && !beta.getText().equals("") && !gamma.getText().equals("") && Integer.parseInt(tau.getText())>0 && Double.parseDouble(alfa.getText())>0.0 && Double.parseDouble(beta.getText())>0.0 && Double.parseDouble(gamma.getText())>0.0)
-    				txtResult.appendText(model.getWinter(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Double.parseDouble(alfa.getText()), Double.parseDouble(beta.getText()), Double.parseDouble(gamma.getText())));
-    			else 
-    				txtResult.appendText("Inserisci i parametri strettamente positivi alfa, beta, gamma e tau");
+    			if(!tau.getText().equals("") && !alfaW.getText().equals("") && !betaW.getText().equals("") && !gammaW.getText().equals("") && !Nperiod.getText().equals(""))
+    				if(Integer.parseInt(tau.getText())>0 && Double.parseDouble(alfaW.getText())>0.0 && Double.parseDouble(betaW.getText())>0.0 && Double.parseDouble(gammaW.getText())>0.0 && Integer.parseInt(Nperiod.getText())>0)
+    					txtResult.appendText(model.getWinter(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Double.parseDouble(alfaW.getText()), Double.parseDouble(betaW.getText()), Double.parseDouble(gammaW.getText()), Integer.parseInt(Nperiod.getText())));
+    				else
+    					txtResult.appendText("Inserisci i parametri strettamente positivi alfa, beta, gamma, tau e N");
+    			else
+    				txtResult.appendText("Inserisci i parametri strettamente positivi alfa, beta, gamma, tau e N");		
     		}
     	}
     	else
     		txtResult.appendText("Selezionare un prodotto e un metodo");
     }
-    
+
     @FXML
     void doMPS(ActionEvent event) {
     	
     	txtResult.clear();
     	
-    	if(txt1.getText()!="" && txt2.getText()!="" && txt3.getText()!="" && txt4.getText()!="" && txt5.getText()!="" &&
-		   txt6.getText()!="" && txt7.getText()!="" && txt8.getText()!="" && txt9.getText()!="" && txt10.getText()!="") {
-    		
-    		int tb1 = Integer.parseInt(txt1.getText());
-        	int tb2 = Integer.parseInt(txt2.getText());
-        	int tb3 = Integer.parseInt(txt3.getText());
-        	int tb4 = Integer.parseInt(txt4.getText());
-        	int tb5 = Integer.parseInt(txt5.getText());
-        	int tb6 = Integer.parseInt(txt6.getText());
-        	int tb7 = Integer.parseInt(txt7.getText());
-        	int tb8 = Integer.parseInt(txt8.getText());
-        	int tb9 = Integer.parseInt(txt9.getText());
-        	int tb10 = Integer.parseInt(txt10.getText());
-    		
-    		if(tb1>=0 && tb2>=0 && tb3>=0 && tb4>=0 && tb5>=0 && tb6>=0 && tb7>=0 && tb8>=0 && tb9>=0 && tb10>=0) {
-    			if(txtLotSize.getText()!="" && Integer.parseInt(txtLotSize.getText())>0) {
-    				if(txtMagIn.getText()!="" && Integer.parseInt(txtMagIn.getText())>=0) {
-    					txtResult.appendText(model.getMPS(Integer.parseInt(txtLotSize.getText()), Integer.parseInt(txtMagIn.getText()), tb1, tb2, tb3, tb4, tb5, tb6, tb7, tb8, tb9, tb10));
-    				}
+    	if(!txt1.getText().equals("") && !txt2.getText().equals("") && !txt3.getText().equals("") && !txt4.getText().equals("") && !txt5.getText().equals("") &&
+		   !txt6.getText().equals("") && !txt7.getText().equals("") && !txt8.getText().equals("") && !txt9.getText().equals("") && !txt10.getText().equals(""))
+    		if(Integer.parseInt(txt1.getText())>=0 && Integer.parseInt(txt2.getText())>=0 && Integer.parseInt(txt3.getText())>=0 && Integer.parseInt(txt4.getText())>=0 && 
+    		   Integer.parseInt(txt5.getText())>=0 && Integer.parseInt(txt6.getText())>=0 && Integer.parseInt(txt7.getText())>=0 && 
+			   Integer.parseInt(txt8.getText())>=0 && Integer.parseInt(txt9.getText())>=0 && Integer.parseInt(txt10.getText())>=0)
+    			if(!txtLotSize.getText().equals(""))
+    				if(Integer.parseInt(txtLotSize.getText())>0)
+    					if(!txtMagIn.getText().equals(""))
+    						if(Integer.parseInt(txtMagIn.getText())>=0)
+    							txtResult.appendText(model.getMPSeATP(boxProdotti.getValue(), Integer.parseInt(txtLotSize.getText()), Integer.parseInt(txtMagIn.getText()),
+    									Integer.parseInt(txt1.getText()), Integer.parseInt(txt2.getText()),Integer.parseInt(txt3.getText()), Integer.parseInt(txt4.getText()),
+    									Integer.parseInt(txt5.getText()), Integer.parseInt(txt6.getText()),Integer.parseInt(txt7.getText()), Integer.parseInt(txt8.getText()),
+    									Integer.parseInt(txt9.getText()), Integer.parseInt(txt10.getText())));
+    						else
+    							txtResult.appendText("Il valore del magazzino iniziale deve essere maggiore o uguale a zero");
+    					else
+    						txtResult.appendText("Inserisci un valore iniziale di disponibilità del magazzino maggiore o uguale a zero");
     				else
-    					txtResult.appendText("Inserisci un valore iniziale di disponibilità del magazzino maggiore o uguale a zero");
-    			}
+    					txtResult.appendText("Il valore di MPS Lot-size deve essere maggiore di zero");
     			else
     				txtResult.appendText("Inserisci un valore di MPS lot-size maggiore di zero");
-    		}
     		else
-    			txtResult.appendText("Inserisci i valori degli ordini acquisiti per i 10 periodi");
-    	}
+    			txtResult.appendText("Tutti i valori degli ordini acquisiti devono essere interi positivi");
+    	else
+    		txtResult.appendText("Inserisci i valori degli ordini acquisiti per i 10 periodi, dopo aver avviato una previsione con tau = 10");
+    }
+    
+    @FXML
+    void doAggiornaStorico(ActionEvent event) {
+    	
+    	model.aggiornaStoricoModel(boxProdotti.getValue(), Integer.parseInt(txt1.getText()), Integer.parseInt(txt2.getText()),Integer.parseInt(txt3.getText()), Integer.parseInt(txt4.getText()),
+				Integer.parseInt(txt5.getText()), Integer.parseInt(txt6.getText()),Integer.parseInt(txt7.getText()), Integer.parseInt(txt8.getText()),
+				Integer.parseInt(txt9.getText()), Integer.parseInt(txt10.getText()));
     }
 
     @FXML
     void initialize() {
         assert boxProdotti != null : "fx:id=\"boxProdotti\" was not injected: check your FXML file 'tesi.fxml'.";
-        assert alfa != null : "fx:id=\"alfa\" was not injected: check your FXML file 'tesi.fxml'.";
-        assert beta != null : "fx:id=\"beta\" was not injected: check your FXML file 'tesi.fxml'.";
-        assert gamma != null : "fx:id=\"gamma\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert alfaES != null : "fx:id=\"alfaES\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert betaEST != null : "fx:id=\"betaEST\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert gammaW != null : "fx:id=\"gammaW\" was not injected: check your FXML file 'tesi.fxml'.";
         assert boxMetodi != null : "fx:id=\"boxMetodi\" was not injected: check your FXML file 'tesi.fxml'.";
         assert tau != null : "fx:id=\"tau\" was not injected: check your FXML file 'tesi.fxml'.";
         assert ButtonPrevisione != null : "fx:id=\"ButtonPrevisione\" was not injected: check your FXML file 'tesi.fxml'.";
         assert m != null : "fx:id=\"m\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert alfaEST != null : "fx:id=\"alfaEST\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert alfaW != null : "fx:id=\"alfaW\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert betaW != null : "fx:id=\"betaW\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert Nperiod != null : "fx:id=\"Nperiod\" was not injected: check your FXML file 'tesi.fxml'.";
         assert txt1 != null : "fx:id=\"txt1\" was not injected: check your FXML file 'tesi.fxml'.";
         assert txt2 != null : "fx:id=\"txt2\" was not injected: check your FXML file 'tesi.fxml'.";
         assert txt9 != null : "fx:id=\"txt9\" was not injected: check your FXML file 'tesi.fxml'.";
@@ -181,10 +217,11 @@ public class Controller {
         assert txtLotSize != null : "fx:id=\"txtLotSize\" was not injected: check your FXML file 'tesi.fxml'.";
         assert txtMagIn != null : "fx:id=\"txtMagIn\" was not injected: check your FXML file 'tesi.fxml'.";
         assert buttonMPS != null : "fx:id=\"buttonMPS\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert btnAggiornaStorico != null : "fx:id=\"btnAggiornaStorico\" was not injected: check your FXML file 'tesi.fxml'.";
         assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'tesi.fxml'.";
 
     }
-
+    
 	public void setModel(Model model) {
 		
 		this.model = model;

@@ -68,4 +68,11 @@ public class DAO {
 			return null;
 		}
 	}
+
+	public void aggiornaStorico(Prodotto prodotto, int[] tbs) {
+		
+//		String insertProd = "INSERT INTO storico(contatore, productId, date, x, quantity) "
+//				+ "VALUES(?,?,?,?,?);";
+//	
+	}
 }

@@ -2,8 +2,6 @@ package tesi.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-
 import tesi.DAO.DAO;
 
 public class Model {
@@ -113,12 +111,12 @@ public class Model {
 		result.append("Previsione della domanda con il metodo Exponential Smoothing :\n");
 		
 		for(int i=1; i<=tau; i++)
-			result.append(i + " ");
+			result.append(i + "\t\t");
 		
 		result.append("\n");
-		
+	
 		for(Double d : forecast)
-			result.append((int)Math.round(d) + " ");
+			result.append((int)Math.round(d) + "\t\t");
 		
 		return result.toString().trim();
 	}
@@ -153,17 +151,17 @@ public class Model {
 		result.append("Previsione della domanda con il metodo Exponential Smoothing with Trend :\n");
 		
 		for(int i=1; i<=tau; i++)
-			result.append(i + " ");
+			result.append(i + "\t\t");
 		
 		result.append("\n");
-		
+	
 		for(Double d : forecast)
-			result.append((int)Math.round(d) + " ");
+			result.append((int)Math.round(d) + "\t\t");
 
 		return result.toString().trim();
 	}
 
-	public String getWinter(Prodotto prodotto, int tau, double alfa, double beta, double gamma) {
+	public String getWinter(Prodotto prodotto, int tau, double alfa, double beta, double gamma, int N) {
 		
 		StringBuilder result = new StringBuilder();
 		
@@ -186,41 +184,32 @@ public class Model {
 		return result.toString();
 	}
 
-	public String getMPS(int lotSize, int magIn, int... tbs) {
+	public String getMPSeATP(Prodotto prodotto, int lotSize, int magIn, int...tbs) {
 		
-		if(forecast.size()>10)
+		if(forecast.size()!=10)
 			return "Prima di calcolare l'MPS, avvia una previsione con tau = 10!";
 		
-		StringBuilder result = new StringBuilder();
+//		StringBuilder result = new StringBuilder();
 				
 		int[] ordini_acquisiti = new int[10];
 		int[] disponibilita_magazzino = new int[10];
 		int[] MPSquantity = new int[10];
+		int[] ATP = new int[10];
 		
-		int j=0;
-		for (int tb : tbs){
-			ordini_acquisiti[j] = tb;
-			MPSquantity[j++] = 0;
+		int count=0;
+		
+		for (int tb : tbs) {
+			ordini_acquisiti[count] = tb;
+			MPSquantity[count] = 0;      
+			ATP[count++] = 0;               // setta a 0 il valore all'indice count e poi fa l'incremento
 		}
-		
-//		ordini_acquisiti[0] = tb1;
-//		ordini_acquisiti[1] = tb2;
-//		ordini_acquisiti[2] = tb3;
-//		ordini_acquisiti[3] = tb4;
-//		ordini_acquisiti[4] = tb5;
-//		ordini_acquisiti[5] = tb6;
-//		ordini_acquisiti[6] = tb7;
-//		ordini_acquisiti[7] = tb8;
-//		ordini_acquisiti[8] = tb9;
-//		ordini_acquisiti[9] = tb10;
-		
-//		for(int i=0; i<10; i++)
-//			MPSquantity[i] = 0;
 		
 		int It;
 		
 		for(int i=0; i<10; i++) {
+			
 			It = 0;
+			
 			if(i==0)
 				It = magIn + MPSquantity[i];
 			else 
@@ -229,7 +218,7 @@ public class Model {
 			if(forecast.get(i)>=ordini_acquisiti[i])
 				It = (int) (It - forecast.get(i));
 			else
-				It = It - ordini_acquisiti[i];
+				It -= ordini_acquisiti[i];
 			
 			if(It>=0)
 				disponibilita_magazzino[i] = It;
@@ -244,14 +233,42 @@ public class Model {
 				if(forecast.get(i)>=ordini_acquisiti[i])
 					It = (int) (It - forecast.get(i));
 				else
-					It = It - ordini_acquisiti[i];
+					It -= ordini_acquisiti[i];
 				
 				disponibilita_magazzino[i] = It;
 			}
 		}
 		
-		String[] temp = {"Previsione", "Ordini acquisiti", "Disponibilità magazzino", "Quantità MPS"};
-		return stampaFormattata(temp, ordini_acquisiti, disponibilita_magazzino, MPSquantity);
+		int atp;
+		boolean calcolaATP;
+		
+		for(int i=0; i<10; i++) {
+			
+			atp = 0;
+			calcolaATP = false;
+			
+			if(i==0) {
+				atp = magIn + MPSquantity[i];
+				calcolaATP = true;
+			}
+			else if(MPSquantity[i]>0) {
+				atp = MPSquantity[i];
+				calcolaATP = true;
+			}
+			
+			if(calcolaATP == true) {
+				for(int j=i; j<MPSquantity.length; j++) {
+					if(j==i || MPSquantity[j]==0)
+						atp -= ordini_acquisiti[j];
+					else if(MPSquantity[j]>0)
+						break;
+				}
+				ATP[i] = atp;
+			}
+		}
+		
+		String[] temp = {"Previsione", "Ordini acquisiti", "Disponibilità magazzino", "Quantità MPS", "ATP"};
+		return stampaFormattata(temp, ordini_acquisiti, disponibilita_magazzino, MPSquantity, ATP);
 		
 //		result.append("Previsione ");
 //		
@@ -276,7 +293,7 @@ public class Model {
 //		return result.toString().trim();
 	}
 	
-	private String stampaFormattata(String[] titles, int[] ordiniAcquisiti, int[] disponibilitaMagazzino, int[] mpsQuantity){
+	private String stampaFormattata(String[] titles, int[] ordiniAcquisiti, int[] disponibilitaMagazzino, int[] mpsQuantity, int[] ATP){
 		
 		StringBuilder result = new StringBuilder();
 		int maxLength=0;
@@ -315,10 +332,19 @@ public class Model {
 		
 		for(int i = 0; i<10; i++)
 			result.append(mpsQuantity[i] + "\t");
+		result.append('\n');
+		
+		result.append(titles[4]);
+		
+		for(int i = 0; i<10; i++)
+			result.append(ATP[i] + "\t");
 		
 		return result.toString().trim();
 		
 	}
-	
-	
+
+	public void aggiornaStoricoModel(Prodotto prodotto, int...tbs) {
+		
+		dao.aggiornaStorico(prodotto, tbs);	
+	}
 }

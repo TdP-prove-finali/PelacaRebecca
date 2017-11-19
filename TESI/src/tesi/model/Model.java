@@ -2,6 +2,9 @@ package tesi.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Series;
 import tesi.DAO.DAO;
 
 public class Model {
@@ -23,6 +26,19 @@ public class Model {
 	public List<Prodotto> getProdotti() {
 		
 		return prodotti;
+	}
+	
+	public Series<String, Number> getSeries(Prodotto prodotto) {
+		
+		List<Integer> domanda = dao.getStoricoDB(prodotto);
+		
+		XYChart.Series<String, Number> series = new XYChart.Series<String, Number>();
+		
+		for(int i=0; i<domanda.size(); i++) {
+			series.getData().add(new XYChart.Data<String, Number>(String.valueOf(i+1), domanda.get(i)));
+		}
+		
+		return series;
 	}
 
 	public List<String> getMetodi() {
@@ -148,7 +164,7 @@ public class Model {
 		
 		for(int i=tau-1; i>=0; i--) {
 			int last_index = smoothed_estimate.size()-1;
-			forecast.add(smoothed_estimate.get(last_index-i)+tau*smoothed_estimate.get(last_index-1));
+			forecast.add(smoothed_estimate.get(last_index-i)+tau*smoothed_estimate.get(last_index-i));
 		}
 		
 		result.append("Previsione della domanda con il metodo Exponential Smoothing with Trend :\n");
@@ -168,21 +184,59 @@ public class Model {
 		
 		StringBuilder result = new StringBuilder();
 		
-//		List<Integer> demand = dao.getStoricoDB(prodotto);
-//		List<Double> smoothed_estimate = new ArrayList<Double>();
-//		List<Double> smoothed_trend = new ArrayList<Double>();
-//		List<Double> smoothed_seasonality = new ArrayList<Double>();
-//		this.forecast = new ArrayList<Double>();
-//		
-//		int sum = 0;
-//		double average;
-//		
-//		for(Integer d : demand) 
-//			sum += d;
-//			
-//		average = (double)sum/demand.size();
-//		smoothed_estimate.add(average);
-//		smoothed_trend.add(0.0);
+		List<Integer> demand = dao.getStoricoDB(prodotto);
+		List<Double> smoothed_estimate = new ArrayList<Double>();
+		List<Double> smoothed_trend = new ArrayList<Double>();
+		List<Double> smoothed_seasonality = new ArrayList<Double>();
+		this.forecast = new ArrayList<Double>();
+		
+		int sum = 0;
+		double average;
+		
+		for(int i=0; i<=N; i++)
+			sum += demand.get(i);
+		
+		average = (double)sum/N;
+		
+		for(int i=0; i<=N; i++) {
+			smoothed_seasonality.add(demand.get(i)/average);
+			smoothed_trend.add(0.0);
+			if(i!=N)
+				smoothed_estimate.add(0.0);
+		}
+		
+		smoothed_estimate.add(average);
+		
+		System.out.println(average);
+		
+		double f;
+		double t;
+		double c;
+		
+		for(int i=N+1; i<demand.size(); i++) {
+			f = alfa*(demand.get(i)/smoothed_seasonality.get(i-N)+(1-alfa)*(smoothed_estimate.get(i-1)+smoothed_trend.get(i-1)));
+			smoothed_estimate.add(f);
+			t = beta*(smoothed_estimate.get(i)-smoothed_estimate.get(i-1))+(1-beta)*smoothed_trend.get(i-1);
+			smoothed_trend.add(t);
+			c = gamma*(demand.get(i)/smoothed_estimate.get(i))+(1-gamma)*smoothed_seasonality.get(i-N);
+			smoothed_seasonality.add(c);
+		}
+		
+		for(int i=tau-1; i>=0; i--) {
+			int last_index = smoothed_estimate.size()-1;
+			forecast.add((smoothed_estimate.get(last_index-i)+tau*smoothed_estimate.get(last_index-i))*smoothed_seasonality.get(last_index-i-N+1));
+		}
+		
+		result.append("Previsione della domanda con il metodo di Winter :\n");
+		
+		for(int i=1; i<=tau; i++)
+			result.append(i + "\t\t");
+		
+		result.append("\n");
+	
+		for(Double d : forecast)
+			result.append((int)Math.round(d) + "\t\t");
+
 		
 		return result.toString();
 	}

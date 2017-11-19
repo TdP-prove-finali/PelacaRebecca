@@ -42,9 +42,11 @@ public class DAO {
 	
 	public List<Integer> getStoricoDB(Prodotto prodotto) {
 		
-		String sql = "SELECT quantity " +
-		             "FROM storico " +
-                     "WHERE productId = ? ORDER BY date;";
+		String sql = "SELECT sum(quantity) as qty " +
+                     "FROM storico " +
+                     "WHERE productid = ? and x = 'VE' " +
+                     "GROUP BY year(date), month(date) " +
+                     "ORDER BY year(date), month(date);";
 
 		List<Integer> storico = new ArrayList<>();
 
@@ -57,7 +59,7 @@ public class DAO {
 
 			while (res.next()) {
 				
-				storico.add(res.getInt("quantity"));
+				storico.add(res.getInt("qty"));
 			}
 
 			conn.close();

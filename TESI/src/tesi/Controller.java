@@ -4,8 +4,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import tesi.model.Model;
@@ -41,6 +46,18 @@ public class Controller {
 
     @FXML
     private Button ButtonPrevisione;
+    
+    @FXML
+    private Button btnStorico;
+    
+    @FXML
+    private LineChart<String, Number> lineChart;
+
+    @FXML
+    private CategoryAxis x;
+
+    @FXML
+    private NumberAxis y;
 
     @FXML
     private TextField m;
@@ -86,9 +103,32 @@ public class Controller {
     
     @FXML
     private Button btnAggiornaStorico;
+    
+    @FXML
+    private Slider sliderProb;
+
+    @FXML
+    private TextField txtMin;
+
+    @FXML
+    private TextField txtMax;
+
+    @FXML
+    private Button btnSimula;
 
     @FXML
     private TextArea txtResult;
+    
+    @SuppressWarnings("unchecked")
+	@FXML
+    void doGraficoStorico(ActionEvent event) {
+    	
+    	lineChart.getData().clear();
+    	
+    	XYChart.Series<String, Number> series = model.getSeries(boxProdotti.getValue());
+    	series.setName(boxProdotti.getValue().getCodice());
+    	lineChart.getData().addAll(series);
+    }
     
     @FXML
     void doPrevisione(ActionEvent event) {
@@ -174,6 +214,11 @@ public class Controller {
     	model.aggiornaStoricoModel(boxProdotti.getValue(), Integer.parseInt(txt1.getText()), Integer.parseInt(txt2.getText()),Integer.parseInt(txt3.getText()), Integer.parseInt(txt4.getText()),
 				Integer.parseInt(txt5.getText()), Integer.parseInt(txt6.getText()));
     }
+    
+    @FXML
+    void doSimula(ActionEvent event) {
+
+    }
 
     @FXML
     void initialize() {
@@ -184,6 +229,10 @@ public class Controller {
         assert boxMetodi != null : "fx:id=\"boxMetodi\" was not injected: check your FXML file 'tesi.fxml'.";
         assert tau != null : "fx:id=\"tau\" was not injected: check your FXML file 'tesi.fxml'.";
         assert ButtonPrevisione != null : "fx:id=\"ButtonPrevisione\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert btnStorico != null : "fx:id=\"btnStorico\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert lineChart != null : "fx:id=\"lineChart\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert y != null : "fx:id=\"y\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert x != null : "fx:id=\"x\" was not injected: check your FXML file 'tesi.fxml'.";
         assert m != null : "fx:id=\"m\" was not injected: check your FXML file 'tesi.fxml'.";
         assert alfaEST != null : "fx:id=\"alfaEST\" was not injected: check your FXML file 'tesi.fxml'.";
         assert alfaW != null : "fx:id=\"alfaW\" was not injected: check your FXML file 'tesi.fxml'.";
@@ -199,8 +248,11 @@ public class Controller {
         assert txtMagIn != null : "fx:id=\"txtMagIn\" was not injected: check your FXML file 'tesi.fxml'.";
         assert buttonMPS != null : "fx:id=\"buttonMPS\" was not injected: check your FXML file 'tesi.fxml'.";
         assert btnAggiornaStorico != null : "fx:id=\"btnAggiornaStorico\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert sliderProb != null : "fx:id=\"sliderProb\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert txtMin != null : "fx:id=\"txtMin\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert txtMax != null : "fx:id=\"txtMax\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert btnSimula != null : "fx:id=\"btnSimula\" was not injected: check your FXML file 'tesi.fxml'.";
         assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'tesi.fxml'.";
-
     }
     
 	public void setModel(Model model) {

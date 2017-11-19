@@ -62,30 +62,18 @@ public class Controller {
 
     @FXML
     private TextField txt2;
-
+    
     @FXML
-    private TextField txt9;
-
+    private TextField txt3;
+    
     @FXML
-    private TextField txt10;
-
-    @FXML
-    private TextField txt8;
-
-    @FXML
-    private TextField txt7;
-
-    @FXML
-    private TextField txt6;
-
+    private TextField txt4;
+    
     @FXML
     private TextField txt5;
 
     @FXML
-    private TextField txt4;
-
-    @FXML
-    private TextField txt3;
+    private TextField txt6;
 
     @FXML
     private TextField txtLotSize;
@@ -155,19 +143,17 @@ public class Controller {
     	
     	txtResult.clear();
     	
-    	if(!txt1.getText().equals("") && !txt2.getText().equals("") && !txt3.getText().equals("") && !txt4.getText().equals("") && !txt5.getText().equals("") &&
-		   !txt6.getText().equals("") && !txt7.getText().equals("") && !txt8.getText().equals("") && !txt9.getText().equals("") && !txt10.getText().equals(""))
-    		if(Integer.parseInt(txt1.getText())>=0 && Integer.parseInt(txt2.getText())>=0 && Integer.parseInt(txt3.getText())>=0 && Integer.parseInt(txt4.getText())>=0 && 
-    		   Integer.parseInt(txt5.getText())>=0 && Integer.parseInt(txt6.getText())>=0 && Integer.parseInt(txt7.getText())>=0 && 
-			   Integer.parseInt(txt8.getText())>=0 && Integer.parseInt(txt9.getText())>=0 && Integer.parseInt(txt10.getText())>=0)
+    	if(!txt1.getText().equals("") && !txt2.getText().equals("") && !txt3.getText().equals("") &&
+    	   !txt4.getText().equals("") && !txt5.getText().equals("") && !txt6.getText().equals(""))
+    		if(Integer.parseInt(txt1.getText())>=0 && Integer.parseInt(txt2.getText())>=0 && Integer.parseInt(txt3.getText())>=0 &&
+    		   Integer.parseInt(txt4.getText())>=0 && Integer.parseInt(txt5.getText())>=0 && Integer.parseInt(txt6.getText())>=0)
     			if(!txtLotSize.getText().equals(""))
     				if(Integer.parseInt(txtLotSize.getText())>0)
     					if(!txtMagIn.getText().equals(""))
     						if(Integer.parseInt(txtMagIn.getText())>=0)
     							txtResult.appendText(model.getMPSeATP(boxProdotti.getValue(), Integer.parseInt(txtLotSize.getText()), Integer.parseInt(txtMagIn.getText()),
-    									Integer.parseInt(txt1.getText()), Integer.parseInt(txt2.getText()),Integer.parseInt(txt3.getText()), Integer.parseInt(txt4.getText()),
-    									Integer.parseInt(txt5.getText()), Integer.parseInt(txt6.getText()),Integer.parseInt(txt7.getText()), Integer.parseInt(txt8.getText()),
-    									Integer.parseInt(txt9.getText()), Integer.parseInt(txt10.getText())));
+    									             Integer.parseInt(txt1.getText()), Integer.parseInt(txt2.getText()),Integer.parseInt(txt3.getText()),
+    									             Integer.parseInt(txt4.getText()), Integer.parseInt(txt5.getText()), Integer.parseInt(txt6.getText())));
     						else
     							txtResult.appendText("Il valore del magazzino iniziale deve essere maggiore o uguale a zero");
     					else
@@ -186,8 +172,7 @@ public class Controller {
     void doAggiornaStorico(ActionEvent event) {
     	
     	model.aggiornaStoricoModel(boxProdotti.getValue(), Integer.parseInt(txt1.getText()), Integer.parseInt(txt2.getText()),Integer.parseInt(txt3.getText()), Integer.parseInt(txt4.getText()),
-				Integer.parseInt(txt5.getText()), Integer.parseInt(txt6.getText()),Integer.parseInt(txt7.getText()), Integer.parseInt(txt8.getText()),
-				Integer.parseInt(txt9.getText()), Integer.parseInt(txt10.getText()));
+				Integer.parseInt(txt5.getText()), Integer.parseInt(txt6.getText()));
     }
 
     @FXML
@@ -206,14 +191,10 @@ public class Controller {
         assert Nperiod != null : "fx:id=\"Nperiod\" was not injected: check your FXML file 'tesi.fxml'.";
         assert txt1 != null : "fx:id=\"txt1\" was not injected: check your FXML file 'tesi.fxml'.";
         assert txt2 != null : "fx:id=\"txt2\" was not injected: check your FXML file 'tesi.fxml'.";
-        assert txt9 != null : "fx:id=\"txt9\" was not injected: check your FXML file 'tesi.fxml'.";
-        assert txt10 != null : "fx:id=\"txt10\" was not injected: check your FXML file 'tesi.fxml'.";
-        assert txt8 != null : "fx:id=\"txt8\" was not injected: check your FXML file 'tesi.fxml'.";
-        assert txt7 != null : "fx:id=\"txt7\" was not injected: check your FXML file 'tesi.fxml'.";
-        assert txt6 != null : "fx:id=\"txt6\" was not injected: check your FXML file 'tesi.fxml'.";
-        assert txt5 != null : "fx:id=\"txt5\" was not injected: check your FXML file 'tesi.fxml'.";
-        assert txt4 != null : "fx:id=\"txt4\" was not injected: check your FXML file 'tesi.fxml'.";
         assert txt3 != null : "fx:id=\"txt3\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert txt4 != null : "fx:id=\"txt4\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert txt5 != null : "fx:id=\"txt5\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert txt6 != null : "fx:id=\"txt6\" was not injected: check your FXML file 'tesi.fxml'.";
         assert txtLotSize != null : "fx:id=\"txtLotSize\" was not injected: check your FXML file 'tesi.fxml'.";
         assert txtMagIn != null : "fx:id=\"txtMagIn\" was not injected: check your FXML file 'tesi.fxml'.";
         assert buttonMPS != null : "fx:id=\"buttonMPS\" was not injected: check your FXML file 'tesi.fxml'.";

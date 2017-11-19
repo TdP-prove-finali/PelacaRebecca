@@ -6,10 +6,13 @@ import tesi.DAO.DAO;
 
 public class Model {
 	
+	private final static int MPSsize = 6;
+	
 	private DAO dao;
 	private List<String> metodi;	
 	private List<Prodotto> prodotti;
 	private List<Double> forecast;
+	
 	
 	public Model() {
 		
@@ -186,15 +189,15 @@ public class Model {
 
 	public String getMPSeATP(Prodotto prodotto, int lotSize, int magIn, int...tbs) {
 		
-		if(forecast.size()!=10)
+		if(forecast.size()!=MPSsize)
 			return "Prima di calcolare l'MPS, avvia una previsione con tau = 10!";
 		
 //		StringBuilder result = new StringBuilder();
 				
-		int[] ordini_acquisiti = new int[10];
-		int[] disponibilita_magazzino = new int[10];
-		int[] MPSquantity = new int[10];
-		int[] ATP = new int[10];
+		int[] ordini_acquisiti = new int[MPSsize];
+		int[] disponibilita_magazzino = new int[MPSsize];
+		int[] MPSquantity = new int[MPSsize];
+		int[] ATP = new int[MPSsize];
 		
 		int count=0;
 		
@@ -206,7 +209,7 @@ public class Model {
 		
 		int It;
 		
-		for(int i=0; i<10; i++) {
+		for(int i=0; i<MPSsize; i++) {
 			
 			It = 0;
 			
@@ -242,7 +245,7 @@ public class Model {
 		int atp;
 		boolean calcolaATP;
 		
-		for(int i=0; i<10; i++) {
+		for(int i=0; i<MPSsize; i++) {
 			
 			atp = 0;
 			calcolaATP = false;
@@ -318,29 +321,28 @@ public class Model {
 		
 		result.append(titles[1]);
 		
-		for(int i = 0; i<10; i++)
+		for(int i = 0; i<MPSsize; i++)
 			result.append(ordiniAcquisiti[i] + "\t");
 		result.append('\n');
 		
 		result.append(titles[2]);
 		
-		for(int i = 0; i<10; i++)
+		for(int i = 0; i<MPSsize; i++)
 			result.append(disponibilitaMagazzino[i] + "\t");
 		result.append('\n');
 		
 		result.append(titles[3]);
 		
-		for(int i = 0; i<10; i++)
+		for(int i = 0; i<MPSsize; i++)
 			result.append(mpsQuantity[i] + "\t");
 		result.append('\n');
 		
 		result.append(titles[4]);
 		
-		for(int i = 0; i<10; i++)
+		for(int i = 0; i<MPSsize; i++)
 			result.append(ATP[i] + "\t");
 		
-		return result.toString().trim();
-		
+		return result.toString();
 	}
 
 	public void aggiornaStoricoModel(Prodotto prodotto, int...tbs) {

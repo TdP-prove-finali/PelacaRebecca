@@ -187,12 +187,12 @@
             </HBox>
             <Label text="Per procedere con MPS e ATP, avvia una previsione con τ = 6 mesi">
                <VBox.margin>
-                  <Insets left="10.0" top="5.0" />
+                  <Insets top="5.0" />
                </VBox.margin>
             </Label>
             <Label text="Inserisci gli ordini acquisiti per i prossimi 6 mesi :">
                <VBox.margin>
-                  <Insets bottom="15.0" left="10.0" top="10.0" />
+                  <Insets bottom="15.0" top="10.0" />
                </VBox.margin>
             </Label>
             <GridPane prefHeight="42.0" prefWidth="692.0">
@@ -270,108 +270,69 @@
             </GridPane>
             <HBox>
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" text="Inserisci l'MPS Lot-size :">
+                  <VBox>
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" text="Inserisci l'MPS Lot-size :" />
+                        <TextField fx:id="txtLotSize" maxWidth="70.0">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <Label text="Inserisci la quantità iniziale del magazzino :" />
+                        <TextField fx:id="txtMagIn" maxWidth="70.0">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <Button fx:id="buttonMPS" mnemonicParsing="false" onAction="#doMPS" text="Calcola MPS e ATP">
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Label text="Scegli un valore di probabilità da attribuire all'arrivo di ordini extra in un mese :">
+                           <padding>
+                              <Insets bottom="5.0" />
+                           </padding>
+                        </Label>
+                        <Slider fx:id="sliderProb" blockIncrement="0.1" majorTickUnit="0.5" max="1.0" maxWidth="300.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="0.5" />
+                        <Label text="Inserisci un range di valori della domanda su cui effettuare la simulazione :">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextField fx:id="txtMin" maxWidth="70.0" promptText="min">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="txtMax" maxWidth="70.0" promptText="max">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <Button fx:id="btnSimula" mnemonicParsing="false" onAction="#doSimula" text="Avvia simulazione">
+                           <VBox.margin>
+                              <Insets bottom="15.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
+                  <TextArea fx:id="txtResult" editable="false" prefHeight="331.0" prefWidth="711.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
                      <HBox.margin>
-                        <Insets top="5.0" />
-                     </HBox.margin></Label>
-                  <TextField fx:id="txtLotSize" maxWidth="70.0">
-                     <HBox.margin>
-                        <Insets left="20.0" top="2.5" />
+                        <Insets left="15.0" right="5.0" top="5.0" />
                      </HBox.margin>
-                  </TextField>
+                  </TextArea>
                </children>
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
                <VBox.margin>
-                  <Insets left="2.5" right="2.5" top="10.0" />
+                  <Insets left="2.5" right="2.5" top="15.0" />
                </VBox.margin>
             </HBox>
-            <HBox>
-               <children>
-                  <Label text="Inserisci la quantità iniziale del magazzino :">
-                     <HBox.margin>
-                        <Insets top="2.5" />
-                     </HBox.margin></Label>
-                  <TextField fx:id="txtMagIn" maxWidth="70.0">
-                     <HBox.margin>
-                        <Insets left="20.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="2.5" right="2.5" top="15.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox>
-               <children>
-                  <Button fx:id="buttonMPS" mnemonicParsing="false" onAction="#doMPS" text="Calcola MPS e ATP">
-                     <HBox.margin>
-                        <Insets left="5.0" />
-                     </HBox.margin></Button>
-               </children>
-               <VBox.margin>
-                  <Insets top="5.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox>
-               <children>
-                  <Label text="Scegli un valore di probabilità da attribuire all'arrivo di ordini extra in un mese :">
-                     <HBox.margin>
-                        <Insets left="5.0" />
-                     </HBox.margin></Label>
-                  <Slider fx:id="sliderProb" blockIncrement="0.1" majorTickUnit="0.5" max="1.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="0.5">
-                     <HBox.margin>
-                        <Insets left="15.0" />
-                     </HBox.margin>
-                  </Slider>
-               </children>
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox>
-               <children>
-                  <Label text="Inserisci un range di valori della domanda su cui effettuare la simulazione :">
-                     <HBox.margin>
-                        <Insets left="5.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Label text="min">
-                     <HBox.margin>
-                        <Insets left="15.0" />
-                     </HBox.margin>
-                  </Label>
-                  <TextField fx:id="txtMin" maxWidth="70.0">
-                     <HBox.margin>
-                        <Insets left="10.0" right="5.0" />
-                     </HBox.margin>
-                  </TextField>
-                  <Label text="max">
-                     <HBox.margin>
-                        <Insets left="15.0" />
-                     </HBox.margin>
-                  </Label>
-                  <TextField fx:id="txtMax" maxWidth="70.0">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="10.0" top="10.0" />
-               </VBox.margin>
-            </HBox>
-            <Button fx:id="btnSimula" mnemonicParsing="false" onAction="#doSimula" text="Avvia simulazione">
-               <VBox.margin>
-                  <Insets bottom="15.0" left="5.0" />
-               </VBox.margin>
-            </Button>
-            <TextArea fx:id="txtResult" editable="false">
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-            </TextArea>
          </children>
          <BorderPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

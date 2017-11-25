@@ -5,14 +5,12 @@ public class Event implements Comparable<Event> {
 	public enum EventType { ARRIVA_ORDINE };
 	
 	private EventType type;
-	private int mese;
-	private double quantita;
+	private Ordine ordine;
 	
-	public Event(EventType type, int mese, double quantita) {
+	public Event(EventType type, Ordine ordine) {
 		super();
 		this.type = type;
-		this.mese = mese;
-		this.quantita = quantita;
+		this.ordine = ordine;
 	}
 
 	public EventType getType() {
@@ -23,25 +21,17 @@ public class Event implements Comparable<Event> {
 		this.type = type;
 	}
 
-	public int getMese() {
-		return mese;
+	public Ordine getOrdine() {
+		return ordine;
 	}
 
-	public void setMese(int mese) {
-		this.mese = mese;
-	}
-
-	public double getQuantita() {
-		return quantita;
-	}
-
-	public void setQuantita(double quantita) {
-		this.quantita = quantita;
+	public void setOrdine(Ordine ordine) {
+		this.ordine = ordine;
 	}
 
 	@Override
 	public int compareTo(Event altro) {
 		
-		return this.mese-altro.mese;
+		return this.ordine.getMese()-altro.getOrdine().getMese();
 	}
 }

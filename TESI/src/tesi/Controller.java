@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 import tesi.model.Model;
 import tesi.model.Prodotto;
 
+
 public class Controller {
 	
 	Model model;
@@ -116,7 +117,8 @@ public class Controller {
     @FXML
     private TextArea txtResult;
     
-    @SuppressWarnings("unchecked")
+    
+	@SuppressWarnings("unchecked")
 	@FXML
     void doGraficoStorico(ActionEvent event) {
     	
@@ -202,12 +204,25 @@ public class Controller {
     		else
     			txtResult.appendText("Tutti i valori degli ordini acquisiti devono essere interi positivi");
     	else
-    		txtResult.appendText("Inserisci i valori degli ordini acquisiti per i 10 periodi, dopo aver avviato una previsione con tau = 10");
+    		txtResult.appendText("Inserisci i valori degli ordini acquisiti per i 6 periodi, dopo aver avviato una previsione con tau = 6");
     }
     
     @FXML
     void doSimula(ActionEvent event) {
-
+    	
+    	if(sliderProb.getValue()>=0) 
+    		if(!txtMin.getText().equals("") && !txtMax.getText().equals("")) 
+    			if(Integer.parseInt(txtMin.getText())>=0 && Integer.parseInt(txtMax.getText())>=0) 
+    				if(Integer.parseInt(txtMin.getText())<Integer.parseInt(txtMax.getText()))
+    					txtResult.appendText(model.simulaModel(sliderProb.getValue(), Integer.parseInt(txtMin.getText()), Integer.parseInt(txtMax.getText())));
+    				else
+    					txtResult.appendText("Inserisci un valore di min minore di quello di max");
+    			else
+    				txtResult.appendText("Inserisci valori interi positivi di min e max");
+    		else
+    			txtResult.appendText("Inserisci valori interi positivi di min e max");
+    	else 
+    		txtResult.appendText("Scegli un valore di probabilità");
     }
 
     @FXML

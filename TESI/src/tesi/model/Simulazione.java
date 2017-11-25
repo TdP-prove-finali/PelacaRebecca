@@ -1,5 +1,7 @@
 package tesi.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.PriorityQueue;
 
 import tesi.model.Event.EventType;
@@ -10,8 +12,10 @@ public class Simulazione {
 	private int[] ATP;
 
 	// output
+	private List<Ordine> ordini;
 	private int ordini_accettati;
 	private int ordini_rifiutati;
+	private double percentuale_accettati;
 	
 	// lista degli eventi
 	PriorityQueue<Event> queue ;
@@ -20,15 +24,17 @@ public class Simulazione {
 		
 		this.ATP = atp;
 		
+		this.ordini = new ArrayList<Ordine>();
 		this.ordini_accettati = 0;
 		this.ordini_rifiutati = 0;
+		this.percentuale_accettati = 0;
 		
 		this.queue = new PriorityQueue<>();
 	}
 	
-	public void addOrdine(int mese, int quantita) {
+	public void addOrdine(Ordine ordine) {
 		
-		queue.add(new Event(EventType.ARRIVA_ORDINE, mese, quantita));
+		queue.add(new Event(EventType.ARRIVA_ORDINE, ordine));
 	}
 	
 	public SimulationResult simula() {
@@ -41,10 +47,11 @@ public class Simulazione {
 			
 			case ARRIVA_ORDINE :
 				
-				for(int i=e.getMese(); i>=0; i--) {
+				for(int i=e.getOrdine().getMese(); i>=0; i--) {
 					if(ATP[i]>=0) {
-						if(ATP[i]>=e.getQuantita()) {
-							ATP[i] -= e.getQuantita();
+						if(ATP[i]>=e.getOrdine().getQuantita()) {
+							ATP[i] -= e.getOrdine().getQuantita();
+							e.getOrdine().setStato(true);
 							ordini_accettati++;
 							break;
 						}
@@ -55,11 +62,15 @@ public class Simulazione {
 					}
 				}
 				
+				ordini.add(e.getOrdine());
 				break;
 			}
 		}
-		double percentuale_accettati = ordini_accettati/(ordini_accettati+ordini_rifiutati)*100;
-		SimulationResult sr = new SimulationResult(ordini_accettati, ordini_rifiutati, percentuale_accettati);
-		return sr;
+		
+		percentuale_accettati = ordini_accettati/(ordini_accettati+ordini_rifiutati)*100;
+		
+		SimulationResult simulationResult = new SimulationResult(ordini, ordini_accettati, ordini_rifiutati, percentuale_accettati);
+		
+		return simulationResult;
 	}
 }

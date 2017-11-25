@@ -380,18 +380,31 @@ public class Model {
 		return result.toString();
 	}
 	
-	public SimulationResult simulaModel(int probabilita, int min, int max) {
+	public String simulaModel(double probabilita, int min, int max) {
 		
 		Simulazione sim = new Simulazione(this.ATP);
+		StringBuilder result = new StringBuilder();
 		
 		for(int i=0; i<this.ATP.length; i++) {
 			if(Math.random()>=probabilita) {
 				Random r = new Random();
 				int qty = r.nextInt((max-min)) + min;
-				sim.addOrdine(i, qty);
+				Ordine ordine = new Ordine(i, qty);
+				sim.addOrdine(ordine);
 			}
 		}
+		
+		SimulationResult sr = sim.simula();
+		
+		result.append("\n");
+		
+		for(Ordine o : sr.getOrdini()) 
+			result.append(o.toString()+"\n");
+		
+		result.append("Numero ordini accettati : " + sr.getOrdini_accettati() + "\n");
+		result.append("Numero ordini rifiutati : " + sr.getOrdini_rifiutati() + "\n");
+		result.append("Percentuale ordini accettati : " + sr.getPercentuale_accettati());
 
-		return sim.simula();
+		return result.toString();
 	}
 }

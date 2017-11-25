@@ -102,9 +102,6 @@ public class Controller {
     private Button buttonMPS;
     
     @FXML
-    private Button btnAggiornaStorico;
-    
-    @FXML
     private Slider sliderProb;
 
     @FXML
@@ -209,13 +206,6 @@ public class Controller {
     }
     
     @FXML
-    void doAggiornaStorico(ActionEvent event) {
-    	
-    	model.aggiornaStoricoModel(boxProdotti.getValue(), Integer.parseInt(txt1.getText()), Integer.parseInt(txt2.getText()),Integer.parseInt(txt3.getText()), Integer.parseInt(txt4.getText()),
-				Integer.parseInt(txt5.getText()), Integer.parseInt(txt6.getText()));
-    }
-    
-    @FXML
     void doSimula(ActionEvent event) {
 
     }
@@ -247,7 +237,6 @@ public class Controller {
         assert txtLotSize != null : "fx:id=\"txtLotSize\" was not injected: check your FXML file 'tesi.fxml'.";
         assert txtMagIn != null : "fx:id=\"txtMagIn\" was not injected: check your FXML file 'tesi.fxml'.";
         assert buttonMPS != null : "fx:id=\"buttonMPS\" was not injected: check your FXML file 'tesi.fxml'.";
-        assert btnAggiornaStorico != null : "fx:id=\"btnAggiornaStorico\" was not injected: check your FXML file 'tesi.fxml'.";
         assert sliderProb != null : "fx:id=\"sliderProb\" was not injected: check your FXML file 'tesi.fxml'.";
         assert txtMin != null : "fx:id=\"txtMin\" was not injected: check your FXML file 'tesi.fxml'.";
         assert txtMax != null : "fx:id=\"txtMax\" was not injected: check your FXML file 'tesi.fxml'.";

@@ -2,6 +2,7 @@ package tesi.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
@@ -16,11 +17,15 @@ public class Model {
 	private List<Prodotto> prodotti;
 	private List<Double> forecast;
 	
+	int[] ATP;
+	
 	
 	public Model() {
 		
 		this.dao = new DAO();
 		this.prodotti = dao.getProdottiDB();
+		
+		this.ATP = new int[MPSsize];
 	}
 	
 	public List<Prodotto> getProdotti() {
@@ -244,14 +249,11 @@ public class Model {
 	public String getMPSeATP(Prodotto prodotto, int lotSize, int magIn, int...tbs) {
 		
 		if(forecast.size()!=MPSsize)
-			return "Prima di calcolare l'MPS, avvia una previsione con tau = 10!";
-		
-//		StringBuilder result = new StringBuilder();
+			return "Prima di calcolare l'MPS, avvia una previsione con tau = 6!";
 				
 		int[] ordini_acquisiti = new int[MPSsize];
 		int[] disponibilita_magazzino = new int[MPSsize];
 		int[] MPSquantity = new int[MPSsize];
-		int[] ATP = new int[MPSsize];
 		
 		int count=0;
 		
@@ -325,29 +327,8 @@ public class Model {
 		}
 		
 		String[] temp = {"Previsione", "Ordini acquisiti", "Disponibilità magazzino", "Quantità MPS", "ATP"};
-		return stampaFormattata(temp, ordini_acquisiti, disponibilita_magazzino, MPSquantity, ATP);
 		
-//		result.append("Previsione ");
-//		
-//		for(Double d : forecast)
-//			result.append((int)Math.floor(d) + " ");
-//		
-//		result.append("\nOrdini acquisiti ");
-//		
-//		for(int i = 0; i<10; i++)
-//			result.append(ordini_acquisiti[i] + " ");
-//		
-//		result.append("\nDisponibilità magazzino ");
-//		
-//		for(int i = 0; i<10; i++)
-//			result.append(disponibilita_magazzino[i] + " ");
-//		
-//		result.append("\nQuantità MPS ");
-//		
-//		for(int i = 0; i<10; i++)
-//			result.append(MPSquantity[i] + " ");
-//		
-//		return result.toString().trim();
+		return stampaFormattata(temp, ordini_acquisiti, disponibilita_magazzino, MPSquantity, ATP);
 	}
 	
 	private String stampaFormattata(String[] titles, int[] ordiniAcquisiti, int[] disponibilitaMagazzino, int[] mpsQuantity, int[] ATP){
@@ -398,9 +379,19 @@ public class Model {
 		
 		return result.toString();
 	}
-
-	public void aggiornaStoricoModel(Prodotto prodotto, int...tbs) {
+	
+	public SimulationResult simulaModel(int probabilita, int min, int max) {
 		
-		dao.aggiornaStorico(prodotto, tbs);	
+		Simulazione sim = new Simulazione(this.ATP);
+		
+		for(int i=0; i<this.ATP.length; i++) {
+			if(Math.random()>=probabilita) {
+				Random r = new Random();
+				int qty = r.nextInt((max-min)) + min;
+				sim.addOrdine(i, qty);
+			}
+		}
+
+		return sim.simula();
 	}
 }

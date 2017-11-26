@@ -9,14 +9,16 @@ public class SimulationResult {
 	private int ordini_accettati;
 	private int ordini_rifiutati;
 	private double percentuale_accettati;
+	private double percentuale_rifiutati;
 	
-	public SimulationResult(List<Ordine> ordini_totali, int ordini_accettati, int ordini_rifiutati, double percentuale_accettati) {
+	public SimulationResult(List<Ordine> ordini_totali, int ordini_accettati, int ordini_rifiutati, double percentuale_accettati, double percentuale_rifiutati) {
 		super();
 		this.ordini = new ArrayList<Ordine>();
 		this.ordini.addAll(ordini_totali);
 		this.ordini_accettati = ordini_accettati;
 		this.ordini_rifiutati = ordini_rifiutati;
 		this.percentuale_accettati = percentuale_accettati;
+		this.percentuale_rifiutati = percentuale_rifiutati;
 	}
 
 	public List<Ordine> getOrdini() {
@@ -49,5 +51,13 @@ public class SimulationResult {
 
 	public void setPercentuale_accettati(double percentuale_accettati) {
 		this.percentuale_accettati = percentuale_accettati;
+	}
+
+	public double getPercentuale_rifiutati() {
+		return percentuale_rifiutati;
+	}
+
+	public void setPercentuale_rifiutati(double percentuale_rifiutati) {
+		this.percentuale_rifiutati = percentuale_rifiutati;
 	}
 }

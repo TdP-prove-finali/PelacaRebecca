@@ -16,6 +16,7 @@ public class Simulazione {
 	private int ordini_accettati;
 	private int ordini_rifiutati;
 	private double percentuale_accettati;
+	private double percentuale_rifiutati;
 	
 	// lista degli eventi
 	PriorityQueue<Event> queue ;
@@ -27,7 +28,6 @@ public class Simulazione {
 		this.ordini = new ArrayList<Ordine>();
 		this.ordini_accettati = 0;
 		this.ordini_rifiutati = 0;
-		this.percentuale_accettati = 0;
 		
 		this.queue = new PriorityQueue<>();
 	}
@@ -48,7 +48,7 @@ public class Simulazione {
 			case ARRIVA_ORDINE :
 				
 				for(int i=e.getOrdine().getMese(); i>=0; i--) {
-					if(ATP[i]>=0) {
+					if(ATP[i]>0) {
 						if(ATP[i]>=e.getOrdine().getQuantita()) {
 							ATP[i] -= e.getOrdine().getQuantita();
 							e.getOrdine().setStato(true);
@@ -67,9 +67,17 @@ public class Simulazione {
 			}
 		}
 		
-		percentuale_accettati = ordini_accettati/(ordini_accettati+ordini_rifiutati)*100;
+		System.out.println(ordini_accettati);
+		System.out.println(ordini_rifiutati);
 		
-		SimulationResult simulationResult = new SimulationResult(ordini, ordini_accettati, ordini_rifiutati, percentuale_accettati);
+		if((ordini_accettati+ordini_rifiutati)>0) {
+			percentuale_accettati = ((double)ordini_accettati/(ordini_accettati+ordini_rifiutati))*100;
+			percentuale_rifiutati = 1-percentuale_accettati;
+		}
+		
+		System.out.println(percentuale_accettati);
+		
+		SimulationResult simulationResult = new SimulationResult(ordini, ordini_accettati, ordini_rifiutati, percentuale_accettati, percentuale_rifiutati);
 		
 		return simulationResult;
 	}

@@ -386,7 +386,7 @@ public class Model {
 		StringBuilder result = new StringBuilder();
 		
 		for(int i=0; i<this.ATP.length; i++) {
-			if(Math.random()>=probabilita) {
+			if(Math.random()>=1-probabilita) {
 				Random r = new Random();
 				int qty = r.nextInt((max-min)) + min;
 				Ordine ordine = new Ordine(i, qty);
@@ -403,7 +403,8 @@ public class Model {
 		
 		result.append("Numero ordini accettati : " + sr.getOrdini_accettati() + "\n");
 		result.append("Numero ordini rifiutati : " + sr.getOrdini_rifiutati() + "\n");
-		result.append("Percentuale ordini accettati : " + sr.getPercentuale_accettati());
+		result.append("Percentuale ordini accettati : " + sr.getPercentuale_accettati() + " %\n");
+		result.append("Percentuale ordini rifiutati : " + (1-sr.getPercentuale_accettati()) + " %\n");
 
 		return result.toString();
 	}

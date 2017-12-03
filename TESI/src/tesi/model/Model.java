@@ -3,12 +3,13 @@ package tesi.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
 import tesi.DAO.DAO;
 
-public class Model {
+public class Model{
 	
 	private final static int MPSsize = 6;
 	
@@ -17,7 +18,7 @@ public class Model {
 	private List<Prodotto> prodotti;
 	private List<Double> forecast;
 	
-	int[] ATP;
+	private int[] ATP;
 	
 	
 	public Model() {
@@ -246,10 +247,11 @@ public class Model {
 		return result.toString();
 	}
 
-	public String getMPSeATP(Prodotto prodotto, int lotSize, int magIn, int...tbs) {
+	public ObservableList<Row> getMPSeATP(Prodotto prodotto, int lotSize, int magIn, int...tbs) {
 		
-		if(forecast.size()!=MPSsize)
-			return "Prima di calcolare l'MPS, avvia una previsione con tau = 6!";
+		if(forecast.size()!=MPSsize) {
+			//genera eccezione
+		}
 				
 		int[] ordini_acquisiti = new int[MPSsize];
 		int[] disponibilita_magazzino = new int[MPSsize];
@@ -326,58 +328,23 @@ public class Model {
 			}
 		}
 		
-		String[] temp = {"Previsione", "Ordini acquisiti", "Disponibilità magazzino", "Quantità MPS", "ATP"};
+		int[] forecast_array = new int[forecast.size()];
 		
-		return stampaFormattata(temp, ordini_acquisiti, disponibilita_magazzino, MPSquantity, ATP);
-	}
-	
-	private String stampaFormattata(String[] titles, int[] ordiniAcquisiti, int[] disponibilitaMagazzino, int[] mpsQuantity, int[] ATP){
+		for(int i=0; i<forecast.size(); i++)
+			forecast_array[i] = (int)Math.floor(forecast.get(i));
+			
+		ObservableList<Row> result = FXCollections.observableArrayList();
 		
-		StringBuilder result = new StringBuilder();
-		int maxLength=0;
+		result.add(new Row("Previsione", forecast_array[0], forecast_array[1], forecast_array[2], forecast_array[3], forecast_array[4], forecast_array[5]));
+		result.add(new Row("Ordini acquisiti", ordini_acquisiti[0],ordini_acquisiti[1],ordini_acquisiti[2],ordini_acquisiti[3],ordini_acquisiti[4],ordini_acquisiti[5]));
+		result.add(new Row("Disponibilità magazzino", disponibilita_magazzino[0], disponibilita_magazzino[1], disponibilita_magazzino[2], disponibilita_magazzino[3], disponibilita_magazzino[4], disponibilita_magazzino[5]));
+		result.add(new Row("Quantità MPS", MPSquantity[0], MPSquantity[1], MPSquantity[2], MPSquantity[3], MPSquantity[4], MPSquantity[5]));
+		result.add(new Row("ATP", ATP[0], ATP[1], ATP[2], ATP[3], ATP[4], ATP[5]));
 		
-		for (int i=0; i<titles.length; i++){
-			if (titles[i].length()>maxLength)
-				maxLength = titles[i].length();
-		}
+		for(Row r : result)
+			System.out.println(r + "\n");
 		
-		for (int i=0; i<titles.length; i++){
-			for (int j=0; j<maxLength-titles[i].length(); j++){
-				titles[i]+=' ';
-			}
-			titles[i]+='\t';
-		}
-		
-		result.append(titles[0]);
-		
-		for(Double d : forecast)
-			result.append((int)Math.floor(d) + "\t");
-		result.append('\n');
-		
-		result.append(titles[1]);
-		
-		for(int i = 0; i<MPSsize; i++)
-			result.append(ordiniAcquisiti[i] + "\t");
-		result.append('\n');
-		
-		result.append(titles[2]);
-		
-		for(int i = 0; i<MPSsize; i++)
-			result.append(disponibilitaMagazzino[i] + "\t");
-		result.append('\n');
-		
-		result.append(titles[3]);
-		
-		for(int i = 0; i<MPSsize; i++)
-			result.append(mpsQuantity[i] + "\t");
-		result.append('\n');
-		
-		result.append(titles[4]);
-		
-		for(int i = 0; i<MPSsize; i++)
-			result.append(ATP[i] + "\t");
-		
-		return result.toString();
+		return result;
 	}
 	
 	public String simulaModel(double probabilita, int min, int max) {

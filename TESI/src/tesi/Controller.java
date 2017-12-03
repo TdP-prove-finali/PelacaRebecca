@@ -11,10 +11,14 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import tesi.model.Model;
 import tesi.model.Prodotto;
+import tesi.model.Row;
 
 
 public class Controller {
@@ -117,6 +121,29 @@ public class Controller {
     @FXML
     private TextArea txtResult;
     
+    @FXML
+    private TableView<Row> tableView;
+
+    @FXML
+    private TableColumn<Row, String> col0;
+
+    @FXML
+    private TableColumn<Row, Integer> col1;
+
+    @FXML
+    private TableColumn<Row, Integer> col2;
+
+    @FXML
+    private TableColumn<Row, Integer> col3;
+
+    @FXML
+    private TableColumn<Row, Integer> col4;
+
+    @FXML
+    private TableColumn<Row, Integer> col5;
+
+    @FXML
+    private TableColumn<Row, Integer> col6;  
     
 	@SuppressWarnings("unchecked")
 	@FXML
@@ -189,10 +216,18 @@ public class Controller {
     			if(!txtLotSize.getText().equals(""))
     				if(Integer.parseInt(txtLotSize.getText())>0)
     					if(!txtMagIn.getText().equals(""))
-    						if(Integer.parseInt(txtMagIn.getText())>=0)
-    							txtResult.appendText(model.getMPSeATP(boxProdotti.getValue(), Integer.parseInt(txtLotSize.getText()), Integer.parseInt(txtMagIn.getText()),
-    									             Integer.parseInt(txt1.getText()), Integer.parseInt(txt2.getText()),Integer.parseInt(txt3.getText()),
-    									             Integer.parseInt(txt4.getText()), Integer.parseInt(txt5.getText()), Integer.parseInt(txt6.getText())));
+    						if(Integer.parseInt(txtMagIn.getText())>=0){
+    							col0.setCellValueFactory(new PropertyValueFactory<Row, String>("0"));
+    							col1.setCellValueFactory(new PropertyValueFactory<Row, Integer>("1"));
+    							col2.setCellValueFactory(new PropertyValueFactory<Row, Integer>("2"));
+    							col3.setCellValueFactory(new PropertyValueFactory<Row, Integer>("3"));
+    							col4.setCellValueFactory(new PropertyValueFactory<Row, Integer>("4"));
+    							col5.setCellValueFactory(new PropertyValueFactory<Row, Integer>("5"));
+    							col6.setCellValueFactory(new PropertyValueFactory<Row, Integer>("6"));
+    							tableView.setItems(model.getMPSeATP(boxProdotti.getValue(), Integer.parseInt(txtLotSize.getText()), Integer.parseInt(txtMagIn.getText()),
+							             Integer.parseInt(txt1.getText()), Integer.parseInt(txt2.getText()),Integer.parseInt(txt3.getText()),
+							             Integer.parseInt(txt4.getText()), Integer.parseInt(txt5.getText()), Integer.parseInt(txt6.getText())));	
+    						}
     						else
     							txtResult.appendText("Il valore del magazzino iniziale deve essere maggiore o uguale a zero");
     					else
@@ -257,6 +292,14 @@ public class Controller {
         assert txtMax != null : "fx:id=\"txtMax\" was not injected: check your FXML file 'tesi.fxml'.";
         assert btnSimula != null : "fx:id=\"btnSimula\" was not injected: check your FXML file 'tesi.fxml'.";
         assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert tableView != null : "fx:id=\"tableView\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert col0 != null : "fx:id=\"col0\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert col1 != null : "fx:id=\"col1\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert col2 != null : "fx:id=\"col2\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert col3 != null : "fx:id=\"col3\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert col4 != null : "fx:id=\"col4\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert col5 != null : "fx:id=\"col5\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert col6 != null : "fx:id=\"col6\" was not injected: check your FXML file 'tesi.fxml'.";     
     }
     
 	public void setModel(Model model) {

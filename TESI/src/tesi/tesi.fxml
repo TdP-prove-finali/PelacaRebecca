@@ -8,6 +8,8 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
@@ -227,12 +229,7 @@
                         <Insets left="2.5" right="2.5" top="2.0" />
                      </GridPane.margin>
                   </TextField>
-                  <TextField fx:id="txt6" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                     <GridPane.margin>
-                        <Insets left="2.5" right="2.5" top="2.0" />
-                     </GridPane.margin>
-                  </TextField>
-                  <TextField fx:id="txt5" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                  <TextField fx:id="txt3" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="2.5" right="2.5" top="2.0" />
                      </GridPane.margin>
@@ -242,7 +239,12 @@
                         <Insets left="2.5" right="2.5" top="2.0" />
                      </GridPane.margin>
                   </TextField>
-                  <TextField fx:id="txt3" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                  <TextField fx:id="txt5" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="2.5" right="2.5" top="2.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <TextField fx:id="txt6" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="2.5" right="2.5" top="2.0" />
                      </GridPane.margin>
@@ -317,7 +319,7 @@
                         </Button>
                      </children>
                   </VBox>
-                  <TextArea fx:id="txtResult" editable="false" prefHeight="331.0" prefWidth="711.0">
+                  <TextArea fx:id="txtResult" editable="false" prefHeight="309.0" prefWidth="339.0">
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
@@ -325,6 +327,17 @@
                         <Insets left="15.0" right="5.0" top="5.0" />
                      </HBox.margin>
                   </TextArea>
+                  <TableView fx:id="tableView">
+                    <columns>
+                      <TableColumn fx:id="col0" prefWidth="75.0" />
+                      <TableColumn fx:id="col1" prefWidth="75.0" text="1" />
+                        <TableColumn fx:id="col2" prefWidth="75.0" text="2" />
+                        <TableColumn fx:id="col3" prefWidth="75.0" text="3" />
+                        <TableColumn fx:id="col4" prefWidth="75.0" text="4" />
+                        <TableColumn fx:id="col5" prefWidth="75.0" text="5" />
+                        <TableColumn fx:id="col6" prefWidth="75.0" text="6" />
+                    </columns>
+                  </TableView>
                </children>
                <opaqueInsets>
                   <Insets />

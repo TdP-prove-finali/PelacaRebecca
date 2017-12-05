@@ -217,13 +217,13 @@ public class Controller {
     				if(Integer.parseInt(txtLotSize.getText())>0)
     					if(!txtMagIn.getText().equals(""))
     						if(Integer.parseInt(txtMagIn.getText())>=0){
-    							col0.setCellValueFactory(new PropertyValueFactory<Row, String>("0"));
-    							col1.setCellValueFactory(new PropertyValueFactory<Row, Integer>("1"));
-    							col2.setCellValueFactory(new PropertyValueFactory<Row, Integer>("2"));
-    							col3.setCellValueFactory(new PropertyValueFactory<Row, Integer>("3"));
-    							col4.setCellValueFactory(new PropertyValueFactory<Row, Integer>("4"));
-    							col5.setCellValueFactory(new PropertyValueFactory<Row, Integer>("5"));
-    							col6.setCellValueFactory(new PropertyValueFactory<Row, Integer>("6"));
+    							col0.setCellValueFactory(new PropertyValueFactory<Row, String>("title"));
+    							col1.setCellValueFactory(new PropertyValueFactory<Row, Integer>("tb1"));
+    							col2.setCellValueFactory(new PropertyValueFactory<Row, Integer>("tb2"));
+    							col3.setCellValueFactory(new PropertyValueFactory<Row, Integer>("tb3"));
+    							col4.setCellValueFactory(new PropertyValueFactory<Row, Integer>("tb4"));
+    							col5.setCellValueFactory(new PropertyValueFactory<Row, Integer>("tb5"));
+    							col6.setCellValueFactory(new PropertyValueFactory<Row, Integer>("tb6"));
     							tableView.setItems(model.getMPSeATP(boxProdotti.getValue(), Integer.parseInt(txtLotSize.getText()), Integer.parseInt(txtMagIn.getText()),
 							             Integer.parseInt(txt1.getText()), Integer.parseInt(txt2.getText()),Integer.parseInt(txt3.getText()),
 							             Integer.parseInt(txt4.getText()), Integer.parseInt(txt5.getText()), Integer.parseInt(txt6.getText())));	

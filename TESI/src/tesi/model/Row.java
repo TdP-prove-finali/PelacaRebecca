@@ -79,6 +79,10 @@ public class Row {
 	public void setTb6(SimpleIntegerProperty tb6) {
 		this.tb6 = tb6;
 	}
+	
+	public SimpleStringProperty titleProperty() {
+		return this.title ;
+	}
 
 	@Override
 	public String toString() {

@@ -82,7 +82,6 @@ public class Row {
 
 	@Override
 	public String toString() {
-		return "Row [title=" + title + ", tb1=" + tb1 + ", tb2=" + tb2 + ", tb3=" + tb3 + ", tb4=" + tb4 + ", tb5="
-				+ tb5 + ", tb6=" + tb6 + "]";
+		return this.getTitle() + " " + this.getTb1() + " " + this.getTb2() + " " + this.getTb3() + " " + this.getTb4() + " " + this.getTb5() + " " + this.getTb6();
 	}	
 }

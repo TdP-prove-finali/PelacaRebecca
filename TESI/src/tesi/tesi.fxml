@@ -296,10 +296,10 @@
                               <Insets bottom="5.0" />
                            </padding>
                         </Label>
-                        <Slider fx:id="sliderProb" blockIncrement="0.1" majorTickUnit="0.5" max="1.0" maxWidth="300.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="0.5" />
+                        <Slider fx:id="sliderProb" blockIncrement="0.05" majorTickUnit="0.05" max="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="0.5" />
                         <Label text="Inserisci un range di valori della domanda su cui effettuare la simulazione :">
                            <VBox.margin>
-                              <Insets bottom="5.0" />
+                              <Insets bottom="5.0" top="10.0" />
                            </VBox.margin>
                         </Label>
                         <TextField fx:id="txtMin" maxWidth="70.0" promptText="min">
@@ -319,7 +319,7 @@
                         </Button>
                      </children>
                   </VBox>
-                  <TextArea fx:id="txtResult" editable="false" prefHeight="309.0" prefWidth="339.0">
+                  <TextArea fx:id="txtResult" editable="false" maxWidth="350.0">
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>

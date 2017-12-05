@@ -39,6 +39,9 @@ public class Simulazione {
 	
 	public SimulationResult simula() {
 		
+		ordini_accettati=0;
+		ordini_rifiutati=0;
+		
 		while(!queue.isEmpty()) {
 			
 			Event e = queue.poll();
@@ -67,15 +70,15 @@ public class Simulazione {
 			}
 		}
 		
-		System.out.println(ordini_accettati);
-		System.out.println(ordini_rifiutati);
+//		System.out.println(ordini_accettati);
+//		System.out.println(ordini_rifiutati);
 		
 		if((ordini_accettati+ordini_rifiutati)>0) {
 			percentuale_accettati = ((double)ordini_accettati/(ordini_accettati+ordini_rifiutati))*100;
 			percentuale_rifiutati = 1-percentuale_accettati;
 		}
 		
-		System.out.println(percentuale_accettati);
+//		System.out.println(percentuale_accettati);
 		
 		SimulationResult simulationResult = new SimulationResult(ordini, ordini_accettati, ordini_rifiutati, percentuale_accettati, percentuale_rifiutati);
 		

@@ -101,7 +101,7 @@ public class Model{
 		for(Double d : forecast)
 			result.append((int)Math.round(d) + "\t\t");
 		
-		return result.toString().trim();
+		return result.toString();
 	
 	}
 
@@ -370,8 +370,8 @@ public class Model{
 		
 		result.append("Numero ordini accettati : " + sr.getOrdini_accettati() + "\n");
 		result.append("Numero ordini rifiutati : " + sr.getOrdini_rifiutati() + "\n");
-		result.append("Percentuale ordini accettati : " + sr.getPercentuale_accettati() + " %\n");
-		result.append("Percentuale ordini rifiutati : " + (1-sr.getPercentuale_accettati()) + " %\n");
+		result.append("Percentuale ordini accettati : " + Math.floor(sr.getPercentuale_accettati()) + " %\n");
+//		result.append("Percentuale ordini rifiutati : " + (1-sr.getPercentuale_accettati()) + " %\n");
 
 		return result.toString();
 	}

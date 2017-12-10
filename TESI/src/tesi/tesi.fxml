@@ -10,6 +10,7 @@
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -39,7 +40,7 @@
             <content>
               <AnchorPane>
                      <children>
-                        <VBox>
+                        <VBox alignment="CENTER">
                            <children>
                               <HBox>
                                  <children>
@@ -70,7 +71,51 @@
                                                 <Insets bottom="2.5" left="5.0" />
                                              </GridPane.margin>
                                           </ComboBox>
+                                          <Button fx:id="btnStorico" mnemonicParsing="false" onAction="#doGraficoStorico" text="Visualizza storico" GridPane.columnIndex="1">
+                                             <GridPane.margin>
+                                                <Insets bottom="3.0" left="190.0" />
+                                             </GridPane.margin>
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Button>
+                                          <Label text="Metodi di previsione : " GridPane.rowIndex="1">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <ComboBox fx:id="boxMetodi" onAction="#abilitaMetodo" promptText="Seleziona un metodo" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                             <GridPane.margin>
+                                                <Insets left="5.0" top="2.5" />
+                                             </GridPane.margin>
+                                          </ComboBox>
                                           <Label text="Inserisci i parametri :" GridPane.rowIndex="2">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label text="Moving average" GridPane.rowIndex="3">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label text="m" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                             <font>
+                                                <Font name="System Italic" size="14.0" />
+                                             </font>
+                                             <GridPane.margin>
+                                                <Insets left="5.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                          <TextField fx:id="m" disable="true" maxWidth="55.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                             <GridPane.margin>
+                                                <Insets left="20.0" />
+                                             </GridPane.margin>
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </TextField>
+                                          <Label text="Exponential smoothing" GridPane.rowIndex="4">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -83,7 +128,28 @@
                                                 <Insets left="5.0" />
                                              </GridPane.margin>
                                           </Label>
-                                          <TextField fx:id="alfaES" maxWidth="55.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                          <TextField fx:id="alfaES" disable="true" maxWidth="55.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                             <GridPane.margin>
+                                                <Insets left="20.0" />
+                                             </GridPane.margin>
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </TextField>
+                                          <Label text="Exponential smoothing with trend" GridPane.rowIndex="5">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label text="α" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <GridPane.margin>
+                                                <Insets left="5.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                          <TextField fx:id="alfaEST" disable="true" maxWidth="55.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                              <GridPane.margin>
                                                 <Insets left="20.0" />
                                              </GridPane.margin>
@@ -99,103 +165,9 @@
                                                 <Font size="14.0" />
                                              </font>
                                           </Label>
-                                          <TextField fx:id="betaEST" maxWidth="55.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                          <TextField fx:id="betaEST" disable="true" maxWidth="55.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                              <GridPane.margin>
                                                 <Insets left="110.0" />
-                                             </GridPane.margin>
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </TextField>
-                                          <Label text="γ" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                                             <font>
-                                                <Font name="System Italic" size="14.0" />
-                                             </font>
-                                             <GridPane.margin>
-                                                <Insets left="185.0" />
-                                             </GridPane.margin>
-                                          </Label>
-                                          <TextField fx:id="gammaW" maxWidth="55.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                                             <GridPane.margin>
-                                                <Insets left="200.0" />
-                                             </GridPane.margin>
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </TextField>
-                                          <Label text="Metodi di previsione : " GridPane.rowIndex="1">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </Label>
-                                          <ComboBox fx:id="boxMetodi" promptText="Seleziona un metodo" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                             <GridPane.margin>
-                                                <Insets left="5.0" top="2.5" />
-                                             </GridPane.margin>
-                                          </ComboBox>
-                                          <Label text="Inserisci l'intervallo di previsione :" GridPane.rowIndex="7">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="τ" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                             <GridPane.margin>
-                                                <Insets left="5.0" />
-                                             </GridPane.margin>
-                                          </Label>
-                                          <TextField fx:id="tau" maxWidth="55.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                                             <GridPane.margin>
-                                                <Insets left="20.0" />
-                                             </GridPane.margin>
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </TextField>
-                                          <Label text="m" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                             <font>
-                                                <Font name="System Italic" size="14.0" />
-                                             </font>
-                                             <GridPane.margin>
-                                                <Insets left="5.0" />
-                                             </GridPane.margin>
-                                          </Label>
-                                          <TextField fx:id="m" maxWidth="55.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                             <GridPane.margin>
-                                                <Insets left="20.0" />
-                                             </GridPane.margin>
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </TextField>
-                                          <Label text="Moving average" GridPane.rowIndex="3">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="Exponential smoothing" GridPane.rowIndex="4">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="Exponential smoothing with trend" GridPane.rowIndex="5">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="α" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                             <GridPane.margin>
-                                                <Insets left="5.0" />
-                                             </GridPane.margin>
-                                          </Label>
-                                          <TextField fx:id="alfaEST" maxWidth="55.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                                             <GridPane.margin>
-                                                <Insets left="20.0" />
                                              </GridPane.margin>
                                              <font>
                                                 <Font size="14.0" />
@@ -214,7 +186,7 @@
                                                 <Insets left="5.0" />
                                              </GridPane.margin>
                                           </Label>
-                                          <TextField fx:id="alfaW" maxWidth="55.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                          <TextField fx:id="alfaW" disable="true" maxWidth="55.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                              <GridPane.margin>
                                                 <Insets left="20.0" />
                                              </GridPane.margin>
@@ -230,9 +202,25 @@
                                                 <Insets left="95.0" />
                                              </GridPane.margin>
                                           </Label>
-                                          <TextField fx:id="betaW" maxWidth="55.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                          <TextField fx:id="betaW" disable="true" maxWidth="55.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                              <GridPane.margin>
                                                 <Insets left="110.0" />
+                                             </GridPane.margin>
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </TextField>
+                                          <Label text="γ" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                             <font>
+                                                <Font name="System Italic" size="14.0" />
+                                             </font>
+                                             <GridPane.margin>
+                                                <Insets left="185.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                          <TextField fx:id="gammaW" disable="true" maxWidth="55.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                             <GridPane.margin>
+                                                <Insets left="200.0" />
                                              </GridPane.margin>
                                              <font>
                                                 <Font size="14.0" />
@@ -246,7 +234,7 @@
                                                 <Font name="System Italic" size="12.0" />
                                              </font>
                                           </Label>
-                                          <TextField fx:id="Nperiod" maxWidth="55.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                          <TextField fx:id="Nperiod" disable="true" maxWidth="55.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                              <GridPane.margin>
                                                 <Insets left="290.0" />
                                              </GridPane.margin>
@@ -254,15 +242,28 @@
                                                 <Font size="14.0" />
                                              </font>
                                           </TextField>
-                                          <Button fx:id="ButtonPrevisione" mnemonicParsing="false" onAction="#doPrevisione" text="Avvia Previsione" GridPane.rowIndex="8">
+                                          <Label text="Inserisci l'intervallo di previsione :" GridPane.rowIndex="7">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
-                                          </Button>
-                                          <Button fx:id="btnStorico" mnemonicParsing="false" onAction="#doGraficoStorico" text="Visualizza storico" GridPane.columnIndex="1">
+                                          </Label>
+                                          <Label text="τ" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
                                              <GridPane.margin>
-                                                <Insets bottom="3.0" left="190.0" />
+                                                <Insets left="5.0" />
                                              </GridPane.margin>
+                                          </Label>
+                                          <TextField fx:id="tau" disable="true" maxWidth="55.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                             <GridPane.margin>
+                                                <Insets left="20.0" />
+                                             </GridPane.margin>
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </TextField>
+                                          <Button fx:id="ButtonPrevisione" mnemonicParsing="false" onAction="#doPrevisione" text="Avvia Previsione" GridPane.rowIndex="8">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -280,15 +281,34 @@
                                         <NumberAxis fx:id="y" minorTickCount="10" side="LEFT" tickLabelGap="2.0" upperBound="50000.0" />
                                       </yAxis>
                                        <HBox.margin>
-                                          <Insets bottom="5.0" left="25.0" right="5.0" top="5.0" />
+                                          <Insets bottom="5.0" right="5.0" top="5.0" />
                                        </HBox.margin>
                                     </LineChart>
                                  </children>
                               </HBox>
-                              <TableView>
+                              <Label fx:id="labelError" alignment="CENTER" contentDisplay="CENTER" textFill="#fc0e0e">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="15.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <TableView fx:id="tvForecast" maxHeight="150.0" maxWidth="631.0" visible="false">
                                  <VBox.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="20.0" />
                                  </VBox.margin>
+                                 <columns>
+                                    <TableColumn fx:id="tbf1" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="1" />
+                                    <TableColumn fx:id="tbf2" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="2" />
+                                    <TableColumn fx:id="tbf3" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="3" />
+                                    <TableColumn fx:id="tbf4" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="4" />
+                                    <TableColumn fx:id="tbf5" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="5" />
+                                    <TableColumn fx:id="tbf6" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="6" />
+                                    <TableColumn fx:id="tbf7" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="7" />
+                                    <TableColumn fx:id="tbf8" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="8" />
+                                    <TableColumn fx:id="tbf9" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="9" />
+                                 </columns>
                               </TableView>
                            </children>
                         </VBox>
@@ -302,7 +322,47 @@
                      <children>
                         <VBox>
                            <children>
-                              <Label text="Inserisci gli ordini acquisiti per i prossimi mesi :">
+                              <Label alignment="CENTER" contentDisplay="CENTER" text="Inserisci l'MPS Lot-size :">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="5.0" top="15.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <TextField fx:id="txtLotSize" maxWidth="70.0">
+                                 <VBox.margin>
+                                    <Insets left="10.0" top="5.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </TextField>
+                              <Label text="Inserisci la quantità iniziale del magazzino :">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="5.0" top="15.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <TextField fx:id="txtMagIn" maxWidth="70.0">
+                                 <VBox.margin>
+                                    <Insets left="10.0" top="5.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </TextField>
+                              <Button fx:id="btnProsegui" mnemonicParsing="false" onAction="#rendiVisibileMPS" text="Prosegui">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="5.0" top="15.0" />
+                                 </VBox.margin>
+                              </Button>
+                              <Label fx:id="labelInserisciOrdini" text="Inserisci gli ordini acquisiti per i prossimi mesi :" visible="false">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -310,7 +370,7 @@
                                     <Insets left="5.0" top="20.0" />
                                  </VBox.margin>
                               </Label>
-                              <GridPane>
+                              <GridPane fx:id="gridPane" visible="false">
                                 <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" />
                                     <ColumnConstraints hgrow="SOMETIMES" />
@@ -343,7 +403,7 @@
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="txt1" maxWidth="100.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                    <TextField fx:id="txt1" disable="true" maxWidth="100.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                        <GridPane.margin>
                                           <Insets left="2.5" right="2.5" top="2.0" />
                                        </GridPane.margin>
@@ -351,7 +411,7 @@
                                           <Font size="14.0" />
                                        </font>
                                     </TextField>
-                                    <TextField fx:id="txt2" maxWidth="100.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                    <TextField fx:id="txt2" disable="true" maxWidth="100.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                        <GridPane.margin>
                                           <Insets left="2.5" right="2.5" top="2.0" />
                                        </GridPane.margin>
@@ -359,7 +419,7 @@
                                           <Font size="14.0" />
                                        </font>
                                     </TextField>
-                                    <TextField fx:id="txt3" maxWidth="100.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                    <TextField fx:id="txt3" disable="true" maxWidth="100.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                        <GridPane.margin>
                                           <Insets left="2.5" right="2.5" top="2.0" />
                                        </GridPane.margin>
@@ -367,7 +427,7 @@
                                           <Font size="14.0" />
                                        </font>
                                     </TextField>
-                                    <TextField fx:id="txt4" maxWidth="100.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                    <TextField fx:id="txt4" disable="true" maxWidth="100.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                        <GridPane.margin>
                                           <Insets left="2.5" right="2.5" top="2.0" />
                                        </GridPane.margin>
@@ -375,7 +435,7 @@
                                           <Font size="14.0" />
                                        </font>
                                     </TextField>
-                                    <TextField fx:id="txt5" maxWidth="100.0" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                    <TextField fx:id="txt5" disable="true" maxWidth="100.0" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                        <GridPane.margin>
                                           <Insets left="2.5" right="2.5" top="2.0" />
                                        </GridPane.margin>
@@ -383,9 +443,33 @@
                                           <Font size="14.0" />
                                        </font>
                                     </TextField>
-                                    <TextField fx:id="txt6" maxWidth="100.0" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                    <TextField fx:id="txt6" disable="true" maxWidth="100.0" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                        <GridPane.margin>
                                           <Insets left="2.5" right="2.5" top="2.0" />
+                                       </GridPane.margin>
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </TextField>
+                                    <TextField fx:id="txt7" disable="true" maxWidth="100.0" GridPane.columnIndex="6" GridPane.rowIndex="1">
+                                       <GridPane.margin>
+                                          <Insets left="2.5" right="2.5" />
+                                       </GridPane.margin>
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </TextField>
+                                    <TextField fx:id="txt8" disable="true" maxWidth="100.0" GridPane.columnIndex="7" GridPane.rowIndex="1">
+                                       <GridPane.margin>
+                                          <Insets left="2.5" right="2.5" />
+                                       </GridPane.margin>
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </TextField>
+                                    <TextField fx:id="txt9" disable="true" maxWidth="100.0" GridPane.columnIndex="8" GridPane.rowIndex="1">
+                                       <GridPane.margin>
+                                          <Insets left="2.5" right="2.5" />
                                        </GridPane.margin>
                                        <font>
                                           <Font size="14.0" />
@@ -433,30 +517,6 @@
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <TextField maxWidth="100.0" GridPane.columnIndex="6" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets left="2.5" right="2.5" />
-                                       </GridPane.margin>
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </TextField>
-                                    <TextField maxWidth="100.0" GridPane.columnIndex="7" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets left="2.5" right="2.5" />
-                                       </GridPane.margin>
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </TextField>
-                                    <TextField maxWidth="100.0" GridPane.columnIndex="8" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets left="2.5" right="2.5" />
-                                       </GridPane.margin>
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </TextField>
                                     <Label text="9" GridPane.columnIndex="8" GridPane.halignment="CENTER">
                                        <font>
                                           <Font size="14.0" />
@@ -467,39 +527,7 @@
                                     <Insets left="2.5" right="2.5" />
                                  </padding>
                               </GridPane>
-                              <Label alignment="CENTER" contentDisplay="CENTER" text="Inserisci l'MPS Lot-size :">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets left="5.0" top="15.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <TextField fx:id="txtLotSize" maxWidth="70.0">
-                                 <VBox.margin>
-                                    <Insets left="10.0" top="5.0" />
-                                 </VBox.margin>
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </TextField>
-                              <Label text="Inserisci la quantità iniziale del magazzino :">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets left="5.0" top="15.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <TextField fx:id="txtMagIn" maxWidth="70.0">
-                                 <VBox.margin>
-                                    <Insets left="10.0" top="5.0" />
-                                 </VBox.margin>
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </TextField>
-                              <Button fx:id="buttonMPS" mnemonicParsing="false" onAction="#doMPS" text="Calcola MPS e ATP">
+                              <Button fx:id="buttonMPS" mnemonicParsing="false" onAction="#doMPS" text="Calcola MPS e ATP" visible="false">
                                  <VBox.margin>
                                     <Insets left="5.0" top="20.0" />
                                  </VBox.margin>
@@ -507,11 +535,39 @@
                                     <Font size="14.0" />
                                  </font>
                               </Button>
-                              <TableView fx:id="tableView">
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <Label fx:id="labelError2" textFill="#e11414">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
                                  <VBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="20.0" />
+                                    <Insets left="5.0" top="15.0" />
                                  </VBox.margin>
-                              </TableView>
+                              </HBox>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <TableView fx:id="tableView" maxHeight="200.0" maxWidth="831.0" visible="false">
+                                       <columns>
+                                          <TableColumn fx:id="tbm0" maxWidth="-1.0" minWidth="150.0" prefWidth="-1.0" />
+                                          <TableColumn fx:id="tbm1" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="1" />
+                                          <TableColumn fx:id="tbm2" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="2" />
+                                          <TableColumn fx:id="tbm3" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="3" />
+                                          <TableColumn fx:id="tbm4" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="4" />
+                                          <TableColumn fx:id="tbm5" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="5" />
+                                          <TableColumn fx:id="tbm6" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="6" />
+                                          <TableColumn fx:id="tbm7" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="7" />
+                                          <TableColumn fx:id="tbm8" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="8" />
+                                          <TableColumn fx:id="tbm9" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="9" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </HBox>
                            </children>
                         </VBox>
                      </children>

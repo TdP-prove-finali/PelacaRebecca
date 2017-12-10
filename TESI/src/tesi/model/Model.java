@@ -11,13 +11,11 @@ import tesi.DAO.DAO;
 
 public class Model{
 	
-	private final static int MPSsize = 6;
-	
 	private DAO dao;
+	
 	private List<String> metodi;	
 	private List<Prodotto> prodotti;
-	private List<Double> forecast;
-	
+	private List<Integer> forecast;
 	private int[] ATP;
 	
 	
@@ -25,8 +23,7 @@ public class Model{
 		
 		this.dao = new DAO();
 		this.prodotti = dao.getProdottiDB();
-		
-		this.ATP = new int[MPSsize];
+	
 	}
 	
 	public List<Prodotto> getProdotti() {
@@ -59,13 +56,14 @@ public class Model{
 		return metodi;
 	}
 	
-	public String getMovingAverage(Prodotto prodotto, int tau, int m) {
+	public ObservableList<Forecast> getMovingAverage(Prodotto prodotto, int tau, int m) {
 		
-		StringBuilder result = new StringBuilder();
+		this.forecast = new ArrayList<Integer>();
+		
+		ObservableList<Forecast> result = FXCollections.observableArrayList();
 		
 		List<Integer> demand = dao.getStoricoDB(prodotto);
 		List<Double> smoothed_estimate = new ArrayList<Double>();
-		this.forecast = new ArrayList<Double>();
 		
 //		for(Integer i : demand)
 //			System.out.println(i + "\n");
@@ -88,30 +86,63 @@ public class Model{
 		
 		for(int i=tau-1; i>=0; i--) {
 			int last_index = smoothed_estimate.size()-1;
-			forecast.add(smoothed_estimate.get(last_index-i));
+			forecast.add((int)Math.round(smoothed_estimate.get(last_index-i)));
 		}
 		
-		result.append("Previsione della domanda con il metodo Moving Average :\n");
+		Forecast tableRow = null;
 		
-		for(int i=1; i<=tau; i++)
-			result.append(i + "\t\t");
+		switch (forecast.size()) {
 		
-		result.append("\n");
-	
-		for(Double d : forecast)
-			result.append((int)Math.round(d) + "\t\t");
+		case 1 : 
+			tableRow = new Forecast(forecast.get(0));
+			break;
+			
+		case 2 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1));
+			break;
+			
+		case 3 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2));
+			break;
+			
+		case 4 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3));
+			break;
+			
+		case 5 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4));
+			break;
+			
+		case 6 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4), forecast.get(5));
+			break;
+			
+		case 7 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4), forecast.get(5), forecast.get(6));
+			break;
+			
+		case 8 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4), forecast.get(5), forecast.get(6), forecast.get(7));
+			break;
+			
+		case 9 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4), forecast.get(5), forecast.get(6), forecast.get(7), forecast.get(8));
+			break;
+		}
 		
-		return result.toString();
+		result.add(tableRow);
+		
+		return result;
 	
 	}
 
-	public String getExponentialSmoothing(Prodotto prodotto, int tau, double alfa) {
+	public ObservableList<Forecast> getExponentialSmoothing(Prodotto prodotto, int tau, double alfa) {
 		
-		StringBuilder result = new StringBuilder();
+		ObservableList<Forecast> result = FXCollections.observableArrayList();
 		
 		List<Integer> demand = dao.getStoricoDB(prodotto);
 		List<Double> smoothed_estimate = new ArrayList<Double>();
-		this.forecast = new ArrayList<Double>();
+		this.forecast = new ArrayList<Integer>();
 		
 //		for(Integer i : demand)
 //		System.out.println(i + "\n");
@@ -130,30 +161,63 @@ public class Model{
 		
 		for(int i=tau-1; i>=0; i--) {
 			int last_index = smoothed_estimate.size()-1;
-			forecast.add(smoothed_estimate.get(last_index-i));
+			forecast.add((int)Math.round(smoothed_estimate.get(last_index-i)));
+		}
+	
+		Forecast tableRow = null;
+		
+		switch (forecast.size()) {
+		
+		case 1 : 
+			tableRow = new Forecast(forecast.get(0));
+			break;
+			
+		case 2 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1));
+			break;
+			
+		case 3 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2));
+			break;
+			
+		case 4 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3));
+			break;
+			
+		case 5 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4));
+			break;
+			
+		case 6 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4), forecast.get(5));
+			break;
+			
+		case 7 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4), forecast.get(5), forecast.get(6));
+			break;
+			
+		case 8 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4), forecast.get(5), forecast.get(6), forecast.get(7));
+			break;
+			
+		case 9 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4), forecast.get(5), forecast.get(6), forecast.get(7), forecast.get(9));
+			break;
 		}
 		
-		result.append("Previsione della domanda con il metodo Exponential Smoothing :\n");
+		result.add(tableRow);
 		
-		for(int i=1; i<=tau; i++)
-			result.append(i + "\t\t");
-		
-		result.append("\n");
-	
-		for(Double d : forecast)
-			result.append((int)Math.round(d) + "\t\t");
-		
-		return result.toString().trim();
+		return result;
 	}
 
-	public String getExponentialSmoothingWithTrend(Prodotto prodotto, int tau, double alfa, double beta) {
+	public ObservableList<Forecast> getExponentialSmoothingWithTrend(Prodotto prodotto, int tau, double alfa, double beta) {
 		
-		StringBuilder result = new StringBuilder();
+		ObservableList<Forecast> result = FXCollections.observableArrayList();
 		
 		List<Integer> demand = dao.getStoricoDB(prodotto);
 		List<Double> smoothed_estimate = new ArrayList<Double>();
 		List<Double> smoothed_trend = new ArrayList<Double>();
-		this.forecast = new ArrayList<Double>();
+		this.forecast = new ArrayList<Integer>();
 		
 		double f;
 		double t;
@@ -170,31 +234,64 @@ public class Model{
 		
 		for(int i=tau-1; i>=0; i--) {
 			int last_index = smoothed_estimate.size()-1;
-			forecast.add(smoothed_estimate.get(last_index-i)+tau*smoothed_estimate.get(last_index-i));
+			forecast.add((int)Math.round(smoothed_estimate.get(last_index-i)+tau*smoothed_estimate.get(last_index-i)));
 		}
 		
-		result.append("Previsione della domanda con il metodo Exponential Smoothing with Trend :\n");
+		Forecast tableRow = null;
 		
-		for(int i=1; i<=tau; i++)
-			result.append(i + "\t\t");
+		switch (forecast.size()) {
 		
-		result.append("\n");
-	
-		for(Double d : forecast)
-			result.append((int)Math.round(d) + "\t\t");
+		case 1 : 
+			tableRow = new Forecast(forecast.get(0));
+			break;
+			
+		case 2 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1));
+			break;
+			
+		case 3 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2));
+			break;
+			
+		case 4 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3));
+			break;
+			
+		case 5 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4));
+			break;
+			
+		case 6 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4), forecast.get(5));
+			break;
+			
+		case 7 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4), forecast.get(5), forecast.get(6));
+			break;
+			
+		case 8 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4), forecast.get(5), forecast.get(6), forecast.get(7));
+			break;
+			
+		case 9 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4), forecast.get(5), forecast.get(6), forecast.get(7), forecast.get(9));
+			break;
+		}
+		
+		result.add(tableRow);
 
-		return result.toString().trim();
+		return result;
 	}
 
-	public String getWinter(Prodotto prodotto, int tau, double alfa, double beta, double gamma, int N) {
+	public ObservableList<Forecast> getWinter(Prodotto prodotto, int tau, double alfa, double beta, double gamma, int N) {
 		
-		StringBuilder result = new StringBuilder();
+		ObservableList<Forecast> result = FXCollections.observableArrayList();
 		
 		List<Integer> demand = dao.getStoricoDB(prodotto);
 		List<Double> smoothed_estimate = new ArrayList<Double>();
 		List<Double> smoothed_trend = new ArrayList<Double>();
 		List<Double> smoothed_seasonality = new ArrayList<Double>();
-		this.forecast = new ArrayList<Double>();
+		this.forecast = new ArrayList<Integer>();
 		
 		int sum = 0;
 		double average;
@@ -230,32 +327,61 @@ public class Model{
 		
 		for(int i=tau-1; i>=0; i--) {
 			int last_index = smoothed_estimate.size()-1;
-			forecast.add((smoothed_estimate.get(last_index-i)+tau*smoothed_estimate.get(last_index-i))*smoothed_seasonality.get(last_index-i-N+1));
+			forecast.add((int)Math.round((smoothed_estimate.get(last_index-i)+tau*smoothed_estimate.get(last_index-i))*smoothed_seasonality.get(last_index-i-N+1)));
 		}
 		
-		result.append("Previsione della domanda con il metodo di Winter :\n");
+		Forecast tableRow = null;
 		
-		for(int i=1; i<=tau; i++)
-			result.append(i + "\t\t");
+		switch (forecast.size()) {
 		
-		result.append("\n");
-	
-		for(Double d : forecast)
-			result.append((int)Math.round(d) + "\t\t");
-
+		case 1 : 
+			tableRow = new Forecast(forecast.get(0));
+			break;
+			
+		case 2 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1));
+			break;
+			
+		case 3 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2));
+			break;
+			
+		case 4 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3));
+			break;
+			
+		case 5 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4));
+			break;
+			
+		case 6 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4), forecast.get(5));
+			break;
+			
+		case 7 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4), forecast.get(5), forecast.get(6));
+			break;
+			
+		case 8 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4), forecast.get(5), forecast.get(6), forecast.get(7));
+			break;
+			
+		case 9 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4), forecast.get(5), forecast.get(6), forecast.get(7), forecast.get(9));
+			break;
+		}
 		
-		return result.toString();
+		result.add(tableRow);
+		
+		return result;
 	}
 
 	public ObservableList<Row> getMPSeATP(Prodotto prodotto, int lotSize, int magIn, int...tbs) {
-		
-		if(forecast.size()!=MPSsize) {
-			//genera eccezione
-		}
 				
-		int[] ordini_acquisiti = new int[MPSsize];
-		int[] disponibilita_magazzino = new int[MPSsize];
-		int[] MPSquantity = new int[MPSsize];
+		int[] ordini_acquisiti = new int[forecast.size()];
+		int[] disponibilita_magazzino = new int[forecast.size()];
+		int[] MPSquantity = new int[forecast.size()];
+		this.ATP = new int[forecast.size()];
 		
 		int count=0;
 		
@@ -267,7 +393,7 @@ public class Model{
 		
 		int It;
 		
-		for(int i=0; i<MPSsize; i++) {
+		for(int i=0; i<forecast.size(); i++) {
 			
 			It = 0;
 			
@@ -277,7 +403,7 @@ public class Model{
 				It = disponibilita_magazzino[i-1] + MPSquantity[i];
 			
 			if(forecast.get(i)>=ordini_acquisiti[i])
-				It = (int) (It - forecast.get(i));
+				It -= forecast.get(i);
 			else
 				It -= ordini_acquisiti[i];
 			
@@ -292,7 +418,7 @@ public class Model{
 					It = disponibilita_magazzino[i-1] + MPSquantity[i];
 				
 				if(forecast.get(i)>=ordini_acquisiti[i])
-					It = (int) (It - forecast.get(i));
+					It -= forecast.get(i);
 				else
 					It -= ordini_acquisiti[i];
 				
@@ -303,7 +429,7 @@ public class Model{
 		int atp;
 		boolean calcolaATP;
 		
-		for(int i=0; i<MPSsize; i++) {
+		for(int i=0; i<forecast.size(); i++) {
 			
 			atp = 0;
 			calcolaATP = false;
@@ -327,19 +453,83 @@ public class Model{
 				ATP[i] = atp;
 			}
 		}
-		
-		int[] forecast_array = new int[forecast.size()];
-		
-		for(int i=0; i<forecast.size(); i++)
-			forecast_array[i] = (int)Math.floor(forecast.get(i));
 			
 		ObservableList<Row> result = FXCollections.observableArrayList();
 		
-		result.add(new Row("Previsione", forecast_array[0], forecast_array[1], forecast_array[2], forecast_array[3], forecast_array[4], forecast_array[5]));
-		result.add(new Row("Ordini acquisiti", ordini_acquisiti[0],ordini_acquisiti[1],ordini_acquisiti[2],ordini_acquisiti[3],ordini_acquisiti[4],ordini_acquisiti[5]));
-		result.add(new Row("Disponibilità magazzino", disponibilita_magazzino[0], disponibilita_magazzino[1], disponibilita_magazzino[2], disponibilita_magazzino[3], disponibilita_magazzino[4], disponibilita_magazzino[5]));
-		result.add(new Row("Quantità MPS", MPSquantity[0], MPSquantity[1], MPSquantity[2], MPSquantity[3], MPSquantity[4], MPSquantity[5]));
-		result.add(new Row("ATP", ATP[0], ATP[1], ATP[2], ATP[3], ATP[4], ATP[5]));
+		switch (forecast.size()) {
+		
+		case 1 : 
+			result.add(new Row("Previsione", forecast.get(0)));
+			result.add(new Row("Ordini acquisiti", ordini_acquisiti[0]));
+			result.add(new Row("Disponibilità magazzino", disponibilita_magazzino[0]));
+			result.add(new Row("Quantità MPS", MPSquantity[0]));
+			result.add(new Row("ATP", ATP[0]));
+			break;
+			
+		case 2 : 
+			result.add(new Row("Previsione", forecast.get(0), forecast.get(1)));
+			result.add(new Row("Ordini acquisiti", ordini_acquisiti[0], ordini_acquisiti[1]));
+			result.add(new Row("Disponibilità magazzino", disponibilita_magazzino[0], disponibilita_magazzino[1]));
+			result.add(new Row("Quantità MPS", MPSquantity[0], MPSquantity[1]));
+			result.add(new Row("ATP", ATP[0], ATP[1]));
+			break;
+			
+		case 3 : 
+			result.add(new Row("Previsione", forecast.get(0), forecast.get(1), forecast.get(2)));
+			result.add(new Row("Ordini acquisiti", ordini_acquisiti[0], ordini_acquisiti[1], ordini_acquisiti[2]));
+			result.add(new Row("Disponibilità magazzino", disponibilita_magazzino[0], disponibilita_magazzino[1], disponibilita_magazzino[2]));
+			result.add(new Row("Quantità MPS", MPSquantity[0], MPSquantity[1], MPSquantity[2]));
+			result.add(new Row("ATP", ATP[0], ATP[1], ATP[2]));
+			break;
+			
+		case 4 : 
+			result.add(new Row("Previsione", forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3)));
+			result.add(new Row("Ordini acquisiti", ordini_acquisiti[0], ordini_acquisiti[1], ordini_acquisiti[2], ordini_acquisiti[3]));
+			result.add(new Row("Disponibilità magazzino", disponibilita_magazzino[0], disponibilita_magazzino[1], disponibilita_magazzino[2], disponibilita_magazzino[3]));
+			result.add(new Row("Quantità MPS", MPSquantity[0], MPSquantity[1], MPSquantity[2], MPSquantity[3]));
+			result.add(new Row("ATP", ATP[0], ATP[1], ATP[2], ATP[3]));
+			break;
+			
+		case 5 : 
+			result.add(new Row("Previsione", forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4)));
+			result.add(new Row("Ordini acquisiti", ordini_acquisiti[0], ordini_acquisiti[1], ordini_acquisiti[2], ordini_acquisiti[3], ordini_acquisiti[4]));
+			result.add(new Row("Disponibilità magazzino", disponibilita_magazzino[0], disponibilita_magazzino[1], disponibilita_magazzino[2], disponibilita_magazzino[3], disponibilita_magazzino[4]));
+			result.add(new Row("Quantità MPS", MPSquantity[0], MPSquantity[1], MPSquantity[2], MPSquantity[3], MPSquantity[4]));
+			result.add(new Row("ATP", ATP[0], ATP[1], ATP[2], ATP[3], ATP[4]));
+			break;
+			
+		case 6 : 
+			result.add(new Row("Previsione", forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4), forecast.get(5)));
+			result.add(new Row("Ordini acquisiti", ordini_acquisiti[0], ordini_acquisiti[1], ordini_acquisiti[2], ordini_acquisiti[3], ordini_acquisiti[4], ordini_acquisiti[5]));
+			result.add(new Row("Disponibilità magazzino", disponibilita_magazzino[0], disponibilita_magazzino[1], disponibilita_magazzino[2], disponibilita_magazzino[3], disponibilita_magazzino[4], disponibilita_magazzino[5]));
+			result.add(new Row("Quantità MPS", MPSquantity[0], MPSquantity[1], MPSquantity[2], MPSquantity[3], MPSquantity[4], MPSquantity[5]));
+			result.add(new Row("ATP", ATP[0], ATP[1], ATP[2], ATP[3], ATP[4], ATP[5]));
+			break;
+			
+		case 7 : 
+			result.add(new Row("Previsione", forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4), forecast.get(5), forecast.get(6)));
+			result.add(new Row("Ordini acquisiti", ordini_acquisiti[0], ordini_acquisiti[1], ordini_acquisiti[2], ordini_acquisiti[3], ordini_acquisiti[4], ordini_acquisiti[5], ordini_acquisiti[6]));
+			result.add(new Row("Disponibilità magazzino", disponibilita_magazzino[0], disponibilita_magazzino[1], disponibilita_magazzino[2], disponibilita_magazzino[3], disponibilita_magazzino[4], disponibilita_magazzino[5], disponibilita_magazzino[6]));
+			result.add(new Row("Quantità MPS", MPSquantity[0], MPSquantity[1], MPSquantity[2], MPSquantity[3], MPSquantity[4], MPSquantity[5], MPSquantity[6]));
+			result.add(new Row("ATP", ATP[0], ATP[1], ATP[2], ATP[3], ATP[4], ATP[5], ATP[6]));
+			break;
+			
+		case 8 : 
+			result.add(new Row("Previsione", forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4), forecast.get(5), forecast.get(6), forecast.get(7)));
+			result.add(new Row("Ordini acquisiti", ordini_acquisiti[0], ordini_acquisiti[1], ordini_acquisiti[2], ordini_acquisiti[3], ordini_acquisiti[4], ordini_acquisiti[5], ordini_acquisiti[6], ordini_acquisiti[7]));
+			result.add(new Row("Disponibilità magazzino", disponibilita_magazzino[0], disponibilita_magazzino[1], disponibilita_magazzino[2], disponibilita_magazzino[3], disponibilita_magazzino[4], disponibilita_magazzino[5], disponibilita_magazzino[6], disponibilita_magazzino[7]));
+			result.add(new Row("Quantità MPS", MPSquantity[0], MPSquantity[1], MPSquantity[2], MPSquantity[3], MPSquantity[4], MPSquantity[5], MPSquantity[6], MPSquantity[7]));
+			result.add(new Row("ATP", ATP[0], ATP[1], ATP[2], ATP[3], ATP[4], ATP[5], ATP[6], ATP[7]));
+			break;
+			
+		case 9 : 
+			result.add(new Row("Previsione", forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4), forecast.get(5), forecast.get(6), forecast.get(7), forecast.get(8)));
+			result.add(new Row("Ordini acquisiti", ordini_acquisiti[0], ordini_acquisiti[1], ordini_acquisiti[2], ordini_acquisiti[3], ordini_acquisiti[4], ordini_acquisiti[5], ordini_acquisiti[6], ordini_acquisiti[7], ordini_acquisiti[8]));
+			result.add(new Row("Disponibilità magazzino", disponibilita_magazzino[0], disponibilita_magazzino[1], disponibilita_magazzino[2], disponibilita_magazzino[3], disponibilita_magazzino[4], disponibilita_magazzino[5], disponibilita_magazzino[6], disponibilita_magazzino[7], disponibilita_magazzino[8]));
+			result.add(new Row("Quantità MPS", MPSquantity[0], MPSquantity[1], MPSquantity[2], MPSquantity[3], MPSquantity[4], MPSquantity[5], MPSquantity[6], MPSquantity[7], MPSquantity[8]));
+			result.add(new Row("ATP", ATP[0], ATP[1], ATP[2], ATP[3], ATP[4], ATP[5], ATP[6], ATP[7], ATP[8]));
+			break;
+		}
 		
 		for(Row r : result)
 			System.out.println(r + "\n");

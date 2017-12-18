@@ -553,15 +553,13 @@ public class Model{
 		
 		SimulationResult sr = sim.simula();
 		
-		result.append("\n");
-		
 		for(Ordine o : sr.getOrdini()) 
 			result.append(o.toString()+"\n");
 		
 		result.append("Numero ordini accettati : " + sr.getOrdini_accettati() + "\n");
 		result.append("Numero ordini rifiutati : " + sr.getOrdini_rifiutati() + "\n");
 		result.append("Percentuale ordini accettati : " + Math.floor(sr.getPercentuale_accettati()) + " %\n");
-//		result.append("Percentuale ordini rifiutati : " + (1-sr.getPercentuale_accettati()) + " %\n");
+		result.append("Percentuale ordini rifiutati : " + Math.floor(sr.getPercentuale_rifiutati()) + " %\n\n");
 
 		return result.toString();
 	}

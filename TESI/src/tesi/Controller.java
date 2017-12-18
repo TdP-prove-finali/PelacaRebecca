@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -111,6 +112,9 @@ public class Controller {
 
     @FXML
     private TableColumn<Forecast, Integer> tbf9;
+    
+    @FXML
+    private Tab tabMPS;
 
     @FXML
     private TextField txt1;
@@ -189,6 +193,9 @@ public class Controller {
 
     @FXML
     private TableColumn<Row, Integer> tbm9;
+    
+    @FXML
+    private Tab tabSimulation;
   
     @FXML
     private Slider sliderProb;
@@ -290,6 +297,8 @@ public class Controller {
     	
     	labelError.setText("");
     	tvForecast.setVisible(false);
+    	tabMPS.setDisable(true);
+    	tabSimulation.setDisable(true);
 		
     	ObservableList<Forecast> result = FXCollections.observableArrayList();
     	
@@ -349,6 +358,7 @@ public class Controller {
     	
     	if(!result.isEmpty()) {
     		System.out.println(result);
+    		tabMPS.setDisable(false);
     		switch (Integer.parseInt(tau.getText())) {
     		
     		case 1 :
@@ -596,6 +606,8 @@ public class Controller {
     @FXML
     void doMPS(ActionEvent event) {
     	
+    	tabSimulation.setDisable(true);
+    	
     	ObservableList<Row> result = FXCollections.observableArrayList();
     	
     	try {
@@ -842,6 +854,7 @@ public class Controller {
 						
     	if(!result.isEmpty()) {
     		System.out.println(result);
+    		tabSimulation.setDisable(false);
     		tableView.setItems(result);
     		tableView.setVisible(true);	
     	}
@@ -850,10 +863,8 @@ public class Controller {
     @FXML
     void doSimula(ActionEvent event) {
     	
-    	txtResult.clear();
-    	
-    	if(sliderProb.getValue()>=0) 
-    		if(!txtMin.getText().equals("") && !txtMax.getText().equals("")) 
+    	if(sliderProb.getValue()>=0) {
+    		try {
     			if(Integer.parseInt(txtMin.getText())>=0 && Integer.parseInt(txtMax.getText())>=0) 
     				if(Integer.parseInt(txtMin.getText())<Integer.parseInt(txtMax.getText()))
     					txtResult.appendText(model.simulaModel(sliderProb.getValue(), Integer.parseInt(txtMin.getText()), Integer.parseInt(txtMax.getText())));
@@ -861,9 +872,12 @@ public class Controller {
     					txtResult.appendText("Inserisci un valore di min minore di quello di max");
     			else
     				txtResult.appendText("Inserisci valori interi positivi di min e max");
-    		else
+    		}
+    		catch(Exception exp) {
     			txtResult.appendText("Inserisci valori interi positivi di min e max");
-    	else 
+    		}
+    	}
+    	else
     		txtResult.appendText("Scegli un valore di probabilità");
     }
 
@@ -903,6 +917,7 @@ public class Controller {
         assert txt7 != null : "fx:id=\"txt7\" was not injected: check your FXML file 'tesi.fxml'.";
         assert txt8 != null : "fx:id=\"txt8\" was not injected: check your FXML file 'tesi.fxml'.";
         assert txt9 != null : "fx:id=\"txt9\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert tabMPS != null : "fx:id=\"tabMPS\" was not injected: check your FXML file 'tesi.fxml'.";
         assert txtLotSize != null : "fx:id=\"txtLotSize\" was not injected: check your FXML file 'tesi.fxml'.";
         assert txtMagIn != null : "fx:id=\"txtMagIn\" was not injected: check your FXML file 'tesi.fxml'.";
         assert btnProsegui != null : "fx:id=\"btnProsegui\" was not injected: check your FXML file 'tesi.fxml'.";
@@ -920,6 +935,7 @@ public class Controller {
         assert tbm7 != null : "fx:id=\"tbm7\" was not injected: check your FXML file 'tesi.fxml'.";
         assert tbm8 != null : "fx:id=\"tbm8\" was not injected: check your FXML file 'tesi.fxml'.";
         assert tbm9 != null : "fx:id=\"tbm9\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert tabSimulation != null : "fx:id=\"tabSimulation\" was not injected: check your FXML file 'tesi.fxml'.";
         assert sliderProb != null : "fx:id=\"sliderProb\" was not injected: check your FXML file 'tesi.fxml'.";
         assert txtMin != null : "fx:id=\"txtMin\" was not injected: check your FXML file 'tesi.fxml'.";
         assert txtMax != null : "fx:id=\"txtMax\" was not injected: check your FXML file 'tesi.fxml'.";

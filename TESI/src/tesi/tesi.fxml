@@ -25,7 +25,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tesi.Controller">
    <top>
-      <Label text="Forecasting, MPS and ATP" BorderPane.alignment="CENTER">
+      <Label text="Forecasting, MPS e ATP" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </BorderPane.margin>
@@ -316,7 +316,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="MPS, ATP">
+          <Tab fx:id="tabMPS" disable="true" text="MPS, ATP">
             <content>
               <AnchorPane>
                      <children>
@@ -574,7 +574,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab text="Simulation">
+            <Tab fx:id="tabSimulation" disable="true" text="Simulazione">
               <content>
                 <AnchorPane>
                      <children>

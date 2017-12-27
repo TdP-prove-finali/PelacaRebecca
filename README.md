@@ -6,7 +6,7 @@ Istruzioni per l'installazione e l'utilizzo dell'applicazione.
 
 1) Scaricare il progetto dalla pagina di GitHub:
   
-  https://github.com/TdP-prove-finali/RebeccaPelaca
+  https://github.com/TdP-prove-finali/PelacaRebecca
 
 3) Importare sul proprio DB server (user=root) il database dell’applicazione, 
 presente all’interno della cartella “db” del progetto.

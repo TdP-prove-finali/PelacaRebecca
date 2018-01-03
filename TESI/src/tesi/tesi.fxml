@@ -643,27 +643,25 @@
       </TabPane>
    </center>
    <top>
-      <VBox BorderPane.alignment="CENTER">
+      <HBox alignment="TOP_CENTER" BorderPane.alignment="TOP_CENTER">
          <children>
-            <HBox alignment="TOP_RIGHT">
-               <children>
-                  <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../logo.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </HBox>
-            <HBox alignment="TOP_CENTER">
-               <children>
-                  <Label text="Forecasting, MPS e ATP">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font>
-                  </Label>
-               </children>
-            </HBox>
+            <Label text="Forecasting, MPS e ATP">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+               <padding>
+                  <Insets top="25.0" />
+               </padding>
+            </Label>
+            <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../logo.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="200.0" />
+               </HBox.margin>
+            </ImageView>
          </children>
-      </VBox>
+      </HBox>
    </top>
 </BorderPane>

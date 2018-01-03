@@ -441,6 +441,7 @@ public class Controller {
     @FXML
     void rendiVisibileMPS(ActionEvent event) {
     	
+    	tableView.setVisible(false);
     	labelInserisciOrdini.setVisible(false);
     	gridPane.setVisible(false);
     	buttonMPS.setVisible(false);
@@ -605,7 +606,9 @@ public class Controller {
     @FXML
     void doMPS(ActionEvent event) {
     	
+    	tableView.setVisible(false);
     	tabSimulation.setDisable(true);
+    	labelError2.setText("");
     	
     	ObservableList<Row> result = FXCollections.observableArrayList();
     	

@@ -279,28 +279,29 @@
                                     </LineChart>
                                  </children>
                               </HBox>
-                              <Label fx:id="labelError" alignment="CENTER" contentDisplay="CENTER" textFill="#fc0e0e">
-                                 <font>
-                                    <Font name="System Bold" size="16.0" />
-                                 </font>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <Label fx:id="labelError" alignment="CENTER" contentDisplay="CENTER" textFill="#fc0e0e">
+                                       <font>
+                                          <Font name="System Bold" size="16.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <TableView fx:id="tvForecast" maxHeight="80.0" maxWidth="631.0" visible="false">
                                  <VBox.margin>
-                                    <Insets left="15.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <TableView fx:id="tvForecast" maxHeight="150.0" maxWidth="631.0" visible="false">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="15.0" />
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
                                  </VBox.margin>
                                  <columns>
-                                    <TableColumn fx:id="tbf1" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="1" />
-                                    <TableColumn fx:id="tbf2" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="2" />
-                                    <TableColumn fx:id="tbf3" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="3" />
-                                    <TableColumn fx:id="tbf4" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="4" />
-                                    <TableColumn fx:id="tbf5" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="5" />
-                                    <TableColumn fx:id="tbf6" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="6" />
-                                    <TableColumn fx:id="tbf7" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="7" />
-                                    <TableColumn fx:id="tbf8" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="8" />
-                                    <TableColumn fx:id="tbf9" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="9" />
+                                    <TableColumn fx:id="tbf1" editable="false" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" sortable="false" text="1" />
+                                    <TableColumn fx:id="tbf2" editable="false" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" sortable="false" text="2" />
+                                    <TableColumn fx:id="tbf3" editable="false" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" sortable="false" text="3" />
+                                    <TableColumn fx:id="tbf4" editable="false" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" sortable="false" text="4" />
+                                    <TableColumn fx:id="tbf5" editable="false" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" sortable="false" text="5" />
+                                    <TableColumn fx:id="tbf6" editable="false" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" sortable="false" text="6" />
+                                    <TableColumn fx:id="tbf7" editable="false" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" sortable="false" text="7" />
+                                    <TableColumn fx:id="tbf8" editable="false" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" sortable="false" text="8" />
+                                    <TableColumn fx:id="tbf9" editable="false" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" sortable="false" text="9" />
                                  </columns>
                               </TableView>
                            </children>
@@ -532,33 +533,33 @@
                                  <children>
                                     <Label fx:id="labelError2" textFill="#e11414">
                                        <font>
-                                          <Font name="System Bold" size="14.0" />
+                                          <Font name="System Bold" size="16.0" />
                                        </font>
                                     </Label>
                                  </children>
                                  <VBox.margin>
-                                    <Insets left="5.0" top="10.0" />
+                                    <Insets left="5.0" top="5.0" />
                                  </VBox.margin>
                               </HBox>
                               <HBox alignment="CENTER">
                                  <children>
-                                    <TableView fx:id="tableView" maxHeight="200.0" maxWidth="831.0" visible="false">
+                                    <TableView fx:id="tableView" maxHeight="150.0" maxWidth="831.0" visible="false">
                                        <columns>
-                                          <TableColumn fx:id="tbm0" maxWidth="-1.0" minWidth="150.0" prefWidth="-1.0" />
-                                          <TableColumn fx:id="tbm1" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="1" />
-                                          <TableColumn fx:id="tbm2" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="2" />
-                                          <TableColumn fx:id="tbm3" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="3" />
-                                          <TableColumn fx:id="tbm4" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="4" />
-                                          <TableColumn fx:id="tbm5" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="5" />
-                                          <TableColumn fx:id="tbm6" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="6" />
-                                          <TableColumn fx:id="tbm7" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="7" />
-                                          <TableColumn fx:id="tbm8" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="8" />
-                                          <TableColumn fx:id="tbm9" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="9" />
+                                          <TableColumn fx:id="tbm0" editable="false" maxWidth="-1.0" minWidth="150.0" prefWidth="-1.0" sortable="false" />
+                                          <TableColumn fx:id="tbm1" editable="false" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" sortable="false" text="1" />
+                                          <TableColumn fx:id="tbm2" editable="false" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" sortable="false" text="2" />
+                                          <TableColumn fx:id="tbm3" editable="false" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" sortable="false" text="3" />
+                                          <TableColumn fx:id="tbm4" editable="false" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" sortable="false" text="4" />
+                                          <TableColumn fx:id="tbm5" editable="false" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" sortable="false" text="5" />
+                                          <TableColumn fx:id="tbm6" editable="false" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" sortable="false" text="6" />
+                                          <TableColumn fx:id="tbm7" editable="false" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" sortable="false" text="7" />
+                                          <TableColumn fx:id="tbm8" editable="false" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" sortable="false" text="8" />
+                                          <TableColumn fx:id="tbm9" editable="false" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" sortable="false" text="9" />
                                        </columns>
                                     </TableView>
                                  </children>
                                  <VBox.margin>
-                                    <Insets top="15.0" />
+                                    <Insets top="10.0" />
                                  </VBox.margin>
                               </HBox>
                            </children>
@@ -649,19 +650,21 @@
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
-               <padding>
-                  <Insets top="25.0" />
-               </padding>
-            </Label>
-            <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../logo.png" />
-               </image>
                <HBox.margin>
-                  <Insets left="200.0" />
+                  <Insets />
                </HBox.margin>
-            </ImageView>
+            </Label>
          </children>
+         <BorderPane.margin>
+            <Insets bottom="5.0" top="5.0" />
+         </BorderPane.margin>
       </HBox>
    </top>
+   <bottom>
+      <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_RIGHT">
+         <image>
+            <Image url="@../../logo.png" />
+         </image>
+      </ImageView>
+   </bottom>
 </BorderPane>

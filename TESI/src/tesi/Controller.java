@@ -292,152 +292,152 @@ public class Controller {
     }
 
     
-    @FXML
-    void doPrevisione(ActionEvent event) {
-    	
-    	labelError.setText("");
-    	tvForecast.setVisible(false);
-    	tabMPS.setDisable(true);
-    	tabSimulation.setDisable(true);
-		
-    	ObservableList<Forecast> result = FXCollections.observableArrayList();
-    	
-    	if(boxMetodi.getValue()!=null && boxProdotti.getValue()!=null) {
-    		
-    		if(boxMetodi.getValue().toLowerCase().equals("moving average")) {
-    			
-    			try { 
-    				if(Integer.parseInt(tau.getText())>0 && Integer.parseInt(tau.getText())<10 && Integer.parseInt(m.getText())>0)
-    					result.addAll(model.getMovingAverage(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Integer.parseInt(m.getText())));
-    				else
-    					labelError.setText("Il parametro m deve essere strettamente positivo, il parametro tau deve essere compreso tra 1 e 9 inclusi");
-    			}
-    			catch(Exception exc) {
-    				labelError.setText("Inserisci i valori numerici dei parametri m e tau");
-    			}
-    		}	
-    		else if (boxMetodi.getValue().toLowerCase().equals("exponential smoothing")) {	
-    			
-    			try {
-    				if(Integer.parseInt(tau.getText())>0 && Integer.parseInt(tau.getText())<10 && Double.parseDouble(alfaES.getText())>0.0)
-    					result.addAll(model.getExponentialSmoothing(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Double.parseDouble(alfaES.getText())));
-    				else
-    					labelError.setText("Il parametro alfa deve essere strettamente positivo, il parametro tau deve essere compreso tra 1 e 9 inclusi");
-    			}
-    			catch(Exception exc) {
-    				labelError.setText("Inserisci i valori numerici dei parametri alfa e tau");
-    			}			
-    		}	
-    		else if(boxMetodi.getValue().toLowerCase().equals("exponential smoothing with trend")) {
-    			
-    			try {
-    				if(Integer.parseInt(tau.getText())>0 && Integer.parseInt(tau.getText())<10 && Double.parseDouble(alfaEST.getText())>0.0 && Double.parseDouble(betaEST.getText())>0.0)
-    					result.addAll(model.getExponentialSmoothingWithTrend(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Double.parseDouble(alfaEST.getText()), Double.parseDouble(betaEST.getText())));
-    				else
-    					labelError.setText("Il parametri alfa e beta devono essere strettamente positivi, il parametro tau deve essere compreso tra 1 e 9 inclusi");
-    			}
-    			catch(Exception exc) {
-    				labelError.setText("Inserisci i valori numerici dei parametri alfa, beta e tau");
-    			}
-    		}	
-    		else if(boxMetodi.getValue().toLowerCase().equals("winter")) {
-    			
-    			try {
-    				if(Integer.parseInt(tau.getText())>0 && Integer.parseInt(tau.getText())<10 && Double.parseDouble(alfaW.getText())>0.0 && Double.parseDouble(betaW.getText())>0.0 && Double.parseDouble(gammaW.getText())>0.0 && Integer.parseInt(Nperiod.getText())>0)
-    					result.addAll(model.getWinter(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Double.parseDouble(alfaW.getText()), Double.parseDouble(betaW.getText()), Double.parseDouble(gammaW.getText()), Integer.parseInt(Nperiod.getText())));
-    				else
-    					labelError.setText("Il parametri alfa, beta e gamma devono essere strettamente positivi, il parametro tau deve essere compreso tra 1 e 9 inclusi");
-    			}
-    			catch(Exception exc) {
-    				labelError.setText("Inserisci i valori numerici dei parametri alfa, beta, gamma, N e tau");
-    			}
-    		}
-    	}
-    	else
-    		labelError.setText("Selezionare un prodotto e un metodo");
-    	
-    	if(!result.isEmpty()) {
-    		System.out.println(result);
-    		tabMPS.setDisable(false);
-    		switch (Integer.parseInt(tau.getText())) {
-    		
-    		case 1 :
-    			tbf1.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("one"));
-    			break;
-    			
-    		case 2 :
-    			tbf1.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("one"));
-        		tbf2.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("two"));
-        		break; 
-        		
-    		case 3 :
-    			tbf1.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("one"));
-        		tbf2.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("two"));
-        		tbf3.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("three"));
-        		break;
-        		
-    		case 4 :
-    			tbf1.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("one"));
-        		tbf2.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("two"));
-        		tbf3.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("three"));
-        		tbf4.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("four"));
-        		break;
-        		
-    		case 5 :
-    			tbf1.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("one"));
-        		tbf2.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("two"));
-        		tbf3.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("three"));
-        		tbf4.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("four"));
-        		tbf5.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("five"));
-        		break;
-        		
-    		case 6 :
-    			tbf1.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("one"));
-        		tbf2.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("two"));
-        		tbf3.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("three"));
-        		tbf4.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("four"));
-        		tbf5.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("five"));
-        		tbf6.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("six"));
-        		break;
-        		
-    		case 7 :
-    	 		tbf1.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("one"));
-        		tbf2.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("two"));
-        		tbf3.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("three"));
-        		tbf4.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("four"));
-        		tbf5.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("five"));
-        		tbf6.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("six"));
-        		tbf7.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("seven"));
-        		break;
-        		
-    		case 8 :
-    			tbf1.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("one"));
-        		tbf2.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("two"));
-        		tbf3.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("three"));
-        		tbf4.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("four"));
-        		tbf5.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("five"));
-        		tbf6.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("six"));
-        		tbf7.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("seven"));
-        		tbf8.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("eight"));
-        		break;
-        		
-    		case 9 :
-    			tbf1.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("one"));
-        		tbf2.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("two"));
-        		tbf3.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("three"));
-        		tbf4.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("four"));
-        		tbf5.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("five"));
-        		tbf6.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("six"));
-        		tbf7.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("seven"));
-        		tbf8.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("eight"));
-        		tbf9.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("nine"));
-        		break;  			
-    		}
-    			
-    		tvForecast.setItems(result);
-    		tvForecast.setVisible(true);
-    	}
-    }
+//    @FXML
+//    void doPrevisione(ActionEvent event) {
+//    	
+//    	labelError.setText("");
+//    	tvForecast.setVisible(false);
+//    	tabMPS.setDisable(true);
+//    	tabSimulation.setDisable(true);
+//		
+//    	ObservableList<Forecast> result = FXCollections.observableArrayList();
+//    	
+//    	if(boxMetodi.getValue()!=null && boxProdotti.getValue()!=null) {
+//    		
+//    		if(boxMetodi.getValue().toLowerCase().equals("moving average")) {
+//    			
+//    			try { 
+//    				if(Integer.parseInt(tau.getText())>0 && Integer.parseInt(tau.getText())<10 && Integer.parseInt(m.getText())>0)
+//    					result.addAll(model.getMovingAverage(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Integer.parseInt(m.getText())));
+//    				else
+//    					labelError.setText("Il parametro m deve essere strettamente positivo, il parametro tau deve essere compreso tra 1 e 9 inclusi");
+//    			}
+//    			catch(Exception exc) {
+//    				labelError.setText("Inserisci i valori numerici dei parametri m e tau");
+//    			}
+//    		}	
+//    		else if (boxMetodi.getValue().toLowerCase().equals("exponential smoothing")) {	
+//    			
+//    			try {
+//    				if(Integer.parseInt(tau.getText())>0 && Integer.parseInt(tau.getText())<10 && Double.parseDouble(alfaES.getText())>0.0)
+//    					result.addAll(model.getExponentialSmoothing(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Double.parseDouble(alfaES.getText())));
+//    				else
+//    					labelError.setText("Il parametro alfa deve essere strettamente positivo, il parametro tau deve essere compreso tra 1 e 9 inclusi");
+//    			}
+//    			catch(Exception exc) {
+//    				labelError.setText("Inserisci i valori numerici dei parametri alfa e tau");
+//    			}			
+//    		}	
+//    		else if(boxMetodi.getValue().toLowerCase().equals("exponential smoothing with trend")) {
+//    			
+//    			try {
+//    				if(Integer.parseInt(tau.getText())>0 && Integer.parseInt(tau.getText())<10 && Double.parseDouble(alfaEST.getText())>0.0 && Double.parseDouble(betaEST.getText())>0.0)
+//    					result.addAll(model.getExponentialSmoothingWithTrend(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Double.parseDouble(alfaEST.getText()), Double.parseDouble(betaEST.getText())));
+//    				else
+//    					labelError.setText("Il parametri alfa e beta devono essere strettamente positivi, il parametro tau deve essere compreso tra 1 e 9 inclusi");
+//    			}
+//    			catch(Exception exc) {
+//    				labelError.setText("Inserisci i valori numerici dei parametri alfa, beta e tau");
+//    			}
+//    		}	
+//    		else if(boxMetodi.getValue().toLowerCase().equals("winter")) {
+//    			
+//    			try {
+//    				if(Integer.parseInt(tau.getText())>0 && Integer.parseInt(tau.getText())<10 && Double.parseDouble(alfaW.getText())>0.0 && Double.parseDouble(betaW.getText())>0.0 && Double.parseDouble(gammaW.getText())>0.0 && Integer.parseInt(Nperiod.getText())>0)
+//    					result.addAll(model.getWinter(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Double.parseDouble(alfaW.getText()), Double.parseDouble(betaW.getText()), Double.parseDouble(gammaW.getText()), Integer.parseInt(Nperiod.getText())));
+//    				else
+//    					labelError.setText("Il parametri alfa, beta e gamma devono essere strettamente positivi, il parametro tau deve essere compreso tra 1 e 9 inclusi");
+//    			}
+//    			catch(Exception exc) {
+//    				labelError.setText("Inserisci i valori numerici dei parametri alfa, beta, gamma, N e tau");
+//    			}
+//    		}
+//    	}
+//    	else
+//    		labelError.setText("Selezionare un prodotto e un metodo");
+//    	
+//    	if(!result.isEmpty()) {
+//    		System.out.println(result);
+//    		tabMPS.setDisable(false);
+//    		switch (Integer.parseInt(tau.getText())) {
+//    		
+//    		case 1 :
+//    			tbf1.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("one"));
+//    			break;
+//    			
+//    		case 2 :
+//    			tbf1.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("one"));
+//        		tbf2.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("two"));
+//        		break; 
+//        		
+//    		case 3 :
+//    			tbf1.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("one"));
+//        		tbf2.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("two"));
+//        		tbf3.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("three"));
+//        		break;
+//        		
+//    		case 4 :
+//    			tbf1.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("one"));
+//        		tbf2.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("two"));
+//        		tbf3.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("three"));
+//        		tbf4.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("four"));
+//        		break;
+//        		
+//    		case 5 :
+//    			tbf1.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("one"));
+//        		tbf2.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("two"));
+//        		tbf3.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("three"));
+//        		tbf4.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("four"));
+//        		tbf5.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("five"));
+//        		break;
+//        		
+//    		case 6 :
+//    			tbf1.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("one"));
+//        		tbf2.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("two"));
+//        		tbf3.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("three"));
+//        		tbf4.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("four"));
+//        		tbf5.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("five"));
+//        		tbf6.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("six"));
+//        		break;
+//        		
+//    		case 7 :
+//    	 		tbf1.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("one"));
+//        		tbf2.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("two"));
+//        		tbf3.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("three"));
+//        		tbf4.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("four"));
+//        		tbf5.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("five"));
+//        		tbf6.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("six"));
+//        		tbf7.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("seven"));
+//        		break;
+//        		
+//    		case 8 :
+//    			tbf1.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("one"));
+//        		tbf2.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("two"));
+//        		tbf3.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("three"));
+//        		tbf4.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("four"));
+//        		tbf5.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("five"));
+//        		tbf6.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("six"));
+//        		tbf7.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("seven"));
+//        		tbf8.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("eight"));
+//        		break;
+//        		
+//    		case 9 :
+//    			tbf1.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("one"));
+//        		tbf2.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("two"));
+//        		tbf3.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("three"));
+//        		tbf4.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("four"));
+//        		tbf5.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("five"));
+//        		tbf6.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("six"));
+//        		tbf7.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("seven"));
+//        		tbf8.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("eight"));
+//        		tbf9.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("nine"));
+//        		break;  			
+//    		}
+//    			
+//    		tvForecast.setItems(result);
+//    		tvForecast.setVisible(true);
+//    	}
+//    }
     
     @FXML
     void rendiVisibileMPS(ActionEvent event) {

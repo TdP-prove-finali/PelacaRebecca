@@ -56,13 +56,36 @@ public class Model{
 		return metodi;
 	}
 	
-	public ObservableList<Forecast> getMovingAverage(Prodotto prodotto, int tau, int m) {
+	public List<Integer> getMovingAverage(int tau, int m) {  //manca Prodotto prodotto, manca ObservableList<Forecast>
 		
 		this.forecast = new ArrayList<Integer>();
 		
 		ObservableList<Forecast> result = FXCollections.observableArrayList();
 		
-		List<Integer> demand = dao.getStoricoDB(prodotto);
+//		List<Integer> demand = dao.getStoricoDB(prodotto);
+		
+		List<Integer> demand = new ArrayList<Integer>();
+		demand.add(10);
+		demand.add(12);
+		demand.add(12);
+		demand.add(11);
+		demand.add(15);
+		demand.add(14);
+		demand.add(18);
+		demand.add(22);
+		demand.add(18);
+		demand.add(28);
+		demand.add(33);
+		demand.add(31);
+		demand.add(31);
+		demand.add(37);
+		demand.add(40);
+		demand.add(33);
+		demand.add(50);
+		demand.add(45);
+		demand.add(55);
+		demand.add(60);
+		
 		List<Double> smoothed_estimate = new ArrayList<Double>();
 		
 //		for(Integer i : demand)
@@ -132,15 +155,38 @@ public class Model{
 		
 		result.add(tableRow);
 		
-		return result;
+		return forecast;   //return result
 	
 	}
 
-	public ObservableList<Forecast> getExponentialSmoothing(Prodotto prodotto, int tau, double alfa) {
+	public List<Integer> getExponentialSmoothing(int tau, double alfa) {  //COME MOVING AVERAGE
 		
 		ObservableList<Forecast> result = FXCollections.observableArrayList();
 		
-		List<Integer> demand = dao.getStoricoDB(prodotto);
+//		List<Integer> demand = dao.getStoricoDB(prodotto);
+		
+		List<Integer> demand = new ArrayList<Integer>();
+		demand.add(10);
+		demand.add(12);
+		demand.add(12);
+		demand.add(11);
+		demand.add(15);
+		demand.add(14);
+		demand.add(18);
+		demand.add(22);
+		demand.add(18);
+		demand.add(28);
+		demand.add(33);
+		demand.add(31);
+		demand.add(31);
+		demand.add(37);
+		demand.add(40);
+		demand.add(33);
+		demand.add(50);
+		demand.add(45);
+		demand.add(55);
+		demand.add(60);
+		
 		List<Double> smoothed_estimate = new ArrayList<Double>();
 		this.forecast = new ArrayList<Integer>();
 		
@@ -207,14 +253,37 @@ public class Model{
 		
 		result.add(tableRow);
 		
-		return result;
+		return forecast;
 	}
 
-	public ObservableList<Forecast> getExponentialSmoothingWithTrend(Prodotto prodotto, int tau, double alfa, double beta) {
+	public List<Integer> getExponentialSmoothingWithTrend(int tau, double alfa, double beta) {
 		
 		ObservableList<Forecast> result = FXCollections.observableArrayList();
 		
-		List<Integer> demand = dao.getStoricoDB(prodotto);
+//		List<Integer> demand = dao.getStoricoDB(prodotto);
+		
+		List<Integer> demand = new ArrayList<Integer>();
+		demand.add(10);
+		demand.add(12);
+		demand.add(12);
+		demand.add(11);
+		demand.add(15);
+		demand.add(14);
+		demand.add(18);
+		demand.add(22);
+		demand.add(18);
+		demand.add(28);
+		demand.add(33);
+		demand.add(31);
+		demand.add(31);
+		demand.add(37);
+		demand.add(40);
+		demand.add(33);
+		demand.add(50);
+		demand.add(45);
+		demand.add(55);
+		demand.add(60);
+		
 		List<Double> smoothed_estimate = new ArrayList<Double>();
 		List<Double> smoothed_trend = new ArrayList<Double>();
 		this.forecast = new ArrayList<Integer>();
@@ -234,7 +303,7 @@ public class Model{
 		
 		for(int i=tau-1; i>=0; i--) {
 			int last_index = smoothed_estimate.size()-1;
-			forecast.add((int)Math.round(smoothed_estimate.get(last_index-i)+tau*smoothed_estimate.get(last_index-i)));
+			forecast.add((int)Math.round(smoothed_estimate.get(last_index-i)+tau*smoothed_trend.get(last_index-i)));
 		}
 		
 		Forecast tableRow = null;
@@ -280,14 +349,42 @@ public class Model{
 		
 		result.add(tableRow);
 
-		return result;
+		return forecast;
 	}
 
-	public ObservableList<Forecast> getWinter(Prodotto prodotto, int tau, double alfa, double beta, double gamma, int N) {
+	public List<Integer> getWinter(int tau, double alfa, double beta, double gamma, int N) {
 		
 		ObservableList<Forecast> result = FXCollections.observableArrayList();
 		
-		List<Integer> demand = dao.getStoricoDB(prodotto);
+//		List<Integer> demand = dao.getStoricoDB(prodotto);
+		
+		List<Integer> demand = new ArrayList<Integer>();
+		
+		demand.add(4);
+		demand.add(2);
+		demand.add(5);
+		demand.add(8);
+		demand.add(11);
+		demand.add(13);
+		demand.add(18);
+		demand.add(15);
+		demand.add(9);
+		demand.add(6);
+		demand.add(5);
+		demand.add(4);
+		demand.add(5);
+		demand.add(4);
+		demand.add(7);
+		demand.add(7);
+		demand.add(15);
+		demand.add(17);
+		demand.add(24);
+		demand.add(18);
+		demand.add(12);
+		demand.add(7);
+		demand.add(8);
+		demand.add(6);
+		
 		List<Double> smoothed_estimate = new ArrayList<Double>();
 		List<Double> smoothed_trend = new ArrayList<Double>();
 		List<Double> smoothed_seasonality = new ArrayList<Double>();
@@ -296,39 +393,77 @@ public class Model{
 		int sum = 0;
 		double average;
 		
-		for(int i=0; i<=N; i++)
+		for(int i=0; i<N; i++) 
 			sum += demand.get(i);
 		
 		average = (double)sum/N;
 		
-		for(int i=0; i<=N; i++) {
+		for(int i=0; i<N; i++) {
 			smoothed_seasonality.add(demand.get(i)/average);
 			smoothed_trend.add(0.0);
-			if(i!=N)
-				smoothed_estimate.add(0.0);
+			if(i<N-1)
+				smoothed_estimate.add(0.0);		
 		}
-		
+
 		smoothed_estimate.add(average);
-		
-		System.out.println(average);
-		
+				
 		double f;
 		double t;
 		double c;
 		
-		for(int i=N+1; i<demand.size(); i++) {
-			f = alfa*(demand.get(i)/smoothed_seasonality.get(i-N)+(1-alfa)*(smoothed_estimate.get(i-1)+smoothed_trend.get(i-1)));
+		for(int i=N; i<demand.size(); i++) {
+			System.out.println("DEMAND " + demand.get(i));
+			System.out.println("SMOOTHED SEASONALITY " + smoothed_seasonality.get(i-N));
+			System.out.println("SMOOTHED ESTIMATE " + smoothed_estimate.get(i-N));
+			System.out.println("SMOOTHED TREND " + smoothed_trend.get(i-1));
+			f = alfa*(demand.get(i)/smoothed_seasonality.get(i-N))+(1-alfa)*(smoothed_estimate.get(i-1)+smoothed_trend.get(i-1));
+			System.out.println("f = " + f);
 			smoothed_estimate.add(f);
+			System.out.println("TREND");
+			System.out.println("SMOOTHED ESTIMATE i " + smoothed_estimate.get(i));
+			System.out.println("SMOOTHED ESTIMATE i-1 " + smoothed_estimate.get(i-1));
+			System.out.println("SMOOTHED TREND " + smoothed_trend.get(i-1));
 			t = beta*(smoothed_estimate.get(i)-smoothed_estimate.get(i-1))+(1-beta)*smoothed_trend.get(i-1);
+			System.out.println("t = " + t);
 			smoothed_trend.add(t);
+			System.out.println("SEASONALITY");
+			System.out.println("DEMAND " + demand.get(i));
+			System.out.println("SMOOTHED ESTIMATE " + smoothed_estimate.get(i));
+			System.out.println("SMOOTHED SEASONALITY " + smoothed_seasonality.get(i-N));
 			c = gamma*(demand.get(i)/smoothed_estimate.get(i))+(1-gamma)*smoothed_seasonality.get(i-N);
+			System.out.println("c = " + c);
 			smoothed_seasonality.add(c);
+			
+			System.out.println("/////////////////////////////////");
 		}
 		
 		for(int i=tau-1; i>=0; i--) {
 			int last_index = smoothed_estimate.size()-1;
-			forecast.add((int)Math.round((smoothed_estimate.get(last_index-i)+tau*smoothed_estimate.get(last_index-i))*smoothed_seasonality.get(last_index-i-N+1)));
+			System.out.println("f " + smoothed_estimate.get(last_index-i));
+			System.out.println("f " + smoothed_trend.get(last_index-i));
+			System.out.println("c " + smoothed_seasonality.get(last_index-i-N+1));
+			double r = (smoothed_estimate.get(last_index-i)+tau*smoothed_trend.get(last_index-i))*smoothed_seasonality.get(last_index-i-N+1);
+			System.out.println("R double " + r);
+			int res = (int)Math.round((smoothed_estimate.get(last_index-i)+tau*smoothed_trend.get(last_index-i))*smoothed_seasonality.get(last_index-i-N+1));
+			System.out.println("Res " + res);
+			forecast.add(res);
 		}
+		
+		System.out.println("SMOOTHING_ESTIMATE");
+		
+		for(double d : smoothed_estimate)
+			System.out.println(d + "\n");
+		
+		System.out.println("SMOOTHING_SEASONALITY");
+		
+		for(double d : smoothed_seasonality)
+			System.out.println(d + "\n");
+		
+		System.out.println("SMOOTHING_TREND");
+		
+		for(double d : smoothed_trend)
+			System.out.println(d + "\n");
+		
 		
 		Forecast tableRow = null;
 		
@@ -373,7 +508,7 @@ public class Model{
 		
 		result.add(tableRow);
 		
-		return result;
+		return forecast;
 	}
 
 	public ObservableList<Row> getMPSeATP(Prodotto prodotto, int lotSize, int magIn, int...tbs) {

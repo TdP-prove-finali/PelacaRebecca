@@ -25,7 +25,8 @@ public class Prova {
 //		
 //		for(int i : model.getWinter(1, 0.1, 0.1, 0.1, 12))
 //			System.out.println(i + "\n");
-
+		
+//		model.getMPSeATP(80, 45);
 	}
 
 }

@@ -479,7 +479,7 @@ public class Model{
 	}
 
 	public ObservableList<Row> getMPSeATP(Prodotto prodotto, int lotSize, int magIn, int...tbs) {
-				
+
 		int[] ordini_acquisiti = new int[forecast.size()];
 		int[] disponibilita_magazzino = new int[forecast.size()];
 		int[] MPSquantity = new int[forecast.size()];
@@ -555,7 +555,7 @@ public class Model{
 				ATP[i] = atp;
 			}
 		}
-			
+		
 		ObservableList<Row> result = FXCollections.observableArrayList();
 		
 		switch (forecast.size()) {
@@ -633,10 +633,120 @@ public class Model{
 			break;
 		}
 		
-//		for(Row r : result)
-//			System.out.println(r + "\n");
-		
 		return result;
+		
+//		int[] ordini_acquisiti = new int[8];
+//		int[] disponibilita_magazzino = new int[8];
+//		int[] MPSquantity = new int[8];
+//		this.ATP = new int[8];
+//		this.forecast = new ArrayList<Integer>();
+//		
+//		forecast.add(20);
+//		forecast.add(20);
+//		forecast.add(20);
+//		forecast.add(20);
+//		forecast.add(40);
+//		forecast.add(40);
+//		forecast.add(40);
+//		forecast.add(40);
+//		
+//		ordini_acquisiti[0]=23;
+//		ordini_acquisiti[1]=15;
+//		ordini_acquisiti[2]=8;
+//		ordini_acquisiti[3]=4;
+//		ordini_acquisiti[4]=0;
+//		ordini_acquisiti[5]=0;
+//		ordini_acquisiti[6]=0;
+//		ordini_acquisiti[7]=0;
+//		
+//		int count=0;
+//		
+//		for (int i=0; i<8; i++) {
+//			MPSquantity[count] = 0;      
+//			ATP[count++] = 0;               // setta a 0 il valore all'indice count e poi fa l'incremento
+//		}
+//		
+//		int It;
+//		
+//		for(int i=0; i<8; i++) {
+//			
+//			It = 0;
+//			
+//			if(i==0)
+//				It = magIn + MPSquantity[i];
+//			else 
+//				It = disponibilita_magazzino[i-1] + MPSquantity[i];
+//			
+//			if(forecast.get(i)>=ordini_acquisiti[i])
+//				It -= forecast.get(i);
+//			else
+//				It -= ordini_acquisiti[i];
+//			
+//			if(It>=0)
+//				disponibilita_magazzino[i] = It;
+//			else {
+//				MPSquantity[i] = lotSize;
+//				
+//				if(i==0)
+//					It = magIn + MPSquantity[i];
+//				else 
+//					It = disponibilita_magazzino[i-1] + MPSquantity[i];
+//				
+//				if(forecast.get(i)>=ordini_acquisiti[i])
+//					It -= forecast.get(i);
+//				else
+//					It -= ordini_acquisiti[i];
+//				
+//				disponibilita_magazzino[i] = It;
+//			}
+//		}
+//		
+//		int atp;
+//		boolean calcolaATP;
+//		
+//		for(int i=0; i<forecast.size(); i++) {
+//			
+//			atp = 0;
+//			calcolaATP = false;
+//			
+//			if(i==0) {
+//				atp = magIn + MPSquantity[i];
+//				calcolaATP = true;
+//			}
+//			else if(MPSquantity[i]>0) {
+//				atp = MPSquantity[i];
+//				calcolaATP = true;
+//			}
+//			
+//			if(calcolaATP == true) {
+//				for(int j=i; j<MPSquantity.length; j++) {
+//					if(j==i || MPSquantity[j]==0)
+//						atp -= ordini_acquisiti[j];
+//					else if(MPSquantity[j]>0)
+//						break;
+//				}
+//				ATP[i] = atp;
+//			}
+//		}
+//		
+//		for(int i=0; i<8; i++)
+//			System.out.println(forecast.get(i) + " ");
+//		
+//		System.out.println("\n");
+//		
+//		for(int i=0; i<8; i++)
+//			System.out.println(ordini_acquisiti[i] + " ");
+//		
+//		System.out.println("\n");
+//		
+//		for(int i=0; i<8; i++)
+//			System.out.println(MPSquantity[i] + " ");
+//		
+//		System.out.println("\n");
+//		
+//		for(int i=0; i<8; i++)
+//			System.out.println(ATP[i] + " ");
+		
 	}
 	
 	public String simulaModel(double probabilita, int min, int max) {

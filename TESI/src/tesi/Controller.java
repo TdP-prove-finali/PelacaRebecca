@@ -208,6 +208,9 @@ public class Controller {
 
     @FXML
     private Button btnSimula;
+    
+    @FXML
+    private Label labelErrorSim;
 
     @FXML
     private TextArea txtResult;
@@ -838,7 +841,7 @@ public class Controller {
 								labelError2.setText("I valori non possono essere negativi");
 						}
 						catch(Exception exc) {
-							labelError2.setText("Inserisci tutti i valori");
+							labelError2.setText("Inserisci tutti gli ordini acquisiti per i prossimi mesi");
 						}
 						
 						break;
@@ -864,22 +867,31 @@ public class Controller {
     @FXML
     void doSimula(ActionEvent event) {
     	
+    	labelErrorSim.setVisible(false);
+    	
     	if(sliderProb.getValue()>=0) {
     		try {
     			if(Integer.parseInt(txtMin.getText())>=0 && Integer.parseInt(txtMax.getText())>=0) 
     				if(Integer.parseInt(txtMin.getText())<Integer.parseInt(txtMax.getText()))
     					txtResult.appendText(model.simulaModel(sliderProb.getValue(), Integer.parseInt(txtMin.getText()), Integer.parseInt(txtMax.getText())));
-    				else
-    					txtResult.appendText("Inserisci un valore di min minore di quello di max");
-    			else
-    				txtResult.appendText("Inserisci valori interi positivi di min e max");
+    				else {
+    					labelErrorSim.setVisible(true);
+    					labelErrorSim.setText("Inserisci un valore di min minore di quello di max");
+    				}
+    			else {
+    				labelErrorSim.setVisible(true);
+    				labelErrorSim.setText("Inserisci valori interi positivi di min e max");
+    			}
     		}
     		catch(Exception exp) {
-    			txtResult.appendText("Inserisci valori interi positivi di min e max");
+    			labelErrorSim.setVisible(true);
+    			labelErrorSim.setText("Inserisci valori interi positivi di min e max");
     		}
     	}
-    	else
-    		txtResult.appendText("Scegli un valore di probabilità");
+    	else {
+    		labelErrorSim.setVisible(true);
+    		labelErrorSim.setText("Scegli un valore di probabilità");
+    	}
     }
 
     @FXML
@@ -944,6 +956,7 @@ public class Controller {
         assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'tesi.fxml'.";
         assert tableView != null : "fx:id=\"tableView\" was not injected: check your FXML file 'tesi.fxml'.";
         assert tvForecast != null : "fx:id=\"tvForecast\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert labelErrorSim != null : "fx:id=\"labelErrorSim\" was not injected: check your FXML file 'tesi.fxml'.";
         assert labelError != null : "fx:id=\"labelError\" was not injected: check your FXML file 'tesi.fxml'.";
     }
     

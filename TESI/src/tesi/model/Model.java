@@ -235,7 +235,7 @@ public class Model{
 			break;
 			
 		case 9 : 
-			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4), forecast.get(5), forecast.get(6), forecast.get(7), forecast.get(9));
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4), forecast.get(5), forecast.get(6), forecast.get(7), forecast.get(8));
 			break;
 		}
 		
@@ -331,7 +331,7 @@ public class Model{
 			break;
 			
 		case 9 : 
-			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4), forecast.get(5), forecast.get(6), forecast.get(7), forecast.get(9));
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4), forecast.get(5), forecast.get(6), forecast.get(7), forecast.get(8));
 			break;
 		}
 		
@@ -469,7 +469,7 @@ public class Model{
 			break;
 			
 		case 9 : 
-			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4), forecast.get(5), forecast.get(6), forecast.get(7), forecast.get(9));
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4), forecast.get(5), forecast.get(6), forecast.get(7), forecast.get(8));
 			break;
 		}
 		
@@ -552,7 +552,18 @@ public class Model{
 					else if(MPSquantity[j]>0)
 						break;
 				}
-				ATP[i] = atp;
+								
+				if(atp<0 && i!=0) {
+					for(int j=i; j>=0; j--) {
+						if(ATP[j]>0) {
+							ATP[j] += atp;
+							ATP[i] = 0;
+							break;
+						}
+					}
+				}
+				else
+					ATP[i] = atp;		
 			}
 		}
 		

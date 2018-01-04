@@ -319,7 +319,7 @@ public class Controller {
     				labelError.setText("Inserisci i valori numerici dei parametri m e tau");
     			}
     		}	
-    		else if (boxMetodi.getValue().toLowerCase().equals("exponential smoothing")) {	
+    		else if (boxMetodi.getValue().toLowerCase().equals("exponential smoothing")) {
     			
     			try {
     				if(Integer.parseInt(tau.getText())>0 && Integer.parseInt(tau.getText())<10 && Double.parseDouble(alfaES.getText())>0.0)
@@ -328,6 +328,7 @@ public class Controller {
     					labelError.setText("Il parametro alfa deve essere strettamente positivo, il parametro tau deve essere compreso tra 1 e 9 inclusi");
     			}
     			catch(Exception exc) {
+    				
     				labelError.setText("Inserisci i valori numerici dei parametri alfa e tau");
     			}			
     		}	

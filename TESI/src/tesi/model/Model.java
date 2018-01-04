@@ -555,10 +555,15 @@ public class Model{
 								
 				if(atp<0 && i!=0) {
 					for(int j=i; j>=0; j--) {
-						if(ATP[j]>0) {
+						if(ATP[j]>-atp) {
 							ATP[j] += atp;
 							ATP[i] = 0;
 							break;
+						}
+						else if (ATP[j]<-atp && ATP[j]>0) {
+							atp += ATP[j];
+							ATP[j] = 0;
+							ATP[i] = 0;			
 						}
 					}
 				}

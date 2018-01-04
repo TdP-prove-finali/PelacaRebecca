@@ -8,7 +8,7 @@ Istruzioni per l'installazione e l'utilizzo dell'applicazione.
   
   https://github.com/TdP-prove-finali/PelacaRebecca
 
-3) Importare sul proprio DB server (user=root) il database dell’applicazione, 
+2) Importare sul proprio DB server (user=root) il database dell’applicazione, 
 presente all’interno della cartella “db” del progetto.
 
 3) Aprire il progetto scaricato con Eclipse e 

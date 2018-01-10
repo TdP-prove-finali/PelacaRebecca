@@ -238,6 +238,9 @@ public class Controller {
     @FXML
     void abilitaMetodo(ActionEvent event) {
     	
+    	labelError.setText("");
+    	tvForecast.setVisible(false);
+    	
     	if(boxMetodi.getValue()!=null && boxProdotti.getValue()!=null) {
     		
     		tau.setDisable(false);
@@ -457,6 +460,7 @@ public class Controller {
 					labelInserisciOrdini.setVisible(true);
 					gridPane.setVisible(true);
 					buttonMPS.setVisible(true);
+					btnProsegui.setDisable(true);
 					
 				switch(Integer.parseInt(tau.getText())) {
 					
@@ -876,20 +880,24 @@ public class Controller {
     				if(Integer.parseInt(txtMin.getText())<Integer.parseInt(txtMax.getText()))
     					txtResult.appendText(model.simulaModel(sliderProb.getValue(), Integer.parseInt(txtMin.getText()), Integer.parseInt(txtMax.getText())));
     				else {
+    					txtResult.clear();
     					labelErrorSim.setVisible(true);
     					labelErrorSim.setText("Inserisci un valore di min minore di quello di max");
     				}
     			else {
+    				txtResult.clear();
     				labelErrorSim.setVisible(true);
     				labelErrorSim.setText("Inserisci valori interi positivi di min e max");
     			}
     		}
     		catch(Exception exp) {
+    			txtResult.clear();
     			labelErrorSim.setVisible(true);
     			labelErrorSim.setText("Inserisci valori interi positivi di min e max");
     		}
     	}
     	else {
+    		txtResult.clear();
     		labelErrorSim.setVisible(true);
     		labelErrorSim.setText("Scegli un valore di probabilità");
     	}

@@ -225,6 +225,9 @@ public class Controller {
     private TableView<Forecast> tvForecast;
     
     @FXML
+    private Button btnNuovaAnalisi;
+    
+    @FXML
     private Label labelError;
     
 	@SuppressWarnings("unchecked")
@@ -241,7 +244,7 @@ public class Controller {
     @FXML
     void abilitaMetodo(ActionEvent event) {
     	
-    	labelError.setText("");
+    	labelError.setVisible(false);
     	tvForecast.setVisible(false);
     	
     	if(boxMetodi.getValue()!=null && boxProdotti.getValue()!=null) {
@@ -296,15 +299,17 @@ public class Controller {
     			
     		}
     	}
-    	else
+    	else {
     		labelError.setText("Selezionare un prodotto e un metodo");
+    		labelError.setVisible(true);
+    	}
     }
 
     
     @FXML
     void doPrevisione(ActionEvent event) {
     	
-    	labelError.setText("");
+    	labelError.setVisible(false);
     	tvForecast.setVisible(false);
     	tabMPS.setDisable(true);
     	tabSimulation.setDisable(true);
@@ -318,11 +323,14 @@ public class Controller {
     			try { 
     				if(Integer.parseInt(tau.getText())>0 && Integer.parseInt(tau.getText())<10 && Integer.parseInt(m.getText())>0)
     					result.addAll(model.getMovingAverage(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Integer.parseInt(m.getText())));
-    				else
+    				else {
     					labelError.setText("Il parametro m deve essere strettamente positivo, il parametro tau deve essere compreso tra 1 e 9 inclusi");
+    					labelError.setVisible(true);
+    				}
     			}
     			catch(Exception exc) {
     				labelError.setText("Inserisci i valori numerici dei parametri m e tau");
+    				labelError.setVisible(true);
     			}
     		}	
     		else if (boxMetodi.getValue().toLowerCase().equals("exponential smoothing")) {
@@ -330,12 +338,14 @@ public class Controller {
     			try {
     				if(Integer.parseInt(tau.getText())>0 && Integer.parseInt(tau.getText())<10 && Double.parseDouble(alfaES.getText())>0.0)
     					result.addAll(model.getExponentialSmoothing(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Double.parseDouble(alfaES.getText())));
-    				else
+    				else {
     					labelError.setText("Il parametro alfa deve essere strettamente positivo, il parametro tau deve essere compreso tra 1 e 9 inclusi");
+    					labelError.setVisible(true);
+    				}
     			}
-    			catch(Exception exc) {
-    				
+    			catch(Exception exc) { 				
     				labelError.setText("Inserisci i valori numerici dei parametri alfa e tau");
+    				labelError.setVisible(true);
     			}			
     		}	
     		else if(boxMetodi.getValue().toLowerCase().equals("exponential smoothing with trend")) {
@@ -343,11 +353,14 @@ public class Controller {
     			try {
     				if(Integer.parseInt(tau.getText())>0 && Integer.parseInt(tau.getText())<10 && Double.parseDouble(alfaEST.getText())>0.0 && Double.parseDouble(betaEST.getText())>0.0)
     					result.addAll(model.getExponentialSmoothingWithTrend(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Double.parseDouble(alfaEST.getText()), Double.parseDouble(betaEST.getText())));
-    				else
+    				else {
     					labelError.setText("Il parametri alfa e beta devono essere strettamente positivi, il parametro tau deve essere compreso tra 1 e 9 inclusi");
+    					labelError.setVisible(true);
+    				}
     			}
     			catch(Exception exc) {
     				labelError.setText("Inserisci i valori numerici dei parametri alfa, beta e tau");
+    				labelError.setVisible(true);
     			}
     		}	
     		else if(boxMetodi.getValue().toLowerCase().equals("winter")) {
@@ -355,16 +368,21 @@ public class Controller {
     			try {
     				if(Integer.parseInt(tau.getText())>0 && Integer.parseInt(tau.getText())<10 && Double.parseDouble(alfaW.getText())>0.0 && Double.parseDouble(betaW.getText())>0.0 && Double.parseDouble(gammaW.getText())>0.0 && Integer.parseInt(Nperiod.getText())>0)
     					result.addAll(model.getWinter(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Double.parseDouble(alfaW.getText()), Double.parseDouble(betaW.getText()), Double.parseDouble(gammaW.getText()), Integer.parseInt(Nperiod.getText())));
-    				else
+    				else {
     					labelError.setText("Il parametri alfa, beta e gamma devono essere strettamente positivi, il parametro tau deve essere compreso tra 1 e 9 inclusi");
+    					labelError.setVisible(true);
+    				}
     			}
     			catch(Exception exc) {
     				labelError.setText("Inserisci i valori numerici dei parametri alfa, beta, gamma, N e tau");
+    				labelError.setVisible(true);
     			}
     		}
     	}
-    	else
+    	else {
     		labelError.setText("Selezionare un prodotto e un metodo");
+    		labelError.setVisible(true);
+    	}
     	
     	if(!result.isEmpty()) {
     		tabMPS.setDisable(false);
@@ -454,7 +472,7 @@ public class Controller {
     	labelInserisciOrdini.setVisible(false);
     	gridPane.setVisible(false);
     	buttonMPS.setVisible(false);
-    	labelError2.setText("");
+    	labelError2.setVisible(false);
     	tabForecasting.setDisable(true);
     	
     	try {
@@ -603,14 +621,19 @@ public class Controller {
 						break;
 					}
 				}
-				else
+				else {
 					labelError2.setText("Il valore del magazzino iniziale deve essere maggiore o uguale a zero");
+					labelError2.setVisible(true);
+				}
 			}
-			else
+			else {
 				labelError2.setText("Il valore di MPS Lot-size deve essere maggiore di zero");
+				labelError2.setVisible(true);
+			}
     	}
     	catch(Exception exc) {
     		labelError2.setText("Inserisci un valore di MPS Lot-size e un valore iniziale di disponibilità del magazzino");
+    		labelError2.setVisible(true);
     	}
     }
 
@@ -619,7 +642,7 @@ public class Controller {
     	
     	tableView.setVisible(false);
     	tabSimulation.setDisable(true);
-    	labelError2.setText("");
+    	labelError2.setVisible(false);
     	
     	ObservableList<Row> result = FXCollections.observableArrayList();
     	
@@ -637,11 +660,14 @@ public class Controller {
 						try {
 							if(Integer.parseInt(txt1.getText())>=0)
 								result.addAll(model.getMPSeATP(boxProdotti.getValue(), Integer.parseInt(txtLotSize.getText()), Integer.parseInt(txtMagIn.getText()), Integer.parseInt(txt1.getText())));
-							else
+							else {
 								labelError2.setText("Il valore non può essere negativo");
+								labelError2.setVisible(true);
+							}
 						}
 						catch(Exception exc) {
 							labelError2.setText("Inserisci il valore numerico");
+							labelError2.setVisible(true);
 						}
 						
 						break;
@@ -656,11 +682,14 @@ public class Controller {
 						try {
 							if(Integer.parseInt(txt1.getText())>=0 && Integer.parseInt(txt2.getText())>=0)
 								result.addAll(model.getMPSeATP(boxProdotti.getValue(), Integer.parseInt(txtLotSize.getText()), Integer.parseInt(txtMagIn.getText()), Integer.parseInt(txt1.getText()), Integer.parseInt(txt2.getText())));
-							else
+							else {
 								labelError2.setText("I valori non possono essere negativi");
+								labelError2.setVisible(true);
+							}
 						}
 						catch(Exception exc) {
 							labelError2.setText("Inserisci tutti i valori numerici");
+							labelError2.setVisible(true);
 						}
 							
 						break;
@@ -677,11 +706,14 @@ public class Controller {
 						try {
 							if(Integer.parseInt(txt1.getText())>=0 && Integer.parseInt(txt2.getText())>=0 && Integer.parseInt(txt3.getText())>=0)
 								result.addAll(model.getMPSeATP(boxProdotti.getValue(), Integer.parseInt(txtLotSize.getText()), Integer.parseInt(txtMagIn.getText()), Integer.parseInt(txt1.getText()), Integer.parseInt(txt2.getText()), Integer.parseInt(txt3.getText())));
-							else
+							else {
 								labelError2.setText("I valori non possono essere negativi");
+								labelError2.setVisible(true);
+							}
 						}
 						catch(Exception exc) {
 							labelError2.setText("Inserisci tutti i valori numerici");
+							labelError2.setVisible(true);
 						}
 							
 						break;
@@ -700,11 +732,14 @@ public class Controller {
 						try {
 							if(Integer.parseInt(txt1.getText())>=0 && Integer.parseInt(txt2.getText())>=0 && Integer.parseInt(txt3.getText())>=0 && Integer.parseInt(txt4.getText())>=0)
 								result.addAll(model.getMPSeATP(boxProdotti.getValue(), Integer.parseInt(txtLotSize.getText()), Integer.parseInt(txtMagIn.getText()), Integer.parseInt(txt1.getText()), Integer.parseInt(txt2.getText()), Integer.parseInt(txt3.getText()),  Integer.parseInt(txt4.getText())));
-							else
+							else {
 								labelError2.setText("I valori non possono essere negativi");
+								labelError2.setVisible(true);
+							}
 						}
 						catch(Exception exc) {
 							labelError2.setText("Inserisci tutti i valori");
+							labelError2.setVisible(true);
 						}
 						
 						break;
@@ -725,11 +760,14 @@ public class Controller {
 						try {
 							if(Integer.parseInt(txt1.getText())>=0 && Integer.parseInt(txt2.getText())>=0 && Integer.parseInt(txt3.getText())>=0 && Integer.parseInt(txt4.getText())>=0 && Integer.parseInt(txt5.getText())>=0)
 								result.addAll(model.getMPSeATP(boxProdotti.getValue(), Integer.parseInt(txtLotSize.getText()), Integer.parseInt(txtMagIn.getText()), Integer.parseInt(txt1.getText()), Integer.parseInt(txt2.getText()), Integer.parseInt(txt3.getText()), Integer.parseInt(txt4.getText()), Integer.parseInt(txt5.getText())));
-							else
+							else {
 								labelError2.setText("I valori non possono essere negativi");
+								labelError2.setVisible(true);
+							}
 						}
 						catch(Exception exc) {
 							labelError2.setText("Inserisci tutti i valori");
+							labelError2.setVisible(true);
 						}
 						
 						break;
@@ -752,11 +790,14 @@ public class Controller {
 						try {
 							if(Integer.parseInt(txt1.getText())>=0 && Integer.parseInt(txt2.getText())>=0 && Integer.parseInt(txt3.getText())>=0 && Integer.parseInt(txt4.getText())>=0 && Integer.parseInt(txt5.getText())>=0 && Integer.parseInt(txt6.getText())>=0)
 								result.addAll(model.getMPSeATP(boxProdotti.getValue(), Integer.parseInt(txtLotSize.getText()), Integer.parseInt(txtMagIn.getText()), Integer.parseInt(txt1.getText()), Integer.parseInt(txt2.getText()), Integer.parseInt(txt3.getText()), Integer.parseInt(txt4.getText()), Integer.parseInt(txt5.getText()), Integer.parseInt(txt6.getText())));
-							else
+							else {
 								labelError2.setText("I valori non possono essere negativi");
+								labelError2.setVisible(true);
+							}
 						}
 						catch(Exception exc) {
 							labelError2.setText("Inserisci tutti i valori");
+							labelError2.setVisible(true);
 						}
 						
 						break;
@@ -781,11 +822,14 @@ public class Controller {
 						try {
 							if(Integer.parseInt(txt1.getText())>=0 && Integer.parseInt(txt2.getText())>=0 && Integer.parseInt(txt3.getText())>=0 && Integer.parseInt(txt4.getText())>=0 && Integer.parseInt(txt5.getText())>=0 && Integer.parseInt(txt6.getText())>=0 && Integer.parseInt(txt7.getText())>=0)
 								result.addAll(model.getMPSeATP(boxProdotti.getValue(), Integer.parseInt(txtLotSize.getText()), Integer.parseInt(txtMagIn.getText()), Integer.parseInt(txt1.getText()), Integer.parseInt(txt2.getText()), Integer.parseInt(txt3.getText()), Integer.parseInt(txt4.getText()), Integer.parseInt(txt5.getText()), Integer.parseInt(txt6.getText()), Integer.parseInt(txt7.getText())));
-							else
+							else {
 								labelError2.setText("I valori non possono essere negativi");
+								labelError2.setVisible(true);
+							}
 						}
 						catch(Exception exc) {
 							labelError2.setText("Inserisci tutti i valori");
+							labelError2.setVisible(true);
 						}
 						
 						break;
@@ -812,11 +856,14 @@ public class Controller {
 						try {
 							if(Integer.parseInt(txt1.getText())>=0 && Integer.parseInt(txt2.getText())>=0 && Integer.parseInt(txt3.getText())>=0 && Integer.parseInt(txt4.getText())>=0 && Integer.parseInt(txt5.getText())>=0 && Integer.parseInt(txt6.getText())>=0 && Integer.parseInt(txt7.getText())>=0 && Integer.parseInt(txt8.getText())>=0)
 								result.addAll(model.getMPSeATP(boxProdotti.getValue(), Integer.parseInt(txtLotSize.getText()), Integer.parseInt(txtMagIn.getText()), Integer.parseInt(txt1.getText()), Integer.parseInt(txt2.getText()), Integer.parseInt(txt3.getText()), Integer.parseInt(txt4.getText()), Integer.parseInt(txt5.getText()), Integer.parseInt(txt6.getText()), Integer.parseInt(txt7.getText()), Integer.parseInt(txt8.getText())));
-							else
+							else {
 								labelError2.setText("I valori non possono essere negativi");
+								labelError2.setVisible(true);
+							}
 						}
 						catch(Exception exc) {
 							labelError2.setText("Inserisci tutti i valori");
+							labelError2.setVisible(true);
 						}
 						
 						break;
@@ -845,30 +892,39 @@ public class Controller {
 						try {
 							if(Integer.parseInt(txt1.getText())>=0 && Integer.parseInt(txt2.getText())>=0 && Integer.parseInt(txt3.getText())>=0 && Integer.parseInt(txt4.getText())>=0 && Integer.parseInt(txt5.getText())>=0 && Integer.parseInt(txt6.getText())>=0 && Integer.parseInt(txt7.getText())>=0 && Integer.parseInt(txt8.getText())>=0 && Integer.parseInt(txt9.getText())>=0)
 								result.addAll(model.getMPSeATP(boxProdotti.getValue(), Integer.parseInt(txtLotSize.getText()), Integer.parseInt(txtMagIn.getText()), Integer.parseInt(txt1.getText()), Integer.parseInt(txt2.getText()), Integer.parseInt(txt3.getText()), Integer.parseInt(txt4.getText()), Integer.parseInt(txt5.getText()), Integer.parseInt(txt6.getText()), Integer.parseInt(txt7.getText()), Integer.parseInt(txt8.getText()), Integer.parseInt(txt9.getText())));
-							else
+							else {
 								labelError2.setText("I valori non possono essere negativi");
+								labelError2.setVisible(true);
+							}
 						}
 						catch(Exception exc) {
 							labelError2.setText("Inserisci tutti gli ordini acquisiti per i prossimi mesi");
+							labelError2.setVisible(true);
 						}
 						
 						break;
 					}
 				}
-				else
+				else {
 					labelError2.setText("Il valore del magazzino iniziale deve essere maggiore o uguale a zero");
+					labelError2.setVisible(true);
+				}
 			}
-			else
+			else {
 				labelError2.setText("Il valore di MPS Lot-size deve essere maggiore di zero");
+				labelError2.setVisible(true);
+			}
     	}
     	catch(Exception exc) {
     		labelError2.setText("Inserisci un valore di MPS Lot-size e un valore iniziale di disponibilità del magazzino");
+    		labelError2.setVisible(true);
     	}
 						
     	if(!result.isEmpty()) {
     		tabSimulation.setDisable(false);
     		tableView.setItems(result);
     		tableView.setVisible(true);	
+    		btnNuovaAnalisi.setDisable(true);
     	}
     }
     
@@ -877,6 +933,7 @@ public class Controller {
     	
     	labelErrorSim.setVisible(false);
     	tabMPS.setDisable(true);
+    	btnNuovaAnalisi.setDisable(false);
     	
     	if(sliderProb.getValue()>=0) {
     		try {
@@ -886,25 +943,71 @@ public class Controller {
     				else {
     					txtResult.clear();
     					labelErrorSim.setVisible(true);
+    					btnNuovaAnalisi.setDisable(true);
     					labelErrorSim.setText("Inserisci un valore di min minore di quello di max");
     				}
     			else {
     				txtResult.clear();
     				labelErrorSim.setVisible(true);
+    				btnNuovaAnalisi.setDisable(true);
     				labelErrorSim.setText("Inserisci valori interi positivi di min e max");
     			}
     		}
     		catch(Exception exp) {
     			txtResult.clear();
     			labelErrorSim.setVisible(true);
+    			btnNuovaAnalisi.setDisable(true);
     			labelErrorSim.setText("Inserisci valori interi positivi di min e max");
     		}
     	}
     	else {
     		txtResult.clear();
     		labelErrorSim.setVisible(true);
+    		btnNuovaAnalisi.setDisable(true);
     		labelErrorSim.setText("Scegli un valore di probabilità");
     	}
+    }
+    
+    @FXML
+    void doNuovaAnalisi(ActionEvent event) {
+    	
+    	tabSimulation.setDisable(true);
+    	tabMPS.setDisable(true);
+    	tabForecasting.setDisable(false);
+    	
+    	m.clear();
+    	alfaES.clear();
+    	alfaEST.clear();
+    	betaEST.clear();
+    	alfaW.clear();
+    	betaW.clear();
+    	gammaW.clear();
+    	Nperiod.clear();
+    	tau.clear();
+    	labelError.setVisible(false);
+    	tvForecast.setVisible(false);
+    	txtLotSize.clear();
+    	txtMagIn.clear();
+    	labelInserisciOrdini.setVisible(false);
+    	gridPane.setVisible(false);
+    	buttonMPS.setVisible(false);
+    	labelError2.setVisible(false);
+    	tableView.setVisible(false);
+    	txtMin.clear();
+    	txtMax.clear();
+    	txtResult.clear();
+    	labelErrorSim.setVisible(false);
+    	btnProsegui.setDisable(false);
+    	txt1.clear();
+    	txt2.clear();
+    	txt3.clear();
+    	txt4.clear();
+    	txt5.clear();
+    	txt6.clear();
+    	txt7.clear();
+    	txt8.clear();
+    	txt9.clear();
+    	btnNuovaAnalisi.setDisable(true);
     }
 
     @FXML
@@ -972,6 +1075,7 @@ public class Controller {
         assert tvForecast != null : "fx:id=\"tvForecast\" was not injected: check your FXML file 'tesi.fxml'.";
         assert labelErrorSim != null : "fx:id=\"labelErrorSim\" was not injected: check your FXML file 'tesi.fxml'.";
         assert labelError != null : "fx:id=\"labelError\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert btnNuovaAnalisi != null : "fx:id=\"btnNuovaAnalisi\" was not injected: check your FXML file 'tesi.fxml'.";
     }
     
 	public void setModel(Model model) {

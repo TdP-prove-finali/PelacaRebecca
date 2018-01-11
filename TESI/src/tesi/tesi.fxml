@@ -645,6 +645,14 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="20.0" />
                                  </VBox.margin>
                               </TextArea>
+                              <Button fx:id="btnNuovaAnalisi" mnemonicParsing="false" onAction="#doNuovaAnalisi" text="Inizia nuova analisi">
+                                 <VBox.margin>
+                                    <Insets left="5.0" top="20.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Button>
                            </children>
                         </VBox>
                      </children>

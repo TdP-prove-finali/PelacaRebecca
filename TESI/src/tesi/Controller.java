@@ -441,8 +441,7 @@ public class Controller {
         		tbf8.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("eight"));
         		tbf9.setCellValueFactory(new PropertyValueFactory<Forecast, Integer>("nine"));
         		break;  			
-    		}
-    			
+    		}   			
     		tvForecast.setItems(result);
     		tvForecast.setVisible(true);
     	}

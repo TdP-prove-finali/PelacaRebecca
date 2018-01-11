@@ -42,10 +42,10 @@ public class Ordine {
 		
 		StringBuilder result = new StringBuilder();
 		
-		if(stato==true) 
-			result.append("Mese " + this.mese + ", Quantita " + this.quantita + ", Accettato");
+		if(stato==true)
+			result.append("Mese " + String.valueOf(this.mese+1) + ", Quantita " + this.quantita + ", Accettato");
 		else
-			result.append("Mese " + this.mese + ", Quantita " + this.quantita + ", Rifiutato");
+			result.append("Mese " + String.valueOf(this.mese+1) + ", Quantita " + this.quantita + ", Rifiutato");
 		
 		return result.toString();		
 	}

@@ -28,6 +28,8 @@ public class Simulazione {
 		this.ordini = new ArrayList<Ordine>();
 		this.ordini_accettati = 0;
 		this.ordini_rifiutati = 0;
+		this.percentuale_accettati = 0.0;
+		this.percentuale_rifiutati = 0.0;
 		
 		this.queue = new PriorityQueue<>();
 	}
@@ -39,8 +41,10 @@ public class Simulazione {
 	
 	public SimulationResult simula() {
 		
-		ordini_accettati=0;
-		ordini_rifiutati=0;
+		this.ordini_accettati = 0;
+		this.ordini_rifiutati = 0;
+		this.percentuale_accettati = 0.0;
+		this.percentuale_rifiutati = 0.0;
 		
 		while(!queue.isEmpty()) {
 			
@@ -75,7 +79,7 @@ public class Simulazione {
 		
 		if((ordini_accettati+ordini_rifiutati)>0) {
 			percentuale_accettati = ((double)ordini_accettati/(ordini_accettati+ordini_rifiutati))*100;
-			percentuale_rifiutati = 1-percentuale_accettati;
+			percentuale_rifiutati = ((double)ordini_rifiutati/(ordini_accettati+ordini_rifiutati))*100;
 		}
 		
 //		System.out.println(percentuale_accettati);

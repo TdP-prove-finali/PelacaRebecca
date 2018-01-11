@@ -37,6 +37,9 @@ public class Controller {
 
     @FXML
     private URL location;
+    
+    @FXML
+    private Tab tabForecasting;
 
     @FXML
     private ComboBox<Prodotto> boxProdotti;
@@ -453,6 +456,7 @@ public class Controller {
     	gridPane.setVisible(false);
     	buttonMPS.setVisible(false);
     	labelError2.setText("");
+    	tabForecasting.setDisable(true);
     	
     	try {
 			if(Integer.parseInt(txtLotSize.getText())>0) {
@@ -873,6 +877,7 @@ public class Controller {
     void doSimula(ActionEvent event) {
     	
     	labelErrorSim.setVisible(false);
+    	tabMPS.setDisable(true);
     	
     	if(sliderProb.getValue()>=0) {
     		try {
@@ -905,6 +910,7 @@ public class Controller {
 
     @FXML
     void initialize() {
+    	assert tabForecasting != null : "fx:id=\"tabForecasting\" was not injected: check your FXML file 'tesi.fxml'.";
         assert boxProdotti != null : "fx:id=\"boxProdotti\" was not injected: check your FXML file 'tesi.fxml'.";
         assert alfaES != null : "fx:id=\"alfaES\" was not injected: check your FXML file 'tesi.fxml'.";
         assert betaEST != null : "fx:id=\"betaEST\" was not injected: check your FXML file 'tesi.fxml'.";

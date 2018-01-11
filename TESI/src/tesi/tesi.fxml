@@ -29,7 +29,7 @@
    <center>
       <TabPane tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
-          <Tab text="Forecasting">
+          <Tab fx:id="tabForecasting" text="Forecasting">
             <content>
               <AnchorPane>
                      <children>

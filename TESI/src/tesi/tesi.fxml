@@ -647,7 +647,7 @@
                               </TextArea>
                               <Button fx:id="btnNuovaAnalisi" mnemonicParsing="false" onAction="#doNuovaAnalisi" text="Inizia nuova analisi">
                                  <VBox.margin>
-                                    <Insets left="5.0" top="20.0" />
+                                    <Insets left="5.0" top="15.0" />
                                  </VBox.margin>
                                  <font>
                                     <Font size="14.0" />

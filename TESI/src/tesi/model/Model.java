@@ -51,40 +51,19 @@ public class Model{
 		metodi.add("Moving average");
 		metodi.add("Exponential smoothing");
 		metodi.add("Exponential smoothing with trend");
-		metodi.add("Winter");
+		metodi.add("Winter with multiplicative seasonality");
+		metodi.add("Winter with additive seasonality");
 			
 		return metodi;
 	}
 	
-	public ObservableList<Forecast> getMovingAverage(Prodotto prodotto, int tau, int m) {
+	public ObservableList<Forecast> getMovingAverage(Prodotto prodotto, int tau, int m) throws ArithmeticException{
 		
 		this.forecast = new ArrayList<Integer>();
 		
 		ObservableList<Forecast> result = FXCollections.observableArrayList();
 		
 		List<Integer> demand = dao.getStoricoDB(prodotto);
-		
-//		List<Integer> demand = new ArrayList<Integer>();
-//		demand.add(10);
-//		demand.add(12);
-//		demand.add(12);
-//		demand.add(11);
-//		demand.add(15);
-//		demand.add(14);
-//		demand.add(18);
-//		demand.add(22);
-//		demand.add(18);
-//		demand.add(28);
-//		demand.add(33);
-//		demand.add(31);
-//		demand.add(31);
-//		demand.add(37);
-//		demand.add(40);
-//		demand.add(33);
-//		demand.add(50);
-//		demand.add(45);
-//		demand.add(55);
-//		demand.add(60);
 		
 		List<Double> smoothed_estimate = new ArrayList<Double>();
 		
@@ -97,6 +76,8 @@ public class Model{
 			for(int j=0; j<m; j++) {
 				tot += demand.get(i-j);
 			}
+			if(m==0)
+				throw new ArithmeticException();
 			media = (double)tot/m;
 			smoothed_estimate.add(media);	
 		}
@@ -157,30 +138,7 @@ public class Model{
 		
 		ObservableList<Forecast> result = FXCollections.observableArrayList();
 		
-		List<Integer> demand = dao.getStoricoDB(prodotto);
-		
-//		List<Integer> demand = new ArrayList<Integer>();
-//		demand.add(10);
-//		demand.add(12);
-//		demand.add(12);
-//		demand.add(11);
-//		demand.add(15);
-//		demand.add(14);
-//		demand.add(18);
-//		demand.add(22);
-//		demand.add(18);
-//		demand.add(28);
-//		demand.add(33);
-//		demand.add(31);
-//		demand.add(31);
-//		demand.add(37);
-//		demand.add(40);
-//		demand.add(33);
-//		demand.add(50);
-//		demand.add(45);
-//		demand.add(55);
-//		demand.add(60);
-		
+		List<Integer> demand = dao.getStoricoDB(prodotto);	
 		List<Double> smoothed_estimate = new ArrayList<Double>();
 		this.forecast = new ArrayList<Integer>();
 		
@@ -248,30 +206,7 @@ public class Model{
 		
 		ObservableList<Forecast> result = FXCollections.observableArrayList();
 		
-		List<Integer> demand = dao.getStoricoDB(prodotto);
-		
-//		List<Integer> demand = new ArrayList<Integer>();
-//		demand.add(10);
-//		demand.add(12);
-//		demand.add(12);
-//		demand.add(11);
-//		demand.add(15);
-//		demand.add(14);
-//		demand.add(18);
-//		demand.add(22);
-//		demand.add(18);
-//		demand.add(28);
-//		demand.add(33);
-//		demand.add(31);
-//		demand.add(31);
-//		demand.add(37);
-//		demand.add(40);
-//		demand.add(33);
-//		demand.add(50);
-//		demand.add(45);
-//		demand.add(55);
-//		demand.add(60);
-		
+		List<Integer> demand = dao.getStoricoDB(prodotto);		
 		List<Double> smoothed_estimate = new ArrayList<Double>();
 		List<Double> smoothed_trend = new ArrayList<Double>();
 		this.forecast = new ArrayList<Integer>();
@@ -340,39 +275,106 @@ public class Model{
 		return result;
 	}
 
-	public ObservableList<Forecast> getWinter(Prodotto prodotto, int tau, double alfa, double beta, double gamma, int N) {
+	public ObservableList<Forecast> getWinterMult(Prodotto prodotto, int tau, double alfa, double beta, double gamma, int N) throws ArithmeticException {
+		
+		ObservableList<Forecast> result = FXCollections.observableArrayList();	
+		
+		List<Integer> demand = dao.getStoricoDB(prodotto);		
+		List<Double> smoothed_estimate = new ArrayList<Double>();
+		List<Double> smoothed_trend = new ArrayList<Double>();
+		List<Double> smoothed_seasonality = new ArrayList<Double>();
+		this.forecast = new ArrayList<Integer>();	
+		
+		int sum = 0;
+		double average;		
+		for(int i=0; i<N; i++) 
+			sum += demand.get(i);		
+		average = (double)sum/N;
+		
+		if(average==0)
+			throw new ArithmeticException();
+		
+		for(int i=0; i<N; i++) {	
+			smoothed_seasonality.add(demand.get(i)/average);
+			smoothed_trend.add(0.0);
+			if(i<N-1)
+				smoothed_estimate.add(0.0);		
+		}	
+		
+		smoothed_estimate.add(average);
+		
+		double f;
+		double t;
+		double c;
+		
+		for(int i=N; i<demand.size(); i++) {
+			if(smoothed_seasonality.get(i-N)==0 || smoothed_estimate.get(i)==0)
+				throw new ArithmeticException();
+			f = alfa*(demand.get(i)/smoothed_seasonality.get(i-N))+(1-alfa)*(smoothed_estimate.get(i-1)+smoothed_trend.get(i-1));
+			smoothed_estimate.add(f);
+			t = beta*(smoothed_estimate.get(i)-smoothed_estimate.get(i-1))+(1-beta)*smoothed_trend.get(i-1);
+			smoothed_trend.add(t);
+			c = gamma*(demand.get(i)/smoothed_estimate.get(i))+(1-gamma)*smoothed_seasonality.get(i-N);
+			smoothed_seasonality.add(c);
+		}
+		
+		for(int i=tau-1; i>=0; i--) {
+			int last_index = smoothed_estimate.size()-1;
+			int res = (int)Math.round((smoothed_estimate.get(last_index-i)+tau*smoothed_trend.get(last_index-i))*smoothed_seasonality.get(last_index-i-N+1));
+			forecast.add(res);
+		}		
+		
+		Forecast tableRow = null;
+		
+		switch (forecast.size()) {
+		
+		case 1 : 
+			tableRow = new Forecast(forecast.get(0));
+			break;
+			
+		case 2 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1));
+			break;
+			
+		case 3 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2));
+			break;
+			
+		case 4 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3));
+			break;
+			
+		case 5 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4));
+			break;
+			
+		case 6 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4), forecast.get(5));
+			break;
+			
+		case 7 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4), forecast.get(5), forecast.get(6));
+			break;
+			
+		case 8 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4), forecast.get(5), forecast.get(6), forecast.get(7));
+			break;
+			
+		case 9 : 
+			tableRow = new Forecast(forecast.get(0), forecast.get(1), forecast.get(2), forecast.get(3), forecast.get(4), forecast.get(5), forecast.get(6), forecast.get(7), forecast.get(8));
+			break;
+		}
+		
+		result.add(tableRow);
+		
+		return result;
+	}
+	
+	public ObservableList<Forecast> getWinterAdd(Prodotto prodotto, int tau, double alfa, double beta, double gamma, int N) throws ArithmeticException {
 		
 		ObservableList<Forecast> result = FXCollections.observableArrayList();
 		
 		List<Integer> demand = dao.getStoricoDB(prodotto);
-		
-//		List<Integer> demand = new ArrayList<Integer>();
-//		
-//		demand.add(4);
-//		demand.add(2);
-//		demand.add(5);
-//		demand.add(8);
-//		demand.add(11);
-//		demand.add(13);
-//		demand.add(18);
-//		demand.add(15);
-//		demand.add(9);
-//		demand.add(6);
-//		demand.add(5);
-//		demand.add(4);
-//		demand.add(5);
-//		demand.add(4);
-//		demand.add(7);
-//		demand.add(7);
-//		demand.add(15);
-//		demand.add(17);
-//		demand.add(24);
-//		demand.add(18);
-//		demand.add(12);
-//		demand.add(7);
-//		demand.add(8);
-//		demand.add(6);
-		
 		List<Double> smoothed_estimate = new ArrayList<Double>();
 		List<Double> smoothed_trend = new ArrayList<Double>();
 		List<Double> smoothed_seasonality = new ArrayList<Double>();
@@ -382,9 +384,11 @@ public class Model{
 		double average;
 		
 		for(int i=0; i<N; i++) 
-			sum += demand.get(i);
-		
+			sum += demand.get(i);		
 		average = (double)sum/N;
+		
+		if(average==0)
+			throw new ArithmeticException();
 		
 		for(int i=0; i<N; i++) {
 			smoothed_seasonality.add(demand.get(i)/average);
@@ -392,43 +396,23 @@ public class Model{
 			if(i<N-1)
 				smoothed_estimate.add(0.0);		
 		}
-
-		smoothed_estimate.add(average);
-				
+		
+		smoothed_estimate.add(average);	
+		
 		double f;
 		double t;
-		double c;
-		
+		double c;		
 		for(int i=N; i<demand.size(); i++) {
-//			System.out.println("DEMAND " + demand.get(i));
-//			System.out.println("SMOOTHED SEASONALITY " + smoothed_seasonality.get(i-N));
-//			System.out.println("SMOOTHED ESTIMATE " + smoothed_estimate.get(i-N));
-//			System.out.println("SMOOTHED TREND " + smoothed_trend.get(i-1));
-			f = alfa*(demand.get(i)/smoothed_seasonality.get(i-N))+(1-alfa)*(smoothed_estimate.get(i-1)+smoothed_trend.get(i-1));
-//			System.out.println("f = " + f);
+			f = alfa*(demand.get(i)-smoothed_seasonality.get(i-N))+(1-alfa)*(smoothed_estimate.get(i-1)+smoothed_trend.get(i-1));
 			smoothed_estimate.add(f);
-//			System.out.println("TREND");
-//			System.out.println("SMOOTHED ESTIMATE i " + smoothed_estimate.get(i));
-//			System.out.println("SMOOTHED ESTIMATE i-1 " + smoothed_estimate.get(i-1));
-//			System.out.println("SMOOTHED TREND " + smoothed_trend.get(i-1));
 			t = beta*(smoothed_estimate.get(i)-smoothed_estimate.get(i-1))+(1-beta)*smoothed_trend.get(i-1);
-//			System.out.println("t = " + t);
 			smoothed_trend.add(t);
-//			System.out.println("SEASONALITY");
-//			System.out.println("DEMAND " + demand.get(i));
-//			System.out.println("SMOOTHED ESTIMATE " + smoothed_estimate.get(i));
-//			System.out.println("SMOOTHED SEASONALITY " + smoothed_seasonality.get(i-N));
-			c = gamma*(demand.get(i)/smoothed_estimate.get(i))+(1-gamma)*smoothed_seasonality.get(i-N);
-//			System.out.println("c = " + c);
+			c = gamma*(demand.get(i)-smoothed_estimate.get(i-1)-smoothed_trend.get(i-1))+(1-gamma)*smoothed_seasonality.get(i-N);
 			smoothed_seasonality.add(c);
-			
-//			System.out.println("/////////////////////////////////");
-		}
-		
+		}		
 		for(int i=tau-1; i>=0; i--) {
 			int last_index = smoothed_estimate.size()-1;
-			int res = (int)Math.round((smoothed_estimate.get(last_index-i)+tau*smoothed_trend.get(last_index-i))*smoothed_seasonality.get(last_index-i-N+1));
-//			System.out.println("Res " + res);
+			int res = (int)Math.round(smoothed_estimate.get(last_index-i)+tau*smoothed_trend.get(last_index-i)+smoothed_seasonality.get(last_index-i-N+1));
 			forecast.add(res);
 		}		
 		
@@ -490,7 +474,7 @@ public class Model{
 		for (int tb : tbs) {
 			ordini_acquisiti[count] = tb;
 			MPSquantity[count] = 0;      
-			ATP[count++] = 0;               // setta a 0 il valore all'indice count e poi fa l'incremento
+			ATP[count++] = 0;              
 		}
 		
 		int It;
@@ -543,16 +527,14 @@ public class Model{
 			else if(MPSquantity[i]>0) {
 				atp = MPSquantity[i];
 				calcolaATP = true;
-			}
-			
+			}		
 			if(calcolaATP == true) {
 				for(int j=i; j<MPSquantity.length; j++) {
 					if(j==i || MPSquantity[j]==0)
 						atp -= ordini_acquisiti[j];
 					else if(MPSquantity[j]>0)
 						break;
-				}
-								
+				}						
 				if(atp<0 && i!=0) {
 					for(int j=i; j>=0; j--) {
 						if(ATP[j]>-atp) {
@@ -650,118 +632,6 @@ public class Model{
 		}
 		
 		return result;
-		
-//		int[] ordini_acquisiti = new int[8];
-//		int[] disponibilita_magazzino = new int[8];
-//		int[] MPSquantity = new int[8];
-//		this.ATP = new int[8];
-//		this.forecast = new ArrayList<Integer>();
-//		
-//		forecast.add(20);
-//		forecast.add(20);
-//		forecast.add(20);
-//		forecast.add(20);
-//		forecast.add(40);
-//		forecast.add(40);
-//		forecast.add(40);
-//		forecast.add(40);
-//		
-//		ordini_acquisiti[0]=23;
-//		ordini_acquisiti[1]=15;
-//		ordini_acquisiti[2]=8;
-//		ordini_acquisiti[3]=4;
-//		ordini_acquisiti[4]=0;
-//		ordini_acquisiti[5]=0;
-//		ordini_acquisiti[6]=0;
-//		ordini_acquisiti[7]=0;
-//		
-//		int count=0;
-//		
-//		for (int i=0; i<8; i++) {
-//			MPSquantity[count] = 0;      
-//			ATP[count++] = 0;               // setta a 0 il valore all'indice count e poi fa l'incremento
-//		}
-//		
-//		int It;
-//		
-//		for(int i=0; i<8; i++) {
-//			
-//			It = 0;
-//			
-//			if(i==0)
-//				It = magIn + MPSquantity[i];
-//			else 
-//				It = disponibilita_magazzino[i-1] + MPSquantity[i];
-//			
-//			if(forecast.get(i)>=ordini_acquisiti[i])
-//				It -= forecast.get(i);
-//			else
-//				It -= ordini_acquisiti[i];
-//			
-//			if(It>=0)
-//				disponibilita_magazzino[i] = It;
-//			else {
-//				MPSquantity[i] = lotSize;
-//				
-//				if(i==0)
-//					It = magIn + MPSquantity[i];
-//				else 
-//					It = disponibilita_magazzino[i-1] + MPSquantity[i];
-//				
-//				if(forecast.get(i)>=ordini_acquisiti[i])
-//					It -= forecast.get(i);
-//				else
-//					It -= ordini_acquisiti[i];
-//				
-//				disponibilita_magazzino[i] = It;
-//			}
-//		}
-//		
-//		int atp;
-//		boolean calcolaATP;
-//		
-//		for(int i=0; i<forecast.size(); i++) {
-//			
-//			atp = 0;
-//			calcolaATP = false;
-//			
-//			if(i==0) {
-//				atp = magIn + MPSquantity[i];
-//				calcolaATP = true;
-//			}
-//			else if(MPSquantity[i]>0) {
-//				atp = MPSquantity[i];
-//				calcolaATP = true;
-//			}
-//			
-//			if(calcolaATP == true) {
-//				for(int j=i; j<MPSquantity.length; j++) {
-//					if(j==i || MPSquantity[j]==0)
-//						atp -= ordini_acquisiti[j];
-//					else if(MPSquantity[j]>0)
-//						break;
-//				}
-//				ATP[i] = atp;
-//			}
-//		}
-//		
-//		for(int i=0; i<8; i++)
-//			System.out.println(forecast.get(i) + " ");
-//		
-//		System.out.println("\n");
-//		
-//		for(int i=0; i<8; i++)
-//			System.out.println(ordini_acquisiti[i] + " ");
-//		
-//		System.out.println("\n");
-//		
-//		for(int i=0; i<8; i++)
-//			System.out.println(MPSquantity[i] + " ");
-//		
-//		System.out.println("\n");
-//		
-//		for(int i=0; i<8; i++)
-//			System.out.println(ATP[i] + " ");
 		
 	}
 	

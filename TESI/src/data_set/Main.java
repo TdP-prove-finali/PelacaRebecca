@@ -114,8 +114,10 @@ public class Main {
 					int quantita = 0;
 					try{
 						quantita = Integer.parseInt(attr[9]);
-					} catch (NumberFormatException e){
-					} catch (ArrayIndexOutOfBoundsException e){
+					} 
+					catch (NumberFormatException e){
+					} 
+					catch (ArrayIndexOutOfBoundsException e){
 					}
 					
 					try {

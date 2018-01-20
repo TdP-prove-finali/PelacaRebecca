@@ -286,7 +286,8 @@ public class Controller {
     			betaEST.setDisable(false);
     			
     		}	
-    		else if(boxMetodi.getValue().toLowerCase().equals("winter")) {
+    		else if(boxMetodi.getValue().toLowerCase().equals("winter with multiplicative seasonality") ||
+    				boxMetodi.getValue().toLowerCase().equals("winter with additive seasonality")) {
     			
     			m.setDisable(true);
     	    	alfaEST.setDisable(true);
@@ -295,8 +296,7 @@ public class Controller {
     			alfaW.setDisable(false);
     			betaW.setDisable(false);
     			gammaW.setDisable(false);
-    			Nperiod.setDisable(false);
-    			
+    			Nperiod.setDisable(false);			
     		}
     	}
     	else {
@@ -328,8 +328,12 @@ public class Controller {
     					labelError.setVisible(true);
     				}
     			}
+    			catch(ArithmeticException ae){
+    				labelError.setText("Errore nel calcolo della previsione, controllare i dati in input e del database");
+    				labelError.setVisible(true);
+    			}
     			catch(Exception exc) {
-    				labelError.setText("Inserisci i valori numerici dei parametri m e tau");
+    				labelError.setText("Inserisci correttamente i valori numerici dei parametri m e tau");
     				labelError.setVisible(true);
     			}
     		}	
@@ -344,7 +348,7 @@ public class Controller {
     				}
     			}
     			catch(Exception exc) { 				
-    				labelError.setText("Inserisci i valori numerici dei parametri alfa e tau");
+    				labelError.setText("Inserisci correttamente i valori numerici dei parametri alfa e tau");
     				labelError.setVisible(true);
     			}			
     		}	
@@ -359,22 +363,45 @@ public class Controller {
     				}
     			}
     			catch(Exception exc) {
-    				labelError.setText("Inserisci i valori numerici dei parametri alfa, beta e tau");
+    				labelError.setText("Inserisci correttamente i valori numerici dei parametri alfa, beta e tau");
     				labelError.setVisible(true);
     			}
     		}	
-    		else if(boxMetodi.getValue().toLowerCase().equals("winter")) {
+    		else if(boxMetodi.getValue().toLowerCase().equals("winter with multiplicative seasonality")) {
     			
     			try {
     				if(Integer.parseInt(tau.getText())>0 && Integer.parseInt(tau.getText())<10 && Double.parseDouble(alfaW.getText())>0.0 && Double.parseDouble(betaW.getText())>0.0 && Double.parseDouble(gammaW.getText())>0.0 && Integer.parseInt(Nperiod.getText())>0)
-    					result.addAll(model.getWinter(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Double.parseDouble(alfaW.getText()), Double.parseDouble(betaW.getText()), Double.parseDouble(gammaW.getText()), Integer.parseInt(Nperiod.getText())));
+    					result.addAll(model.getWinterMult(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Double.parseDouble(alfaW.getText()), Double.parseDouble(betaW.getText()), Double.parseDouble(gammaW.getText()), Integer.parseInt(Nperiod.getText())));
     				else {
     					labelError.setText("Il parametri alfa, beta e gamma devono essere strettamente positivi, il parametro tau deve essere compreso tra 1 e 9 inclusi");
     					labelError.setVisible(true);
     				}
     			}
+    			catch(ArithmeticException ae){
+    				labelError.setText("Errore nel calcolo della previsione, controllare i dati in input e del database");
+    				labelError.setVisible(true);
+    			}
     			catch(Exception exc) {
-    				labelError.setText("Inserisci i valori numerici dei parametri alfa, beta, gamma, N e tau");
+    				labelError.setText("Inserisci correttamente i valori numerici dei parametri alfa, beta, gamma, N e tau");
+    				labelError.setVisible(true);
+    			}
+    		}
+    		else if(boxMetodi.getValue().toLowerCase().equals("winter with additive seasonality")) {
+    			
+    			try {
+    				if(Integer.parseInt(tau.getText())>0 && Integer.parseInt(tau.getText())<10 && Double.parseDouble(alfaW.getText())>0.0 && Double.parseDouble(betaW.getText())>0.0 && Double.parseDouble(gammaW.getText())>0.0 && Integer.parseInt(Nperiod.getText())>0)
+    					result.addAll(model.getWinterAdd(boxProdotti.getValue(), Integer.parseInt(tau.getText()), Double.parseDouble(alfaW.getText()), Double.parseDouble(betaW.getText()), Double.parseDouble(gammaW.getText()), Integer.parseInt(Nperiod.getText())));
+    				else {
+    					labelError.setText("Il parametri alfa, beta e gamma devono essere strettamente positivi, il parametro tau deve essere compreso tra 1 e 9 inclusi");
+    					labelError.setVisible(true);
+    				}
+    			}
+    			catch(ArithmeticException ae){
+    				labelError.setText("Errore nel calcolo della previsione, controllare i dati in input e del database");
+    				labelError.setVisible(true);
+    			}
+    			catch(Exception exc) {
+    				labelError.setText("Inserisci correttamente i valori numerici dei parametri alfa, beta, gamma, N e tau");
     				labelError.setVisible(true);
     			}
     		}

@@ -9,7 +9,7 @@ Istruzioni per l'installazione e l'utilizzo dell'applicazione.
   https://github.com/TdP-prove-finali/PelacaRebecca
 
 2) Importare sul proprio DB server (user=root) il database dell’applicazione, 
-presente all’interno della cartella “db” del progetto.
+presente all’interno della cartella del progetto.
 
 3) Aprire il progetto scaricato con Eclipse e 
 lanciare la classe Main nel package "tesi" del codice sorgente.
